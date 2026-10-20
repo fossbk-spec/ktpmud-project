@@ -13,6 +13,9 @@ jobs:
     # bỏ qua bước cách ly; job "skipped" vẫn tính là đạt khi bật branch protection.
     if: github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
+    # Chỉ đọc. Bình luận kết quả do workflow comment-result.yml đăng.
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,4 +43,22 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           git show "$BASE_SHA:scripts/validate_submission.py" > scripts/.validate_base.py
-          python scripts/.validate_base.py --pr-files changed_files.txt
+          mkdir -p result
+          set -o pipefail
+          python scripts/.validate_base.py --pr-files changed_files.txt 2>&1 | tee result/result.txt
+
+      # Gửi kết quả cho comment-result.yml (chạy với quyền bình luận).
+      - name: Lưu kết quả
+        if: always()
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          mkdir -p result
+          echo "$PR_NUMBER" > result/pr_number.txt
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validate-result
+          path: result/
+          retention-days: 7

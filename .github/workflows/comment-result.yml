@@ -1,0 +1,85 @@
+name: Comment Validate Result
+
+# Đăng kết quả "Validate Submission" thành 1 bình luận trên PR, cập nhật lại ở
+# mỗi lần push. Tách riêng vì lượt chạy từ fork chỉ có token đọc.
+#
+# Workflow này chạy từ main với quyền bình luận, nên KHÔNG checkout hay chạy
+# bất kỳ code nào của PR; artifact từ PR chỉ được đọc như dữ liệu và kiểm tra
+# lại (số PR phải khớp commit đã chạy).
+on:
+  workflow_run:
+    workflows: ["Validate Submission"]
+    types: [completed]
+
+permissions:
+  actions: read          # tải artifact
+  pull-requests: write   # bình luận
+
+jobs:
+  comment:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.head_repository.full_name != github.repository &&
+      (github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.conclusion == 'failure')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RUN_ID: ${{ github.event.workflow_run.id }}
+      HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+      CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: validate-result
+          path: ${{ runner.temp }}/result
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Bình luận kết quả lên PR
+        run: |
+          dir="$RUNNER_TEMP/result"
+          pr=$(head -c 10 "$dir/pr_number.txt" | tr -dc '0-9')
+          if [ -z "$pr" ]; then echo "Không đọc được số PR"; exit 1; fi
+          # Chống giả mạo: PR đó phải đúng là commit vừa được kiểm tra.
+          pr_head=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/$pr" --jq .head.sha)
+          if [ "$pr_head" != "$HEAD_SHA" ]; then
+            echo "PR #$pr đã có commit mới ($pr_head) hoặc không khớp $HEAD_SHA — bỏ qua."
+            exit 0
+          fi
+
+          marker='<!-- validate-submission -->'
+          body="$RUNNER_TEMP/comment.md"
+          {
+            echo "$marker"
+            if [ "$CONCLUSION" = "success" ]; then
+              echo "### ✅ Bài nộp hợp lệ về cấu trúc"
+              echo
+              echo "Đã qua kiểm tra tự động. PR đang chờ giảng viên/TA review nội dung."
+            else
+              echo "### ❌ Bài nộp chưa hợp lệ"
+              echo
+              echo "Sửa các lỗi dưới đây rồi push tiếp lên **cùng nhánh** (PR tự cập nhật, không cần mở PR mới):"
+              echo
+              echo '```'
+              if [ -s "$dir/result.txt" ]; then
+                head -c 6000 "$dir/result.txt" | sed 's/`/'"'"'/g'
+              else
+                echo "CI lỗi trước khi chạy kiểm tra — xem log: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}"
+              fi
+              echo
+              echo '```'
+              echo
+              echo "Tự kiểm tra trước khi push: \`python scripts/validate_submission.py submissions/<thu_muc_nhom>\` — xem [CONTRIBUTING.md](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/main/CONTRIBUTING.md)."
+            fi
+            echo
+            echo "<sub>Commit \`${HEAD_SHA:0:7}\` · bình luận tự động, cập nhật ở mỗi lần push.</sub>"
+          } > "$body"
+
+          id=$(gh api "repos/${GITHUB_REPOSITORY}/issues/$pr/comments" --paginate \
+                 --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$marker\"))) | .id" | head -n1)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/$id" -F body=@"$body" > /dev/null
+          else
+            gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/$pr/comments" -F body=@"$body" > /dev/null
+          fi
+          echo "Đã cập nhật bình luận trên PR #$pr"
