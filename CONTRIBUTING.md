@@ -8,11 +8,12 @@ submissions/<case_study_slug>_<ma_nhom>/
 
 - `case_study_slug` — đúng slug case study trong
   [ngân hàng case study](https://fossbk-spec.github.io/ktpmud-book/do_an_mon_hoc)
-  (`may_day`, `suy_tim`, `alzheimer`, hoặc `dreye`).
-- `ma_nhom` — mã nhóm giảng viên cấp (vd `nhom01`) — **không dùng họ tên
-  thật hay MSSV** trong tên thư mục (xem Mục 3 về quyền riêng tư).
+  (`may_day`, `suy_tim`, `alzheimer`, `dreye`, hoặc `dai_thao_duong`).
+- `ma_nhom` — mã nhóm giảng viên cấp, dạng `<mã lớp>_<số nhóm>` (vd
+  `173820_n01` = lớp 173820, nhóm N01) — **không dùng họ tên thật hay MSSV**
+  trong tên thư mục (xem Mục 3 về quyền riêng tư).
 
-Ví dụ: `submissions/suy_tim_nhom07/`.
+Ví dụ: `submissions/suy_tim_173820_n07/`, `submissions/dai_thao_duong_173820_n01/`.
 
 **Quan trọng:** 1 Pull Request chỉ được đụng tới ĐÚNG 1 thư mục
 `submissions/<case_study_slug>_<ma_nhom>/` của nhóm bạn. CI sẽ tự động

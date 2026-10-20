@@ -10,7 +10,8 @@ bài đồ án cuối khóa theo case study đã chọn trong
 - **Mỗi nhóm = 1 thư mục riêng** dưới `submissions/`, đặt tên theo đúng quy
   ước ở [CONTRIBUTING.md](CONTRIBUTING.md).
 - **Nộp bài qua Pull Request** — không push trực tiếp vào `main`. Xem quy
-  trình đầy đủ trong [CONTRIBUTING.md](CONTRIBUTING.md).
+  trình đầy đủ trong [CONTRIBUTING.md](CONTRIBUTING.md); làm lần đầu thì theo
+  [HUONG_DAN_NOP_BAI.md](HUONG_DAN_NOP_BAI.md) (từng bước, có ví dụ).
 
 ## Vì sao dùng Pull Request thay vì push trực tiếp?
 
@@ -53,6 +54,7 @@ ktpmud-project/
 | `suy_tim` | CS-2: AI-CDSS Suy tim (HF-CDSS) | |
 | `alzheimer` | CS-3: AI-CDSS Alzheimer | |
 | `dreye` | CS-4: Phần mềm điều khiển thiết bị Edge AI (DrEye) | Phần mềm nhúng/di động — khác lớp CS-2/CS-3 (CDSS server/web) |
+| `dai_thao_duong` | CS-5: Hỗ trợ người chăm sóc theo dõi điều trị ngoại trú đái tháo đường type 2 | Đề nhóm đề xuất, giảng viên đã duyệt |
 
 Slug phải khớp đúng tên trong
 [bảng case study](https://fossbk-spec.github.io/ktpmud-book/do_an_mon_hoc).
