@@ -8,6 +8,10 @@ on:
 
 jobs:
   validate:
+    # Chỉ kiểm tra PR nộp bài từ fork của sinh viên. PR từ nhánh trong repo
+    # (chỉ người có quyền ghi mới tạo được: sửa CI, góp ý trong feedback/...)
+    # bỏ qua bước cách ly; job "skipped" vẫn tính là đạt khi bật branch protection.
+    if: github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,11 +22,22 @@ jobs:
         with:
           python-version: "3.11"
 
+      # PR từ fork không có nhánh origin/<head_ref> trong repo gốc, nên so
+      # theo SHA của base/head (cả hai đều có sẵn khi checkout merge ref).
       - name: Liệt kê file thay đổi trong PR
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }} > changed_files.txt
+          git -c core.quotePath=false diff --name-only "$BASE_SHA...$HEAD_SHA" > changed_files.txt
           echo "== File thay đổi trong PR =="
           cat changed_files.txt
 
+      # Dùng script của nhánh main, không dùng bản trong PR — tránh PR tự sửa
+      # validate_submission.py để vượt kiểm tra.
       - name: Kiểm tra cách ly + schema + dữ liệu nhạy cảm
-        run: python scripts/validate_submission.py --pr-files changed_files.txt
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git show "$BASE_SHA:scripts/validate_submission.py" > scripts/.validate_base.py
+          python scripts/.validate_base.py --pr-files changed_files.txt
