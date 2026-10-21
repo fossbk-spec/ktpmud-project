@@ -49,6 +49,10 @@ submissions/dai_thao_duong_173820_n01/
 `members` ghi **MSSV**, không ghi họ tên. `scenario` chỉ dùng cho CS-1; đề khác ghi
 `khong_ap_dung`.
 
+> **Thư mục nhóm đã có sẵn trên `main`?** Lớp 173820: bài tuần 6 của các nhóm N01, N02, N03,
+> N27, N43 đã được giảng viên đưa lên. Các tuần sau chỉ cần tạo nhánh, **thêm file mới** vào đúng
+> thư mục đó (bỏ qua bước tạo `submission.json`/`README.md`) rồi mở PR như bước 3.
+
 ## 2a. Nộp bằng trình duyệt (dễ nhất, không cần cài gì)
 
 1. Vào **fork của nhóm** → nút nhánh `main` ở góc trái → gõ `submit/dai_thao_duong-173820_n01`

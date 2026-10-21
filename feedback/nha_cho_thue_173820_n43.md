@@ -1,8 +1,8 @@
 # Góp ý — 173820_n43 (CS-6: Quản lý nhà cho thuê)
 
-- **Bài nộp:** báo cáo quá trình tuần 6 + slide — **chưa mở PR**
+- **Bài nộp:** báo cáo quá trình tuần 6 + slide — giảng viên đã đưa lên [`submissions/nha_cho_thue_173820_n43/`](../submissions/nha_cho_thue_173820_n43/) theo template chuẩn
 - **Ngày góp ý:** 21/10/2026
-- **Kết quả kiểm tra tự động:** ✅ thư mục bài nộp giảng viên chuẩn bị sẵn đã qua `scripts/validate_submission.py`
+- **Kết quả kiểm tra tự động:** ✅ hợp lệ (`scripts/validate_submission.py`)
 
 ## Đề tài đã được duyệt
 
@@ -11,17 +11,26 @@
 `nha_cho_thue` (đề ngoài y tế). Trang chi tiết của CS-6 trỏ tới thư mục bài nộp của nhóm, nên link
 chỉ mở được sau khi PR của nhóm được merge.
 
-## Cách nộp
+## Bài nộp và các tuần sau
 
-Làm theo từng bước tại [HUONG_DAN_NOP_BAI.md](../HUONG_DAN_NOP_BAI.md), thay ví dụ N01 bằng thông
-tin của nhóm:
+Bài tuần 6 của nhóm **đã có trong repo** tại [`submissions/nha_cho_thue_173820_n43/`](../submissions/nha_cho_thue_173820_n43/), đúng
+template chuẩn (`submission.json`, `README.md`, `report/`, `slides/`, `src/`):
 
-1. Đại diện nhóm fork `fossbk-spec/ktpmud-project`, tạo nhánh `submit/nha_cho_thue-173820_n43`.
-2. Đưa thư mục `submissions/nha_cho_thue_173820_n43/` giảng viên gửi kèm vào fork. Thư mục đã có:
-   - `submission.json` — CS-6, mã nhóm `173820_n43`, MSSV 202414266, 202414351
-   - `README.md` — tóm tắt nội dung tuần 6, phạm vi chức năng
-   - `report/BaoCao_Tuan6.docx`, `slides/Slide_Tuan6.pptx`
-   - `src/` — để trống
+- [`README.md`](../submissions/nha_cho_thue_173820_n43/README.md)
+- [`report/BaoCao_Tuan6.docx`](../submissions/nha_cho_thue_173820_n43/report/BaoCao_Tuan6.docx)
+- [`slides/Slide_Tuan6.pptx`](../submissions/nha_cho_thue_173820_n43/slides/Slide_Tuan6.pptx)
+- [`submission.json`](../submissions/nha_cho_thue_173820_n43/submission.json)
+
+Nhóm kiểm tra lại `submission.json` (MSSV, thành viên) và `README.md`; nếu sai thì sửa qua PR như
+bên dưới.
+
+**Từ tuần sau**, nhóm tự nộp bằng Pull Request từ fork theo
+[HUONG_DAN_NOP_BAI.md](../HUONG_DAN_NOP_BAI.md):
+
+1. Fork `fossbk-spec/ktpmud-project` (fork cũ thì bấm **Sync fork** trước), tạo nhánh
+   `submit/nha_cho_thue-173820_n43`.
+2. **Thêm file mới** vào đúng thư mục `submissions/nha_cho_thue_173820_n43/` (vd `report/BaoCao_Tuan8.docx`, mã nguồn
+   trong `src/`), cập nhật `README.md` nếu cần. Không sửa thư mục của nhóm khác.
 3. Mở Pull Request vào `main`. Bot bình luận ✅/❌ trong khoảng 1 phút; nếu ❌ thì sửa và push lên
    **cùng nhánh**, không mở PR mới.
 

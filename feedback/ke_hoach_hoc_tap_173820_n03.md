@@ -1,27 +1,35 @@
 # Góp ý — 173820_n03 (CS-8: Theo dõi tiến độ và lập kế hoạch học tập)
 
-- **Bài nộp:** báo cáo tiến độ tuần 6 + slide — **chưa mở PR**
+- **Bài nộp:** báo cáo tiến độ tuần 6 + slide — giảng viên đã đưa lên [`submissions/ke_hoach_hoc_tap_173820_n03/`](../submissions/ke_hoach_hoc_tap_173820_n03/) theo template chuẩn
 - **Ngày góp ý:** 21/10/2026
-- **Kết quả kiểm tra tự động:** ✅ thư mục bài nộp giảng viên chuẩn bị sẵn đã qua `scripts/validate_submission.py`
+- **Kết quả kiểm tra tự động:** ✅ hợp lệ (`scripts/validate_submission.py`)
 
 ## Đề tài đã được duyệt
 
 Đề "Hệ thống hỗ trợ theo dõi tiến độ và lập kế hoạch học tập cho sinh viên" đã được thêm vào
 [ngân hàng case study](https://fossbk-spec.github.io/ktpmud-book/do_an_mon_hoc) là **CS-8**, slug
-`ke_hoach_hoc_tap` (đề ngoài y tế). Trang chi tiết của CS-8 trỏ tới thư mục bài nộp của nhóm, nên
-link chỉ mở được sau khi PR của nhóm được merge.
+`ke_hoach_hoc_tap` (đề ngoài y tế). Trang chi tiết của CS-8 trỏ tới thư mục bài nộp của nhóm.
 
-## Cách nộp
+## Bài nộp và các tuần sau
 
-Làm theo từng bước tại [HUONG_DAN_NOP_BAI.md](../HUONG_DAN_NOP_BAI.md), thay ví dụ N01 bằng thông
-tin của nhóm:
+Bài tuần 6 của nhóm **đã có trong repo** tại [`submissions/ke_hoach_hoc_tap_173820_n03/`](../submissions/ke_hoach_hoc_tap_173820_n03/), đúng
+template chuẩn (`submission.json`, `README.md`, `report/`, `slides/`, `src/`):
 
-1. Đại diện nhóm fork `fossbk-spec/ktpmud-project`, tạo nhánh `submit/ke_hoach_hoc_tap-173820_n03`.
-2. Đưa thư mục `submissions/ke_hoach_hoc_tap_173820_n03/` giảng viên gửi kèm vào fork. Thư mục đã có:
-   - `submission.json` — CS-8, mã nhóm `173820_n03`, MSSV 202414248, 202413961
-   - `README.md` — tóm tắt nội dung tuần 6
-   - `report/BaoCao_Tuan6.docx`, `slides/Slide_Tuan6.pptx`
-   - `src/` — để trống
+- [`README.md`](../submissions/ke_hoach_hoc_tap_173820_n03/README.md)
+- [`report/BaoCao_Tuan6.docx`](../submissions/ke_hoach_hoc_tap_173820_n03/report/BaoCao_Tuan6.docx)
+- [`slides/Slide_Tuan6.pptx`](../submissions/ke_hoach_hoc_tap_173820_n03/slides/Slide_Tuan6.pptx)
+- [`submission.json`](../submissions/ke_hoach_hoc_tap_173820_n03/submission.json)
+
+Nhóm kiểm tra lại `submission.json` (MSSV, thành viên) và `README.md`; nếu sai thì sửa qua PR như
+bên dưới.
+
+**Từ tuần sau**, nhóm tự nộp bằng Pull Request từ fork theo
+[HUONG_DAN_NOP_BAI.md](../HUONG_DAN_NOP_BAI.md):
+
+1. Fork `fossbk-spec/ktpmud-project` (fork cũ thì bấm **Sync fork** trước), tạo nhánh
+   `submit/ke_hoach_hoc_tap-173820_n03`.
+2. **Thêm file mới** vào đúng thư mục `submissions/ke_hoach_hoc_tap_173820_n03/` (vd `report/BaoCao_Tuan8.docx`, mã nguồn
+   trong `src/`), cập nhật `README.md` nếu cần. Không sửa thư mục của nhóm khác.
 3. Mở Pull Request vào `main`. Bot bình luận ✅/❌ trong khoảng 1 phút; nếu ❌ thì sửa và push lên
    **cùng nhánh**, không mở PR mới.
 
