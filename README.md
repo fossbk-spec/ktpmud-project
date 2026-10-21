@@ -55,6 +55,7 @@ ktpmud-project/
 | `alzheimer` | CS-3: AI-CDSS Alzheimer | |
 | `dreye` | CS-4: Phần mềm điều khiển thiết bị Edge AI (DrEye) | Phần mềm nhúng/di động — khác lớp CS-2/CS-3 (CDSS server/web) |
 | `dai_thao_duong` | CS-5: Hỗ trợ người chăm sóc theo dõi điều trị ngoại trú đái tháo đường type 2 | Đề nhóm đề xuất, giảng viên đã duyệt |
+| `nha_cho_thue` | CS-6: Phần mềm quản lý nhà cho thuê (nhà trọ, chung cư mini) | Đề ngoài y tế, nhóm đề xuất, giảng viên đã duyệt |
 
 Slug phải khớp đúng tên trong
 [bảng case study](https://fossbk-spec.github.io/ktpmud-book/do_an_mon_hoc).
