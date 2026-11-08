@@ -1,0 +1,8 @@
+{
+  "starter_repo": "https://github.com/fossbk-spec/ktpmud-bkt-ruleengine-starter",
+  "starter_commit": "79426ff453690e36b73db4211ac84794f7f89ef8",
+  "fork_url": "https://github.com/thaihop06/ktpmud-bkt-ruleengine-starter.git",
+  "final_commit": "47a85cad341964c47b737b8fe838eebcec12dd4d",
+  "release_tag": "checkpoint-1",
+  "ci_run_url": ""
+}
