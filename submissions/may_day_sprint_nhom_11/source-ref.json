@@ -1,0 +1,8 @@
+{
+  "starter_repo": "https://github.com/phg-nam/ktpmud-bkt-ruleengine-starterREPLACE_VOI_STARTER_REPO",
+  "starter_commit": "477a49d1ce61082dade8490e71d3727f1e278872",
+  "fork_url": "https://github.com/phg-nam/ktpmud-project",
+  "final_commit": "477a49d1ce61082dade8490e71d3727f1e278872",
+  "release_tag": "bkt-2026-v1.1",
+  "ci_run_url": "https://github.com/phg-nam/ktpmud-bkt-ruleengine-starter/actions"
+}
