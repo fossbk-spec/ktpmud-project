@@ -21,7 +21,7 @@ CREATE TABLE observation_version (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY
 CREATE TABLE mapping_profile (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, name text NOT NULL, version_no integer NOT NULL CHECK(version_no > 0), form_version_id bigint NOT NULL REFERENCES form_version(id), UNIQUE(name,version_no));
 CREATE TABLE mapping_rule (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, profile_id bigint NOT NULL REFERENCES mapping_profile(id), source_column text NOT NULL, field_id bigint NOT NULL REFERENCES form_field(id), UNIQUE(profile_id,source_column));
 CREATE TABLE import_batch (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, source_name text NOT NULL, file_ref text, mapping_profile_id bigint REFERENCES mapping_profile(id), zero_requires_review boolean NOT NULL DEFAULT true, status text NOT NULL CHECK(status IN ('received','review','applied','failed')), uploaded_by bigint NOT NULL REFERENCES app_user(id), uploaded_at timestamptz NOT NULL DEFAULT now());
-CREATE TABLE import_item (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, batch_id bigint NOT NULL REFERENCES import_batch(id), source_location text NOT NULL, source_column text, mapping_rule_id bigint REFERENCES mapping_rule(id), raw_value text, encounter_id bigint REFERENCES encounter(id), field_id bigint REFERENCES form_field(id), status text NOT NULL CHECK(status IN ('pending','valid','review','applied','error')), message text, UNIQUE(batch_id,source_location), CHECK(status NOT IN ('valid','applied') OR (source_column IS NOT NULL AND mapping_rule_id IS NOT NULL AND encounter_id IS NOT NULL AND field_id IS NOT NULL)));
+CREATE TABLE import_item (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, batch_id bigint NOT NULL REFERENCES import_batch(id), source_location text NOT NULL, mapping_rule_id bigint REFERENCES mapping_rule(id), raw_value text, encounter_id bigint REFERENCES encounter(id), status text NOT NULL CHECK(status IN ('pending','valid','review','applied','error')), message text, UNIQUE(batch_id,source_location), CHECK(status NOT IN ('valid','applied') OR (mapping_rule_id IS NOT NULL AND encounter_id IS NOT NULL)));
 CREATE TABLE import_application (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, import_item_id bigint NOT NULL REFERENCES import_item(id), observation_version_id bigint NOT NULL REFERENCES observation_version(id), applied_by bigint NOT NULL REFERENCES app_user(id), applied_at timestamptz NOT NULL DEFAULT now(), UNIQUE(import_item_id,observation_version_id));
 CREATE TABLE clinic_slot (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, starts_at timestamptz NOT NULL, ends_at timestamptz NOT NULL, capacity integer NOT NULL CHECK(capacity > 0), CHECK(ends_at > starts_at));
 CREATE TABLE appointment (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, patient_id bigint NOT NULL REFERENCES patient(id), slot_id bigint NOT NULL REFERENCES clinic_slot(id), status text NOT NULL CHECK(status IN ('booked','cancelled','completed')), created_at timestamptz NOT NULL DEFAULT now());
@@ -114,7 +114,7 @@ CREATE TRIGGER observation_version_immutable BEFORE UPDATE OR DELETE ON observat
 CREATE FUNCTION enforce_import_application() RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE i_enc bigint; i_field bigint; o_enc bigint; o_field bigint; item_status text;
 BEGIN
- SELECT encounter_id,field_id,status INTO i_enc,i_field,item_status FROM import_item WHERE id=NEW.import_item_id;
+ SELECT i.encounter_id,m.field_id,i.status INTO i_enc,i_field,item_status FROM import_item i LEFT JOIN mapping_rule m ON m.id=i.mapping_rule_id WHERE i.id=NEW.import_item_id FOR UPDATE OF i;
  SELECT o.encounter_id,o.field_id INTO o_enc,o_field FROM observation_version ov JOIN observation o ON o.id=ov.observation_id WHERE ov.id=NEW.observation_version_id;
  IF i_enc IS NULL OR i_field IS NULL OR i_enc IS DISTINCT FROM o_enc OR i_field IS DISTINCT FROM o_field OR item_status NOT IN ('valid','applied') THEN
    RAISE EXCEPTION 'Dữ liệu nguồn chưa hợp lệ hoặc không khớp lượt khám và trường' USING ERRCODE='23514';
@@ -141,9 +141,8 @@ BEGIN
  SELECT mapping_profile_id INTO batch_profile FROM import_batch WHERE id=NEW.batch_id FOR SHARE;
  SELECT profile_id,field_id,source_column INTO rule_profile,rule_field,rule_column FROM mapping_rule WHERE id=NEW.mapping_rule_id FOR SHARE;
  SELECT form_version_id INTO encounter_version FROM encounter WHERE id=NEW.encounter_id FOR SHARE;
- SELECT s.version_id INTO field_version FROM form_field f JOIN form_section s ON s.id=f.section_id WHERE f.id=NEW.field_id;
- IF batch_profile IS NULL OR batch_profile IS DISTINCT FROM rule_profile OR NEW.field_id IS DISTINCT FROM rule_field OR
-    NEW.source_column IS DISTINCT FROM rule_column OR encounter_version IS DISTINCT FROM field_version THEN
+ SELECT s.version_id INTO field_version FROM form_field f JOIN form_section s ON s.id=f.section_id WHERE f.id=rule_field;
+ IF batch_profile IS NULL OR batch_profile IS DISTINCT FROM rule_profile OR encounter_version IS DISTINCT FROM field_version THEN
    RAISE EXCEPTION 'Cột nguồn, cấu hình, trường đích hoặc lượt khám không khớp' USING ERRCODE='23514';
  END IF;
  RETURN NEW;
@@ -219,4 +218,25 @@ BEGIN
  RETURN NEW;
 END $$;
 CREATE TRIGGER slot_capacity_valid BEFORE UPDATE OF capacity ON clinic_slot FOR EACH ROW EXECUTE FUNCTION protect_slot_capacity();
+
+CREATE FUNCTION protect_used_mapping() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF TG_TABLE_NAME='mapping_profile' THEN
+   IF EXISTS(SELECT 1 FROM import_batch WHERE mapping_profile_id=OLD.id) THEN
+     RAISE EXCEPTION 'Cau hinh da dung; tao phien ban moi' USING ERRCODE='23514';
+   END IF;
+ ELSE
+   IF TG_OP='INSERT' THEN
+     IF EXISTS(SELECT 1 FROM import_batch WHERE mapping_profile_id=NEW.profile_id) THEN
+       RAISE EXCEPTION 'Cau hinh da dung; tao phien ban moi' USING ERRCODE='23514';
+     END IF;
+   ELSIF EXISTS(SELECT 1 FROM import_batch WHERE mapping_profile_id=OLD.profile_id) THEN
+     RAISE EXCEPTION 'Cau hinh da dung; tao phien ban moi' USING ERRCODE='23514';
+   END IF;
+ END IF;
+ IF TG_OP='DELETE' THEN RETURN OLD; END IF; RETURN NEW;
+END $$;
+CREATE TRIGGER used_mapping_profile BEFORE UPDATE OR DELETE ON mapping_profile FOR EACH ROW EXECUTE FUNCTION protect_used_mapping();
+CREATE TRIGGER used_mapping_rule BEFORE INSERT OR UPDATE OR DELETE ON mapping_rule FOR EACH ROW EXECUTE FUNCTION protect_used_mapping();
+
 COMMIT;

@@ -29,3 +29,7 @@ Các file test SQL tự ROLLBACK dữ liệu giả lập. File `test-dong-thoi.p
 | Chạy lại schema trên CSDL đã có bảng | Bị từ chối tại `app_user already exists` như thiết kế; phải tạo CSDL thử trống mới để chạy lại. Seed cũng không phải script cập nhật dữ liệu đã có. |
 
 Kiểm thử dùng dữ liệu giả lập. Kết quả không xác nhận an toàn lâm sàng, toàn bộ phụ thuộc hàm hoặc tất cả tình huống cạnh tranh. Chưa kiểm thử khôi phục dữ liệu, tải file thực tế hoặc tích hợp với web. Schema khởi tạo **không phải migration** từ demo và chưa có quy trình chuyển dữ liệu cũ.
+
+## Đợt chốt danh mục hiện tại
+
+Đã chạy lại schema sau khi bỏ field_id/source_column lặp khỏi import_item trên CSDL thử sạch schema_32_final_01 (PostgreSQL 16.15). Schema, seed, hai file SQL test và hai ca đồng thời đều chạy thành công. Đã chạy thêm ca tạo phiên bản mẫu mới, thêm trường và ghi dữ liệu mới, xác minh lượt cũ giữ nguyên mẫu và giá trị. Cấu hình ánh xạ đã được dùng được chặn sửa/xóa, phải tạo phiên bản mới; ca sửa quy tắc đã dùng bị từ chối như mong đợi.

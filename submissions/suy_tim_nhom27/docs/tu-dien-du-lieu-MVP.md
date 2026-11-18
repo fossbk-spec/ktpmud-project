@@ -270,15 +270,13 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 | id | Khóa phần dữ liệu | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
 | batch_id | Lần nhập chứa phần này | `bigint NOT NULL REFERENCES import_batch(id)` |
 | source_location | Vị trí nguồn | `text NOT NULL` |
-| source_column | Tên cột nguồn | `text` |
 | mapping_rule_id | Thuộc tính mapping_rule_id | `bigint REFERENCES mapping_rule(id)` |
 | raw_value | Giá trị nguyên dạng | `text` |
 | encounter_id | Lượt khám | `bigint REFERENCES encounter(id)` |
-| field_id | Trường biểu mẫu | `bigint REFERENCES form_field(id)` |
 | status | Hợp lệ hoặc chờ hoặc lỗi | `text NOT NULL CHECK(status IN ('pending','valid','review','applied','error'))` |
 | message | Lý do và cảnh báo | `text` |
 
-Ràng buộc của bảng: `UNIQUE(batch_id,source_location)`; `CHECK(status NOT IN ('valid','applied') OR (source_column IS NOT NULL AND mapping_rule_id IS NOT NULL AND encounter_id IS NOT NULL AND field_id IS NOT NULL))`
+Ràng buộc của bảng: `UNIQUE(batch_id,source_location)`; `CHECK(status NOT IN ('valid','applied') OR (mapping_rule_id IS NOT NULL AND encounter_id IS NOT NULL))`
 
 Chỉ mục bổ sung: `ix_import_item_batch_status (batch_id,status)`.
 
@@ -335,4 +333,18 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 
 Chỉ mục bổ sung: `ix_audit_actor_time (actor_id,occurred_at)`.
 
-Khóa chính và UNIQUE cũng tạo chỉ mục duy nhất trong PostgreSQL. Một số quy tắc liên bảng cần được kiểm tra trong ứng dụng hoặc bổ sung ràng buộc: trường thuộc phiên bản mẫu của lượt khám, dữ liệu nhập đã đối chiếu đúng người và lượt, và sức chứa khung giờ.
+Khóa chính và UNIQUE tạo chỉ mục duy nhất trong PostgreSQL. Các điều kiện liên bảng sau được thực hiện bằng trigger, không phải CHECK tham chiếu bảng khác:
+
+| Quy tắc | Cơ chế trong schema |
+| --- | --- |
+| Trường và lượt cùng phiên bản mẫu | observation_field_version; encounter_form_valid |
+| Kiểu giá trị và lựa chọn đúng trường | observation_value_valid; CHECK một ô giá trị |
+| Lịch sử giá trị không bị ghi đè | observation_version_immutable; observation_identity_locked |
+| Dữ liệu nguồn và giá trị áp dụng cùng lượt/trường | import_application_match; import_mapping_valid |
+| Nguồn 0 phải chờ rà soát khi chính sách được bật | import_zero_review |
+| Không đổi phần nguồn sau khi ghi | import_item_locked |
+| Không sửa cấu hình ánh xạ đã dùng | used_mapping_profile; used_mapping_rule |
+| Không sửa mẫu đã phát hành hoặc dùng | protect_version; protect_section; protect_field; protect_option |
+| Lịch hẹn không vượt sức chứa | appointment_capacity; slot_capacity_valid; khóa hàng khung giờ trong giao dịch |
+
+Ứng dụng chịu trách nhiệm phân quyền, xác minh mã nguồn đúng người bệnh, đọc file, trình bày xem trước, kiểm tra bắt buộc theo thao tác và ghi nhật ký. Các quy tắc chuyển đơn vị, suy diễn lâm sàng và danh mục chưa chốt không được tuyên bố là đã được DDL thực thi. Các phép kiểm thử đã chạy được nêu riêng tại [kết quả kiểm thử](kiem-thu-co-so-du-lieu-MVP.md).

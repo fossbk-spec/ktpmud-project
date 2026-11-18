@@ -1,6 +1,6 @@
 # 5.3 Thiết kế dữ liệu cho MVP
 
-**Trạng thái:** bản dự thảo thiết kế, cần kiểm tra trước khi triển khai. Phạm vi gồm quản lý hồ sơ và lượt khám, tiếp nhận file, tài khoản và quản trị; các chức năng AI và cổng bệnh nhân thuộc hướng mở rộng.
+**Phạm vi duyệt công việc 3.2:** lược đồ quan hệ 25 bảng, danh mục khởi tạo 61 trường lâm sàng và các trường hành chính. Các biến còn lại được quản lý trong bảng truy vết và bổ sung qua phiên bản biểu mẫu sau. Phạm vi gồm quản lý hồ sơ và lượt khám, tiếp nhận file, tài khoản và quản trị; các chức năng AI và cổng bệnh nhân thuộc hướng mở rộng.
 
 ## Các nhóm dữ liệu
 
@@ -18,7 +18,7 @@ Hồ sơ có nhiều lượt khám; mỗi lượt gắn một phiên bản mẫu
 
 ## 3NF và những điều kiện cần tiếp tục kiểm tra
 
-Thiết kế tách tài khoản và vai trò, biểu mẫu và phiên bản, trường và lựa chọn, bản ghi và phiên bản giá trị. Mỗi trường biểu mẫu xác định phiên bản thông qua nhóm trường để giảm dữ liệu lặp. Cần kiểm tra đầy đủ các khóa ứng viên và phụ thuộc hàm theo nghiệp vụ đã chốt trước khi kết luận toàn bộ schema đạt 3NF.
+Thiết kế tách tài khoản và vai trò, biểu mẫu và phiên bản, trường và lựa chọn, bản ghi và phiên bản giá trị. Mỗi trường biểu mẫu xác định phiên bản thông qua nhóm trường để giảm dữ liệu lặp. Phân tích chuẩn hóa dưới đây xác định khóa, phụ thuộc hàm và giả định của lược đồ trong phạm vi hiện tại; không dùng số lượng trường để kết luận 3NF.
 
 Trigger kiểm tra trường thuộc mẫu của lượt, kiểu và lựa chọn, kết quả nhập đúng lượt/trường, bảo vệ mẫu đã phát hành, giữ nguồn 0 ở trạng thái cần kiểm tra, và khóa khung giờ khi nhận lịch. Mặc định kiểm tra 0 được bật cho lần nhập; quyền thay đổi thiết lập và việc bác sĩ xác nhận phải được ứng dụng quản lý. Không coi điều này thay thế xác nhận định danh người bệnh: bước đối chiếu mã nguồn và quyết định của bác sĩ vẫn do ứng dụng thực hiện. Chưa kiểm chứng đầy đủ mọi đường cập nhật dữ liệu liên bảng hoặc các giao dịch đồng thời. Tính bắt buộc theo từng thao tác, chuẩn hóa đơn vị và xử lý lâm sàng chưa được DDL kiểm chứng.
 
@@ -29,6 +29,8 @@ DDL có khóa chính và khóa ngoại, ràng buộc duy nhất, kiểm tra và 
 ## Lưu ý triển khai
 
 DDL dự kiến dùng cho PostgreSQL trên cơ sở dữ liệu trống, chưa là migration cho bản demo cũ và chưa có quy trình chuyển dữ liệu. Các mô tả trạng thái, dữ liệu nhập và quy tắc lâm sàng phải được nhóm xác nhận; không dùng dữ liệu bệnh nhân thật trong bộ tài liệu.
+
+Sao lưu/khôi phục thuộc quy trình vận hành PostgreSQL và kho tệp, không cần tạo một bản sao các bảng nghiệp vụ trong schema. Kiểm thử khôi phục không nằm trong các kết quả SQL đã nêu ở đợt này.
 
 ## Sơ đồ chi tiết
 
@@ -71,8 +73,18 @@ DDL dự kiến dùng cho PostgreSQL trên cơ sở dữ liệu trống, chưa l
 
 Nhóm tài liệu TL01–TL03 đã dùng làm căn cứ phạm vi lâm sàng nhưng chưa có bảng truy vết đầy đủ từng thông tin sang trường biểu mẫu. Các cột nguồn chưa rõ, đơn vị chưa chốt, trường dữ liệu tính toán, thuốc và dữ liệu nhiều lựa chọn cần tiếp tục xác nhận trước khi coi danh mục trường hoàn chỉnh.
 
-Ảnh PNG là bản xem nhanh, có đường nối chưa ghi bội số; mở file draw.io để xem nhãn quan hệ. Các bảng liên kết có khóa chính ghép được nêu chính xác trong từ điển và SQL; ảnh chưa ký hiệu đầy đủ PK ghép.
+Ảnh PNG ghi kiểu, PK/FK và bảng bội số dưới mỗi hình; file draw.io ghi nhãn bội số trên liên kết. Các bảng liên kết có ký hiệu PK/FK trên từng cột của khóa ghép.
 
 ## Căn cứ thiết kế
 
 Đối chiếu sáu nguồn nhóm cung cấp: hướng dẫn suy tim của Bộ Y tế; tài liệu suy tim người cao tuổi; tài liệu SUY TIM; schema tối thiểu năm bệnh; bảng biến bác sĩ AI-CDSS; từ điển dữ liệu suy tim. Các nguồn chuyên môn làm căn cứ chọn trường biểu mẫu và không tự tạo yêu cầu kết nối trực tiếp bệnh viện. Tham khảo [bài giảng kỹ thuật yêu cầu và thiết kế hệ thống](https://fossbk-spec.github.io/ktpmud-book/ch02_yeu_cau_thiet_ke_c4).
+
+## Thêm trường dữ liệu sau khi chốt 3.2
+
+1. Chọn biến từ bảng truy vết; xác định nhãn, mã ổn định, nhóm, kiểu, đơn vị, lựa chọn, quy tắc và nguồn.
+2. Tạo phiên bản nháp mới của mẫu, sao chép các nhóm/trường/lựa chọn cần giữ với ID mới; giữ mã logic của trường cũ. Thêm trường mới vào bản nháp.
+3. Kiểm tra và phát hành bản mới. Lượt mới dùng bản mới; lượt cũ giữ form_version_id cũ. Không tự chuyển dữ liệu giữa mẫu.
+4. Cập nhật cấu hình JSON, seed phiên bản mới, bảng truy vết và kiểm thử. Khi trường chỉ dùng các kiểu hiện có, không cần thêm cột SQL.
+5. Kiểu nghiệp vụ mới hoặc cấu trúc mới (ví dụ bảng thuốc chuyên biệt hơn) có thể cần migration riêng. Không sửa schema rồi chạy lại trên CSDL có dữ liệu.
+
+Đã chạy ca thêm trường ở bản mới, ghi giá trị cho lượt mới và xác minh mẫu/giá trị lượt cũ còn nguyên. Cách này cho phép chốt nền dữ liệu trước khi hoàn thiện toàn bộ danh mục lâm sàng. Không gọi danh mục 61 trường là đầy đủ toàn bộ dữ liệu suy tim.
