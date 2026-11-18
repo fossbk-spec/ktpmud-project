@@ -4,7 +4,7 @@
 
 RTM liên kết **Mã yêu cầu → User Story → Use Case → Schema CSDL → API**, đồng thời truy vết tới mục tiêu nghiệp vụ và BDD. Phạm vi gồm 46 FR, 13 NFR, 33 User Story, 54 Use Case và 50 Scenario BDD dự kiến.
 
-**Trạng thái:** liên kết FR/US/UC/BDD kế thừa [SRS v1.0](SRS-v1.0.md), [đặc tả Use Case](<Đặc tả usecase đầy đủ.md>) và [User Story INVEST BDD](User-Stories-INVEST-BDD.md). Các bảng CSDL trong danh mục DB và giao diện API trong danh mục API bên dưới đều là **đề xuất (ĐX), chưa chốt DDL/OpenAPI và chưa chứng minh hiện thực**. Thiết kế dữ liệu mục 5.3 đang được rà soát. Không lấy tên giống bảng/API cũ làm bằng chứng đã đáp ứng yêu cầu.
+**Trạng thái:** liên kết FR/US/UC/BDD kế thừa [SRS v1.0](SRS-v1.0.md), [đặc tả Use Case](<Đặc tả usecase đầy đủ.md>) và [User Story INVEST BDD](User-Stories-INVEST-BDD.md). Các bảng CSDL trong danh mục DB và giao diện API trong danh mục API bên dưới đều là **đề xuất (ĐX), chưa chốt DDL/OpenAPI và chưa chứng minh hiện thực**. [Thiết kế dữ liệu](thiet-ke-du-lieu.md) đang được rà soát. Không lấy tên giống bảng/API cũ làm bằng chứng đã đáp ứng yêu cầu.
 
 ## Mục lục
 
@@ -180,7 +180,7 @@ Cột Schema và API đọc cùng trạng thái **ĐX** tại danh mục 4–5. 
 
 ## 4 Danh mục Schema CSDL dự kiến
 
-**Tất cả các dòng là ĐX.** Tên bảng tham chiếu đề xuất mục 5.3, chưa phải lược đồ đã được duyệt hoặc migration đã chạy. Khóa, cột, chỉ mục và ràng buộc đầy đủ phải được bổ sung trong ERD/từ điển dữ liệu/DDL; RTM chưa chứng minh đạt 3NF.
+**Tất cả các dòng là ĐX.** Tên bảng tham chiếu đề xuất trong [Thiết kế dữ liệu](thiet-ke-du-lieu.md), chưa phải lược đồ đã được duyệt hoặc migration đã chạy. Khóa, cột, chỉ mục và ràng buộc đầy đủ phải được bổ sung trong ERD/từ điển dữ liệu/DDL; RTM chưa chứng minh đạt 3NF.
 
 | Mã | Phần dữ liệu | Bảng dự kiến | Ý nghĩa liên kết |
 | --- | --- | --- | --- |
@@ -333,7 +333,7 @@ Repo tài liệu đang lưu một schema 18 bảng và hợp đồng Gateway stu
 2. Khi duyệt API, thay các API ĐX bằng method/path/operationId và link tới OpenAPI đúng phiên bản; cập nhật các yêu cầu có hành vi nội bộ hoặc công cụ vận hành thay endpoint.
 3. Khi triển khai, thêm tham chiếu mã nguồn và mã Test Case. Khi chạy thử, ghi phiên bản, môi trường, dữ liệu, kết quả đạt/không đạt/chưa chạy và bằng chứng.
 4. Khi đổi FR/US/UC, rà cả hai chiều để phát hiện yêu cầu thiếu thiết kế/ca thử và bảng/API không có căn cứ yêu cầu. Giữ các liên kết nhiều–nhiều cần thiết, không chia giả tạo thành một–một.
-5. Cập nhật SRS, tài liệu US/BDD và report cùng phiên bản. Không đưa đề xuất mục 5.3 thành quyết định đã chốt khi trưởng nhóm chưa duyệt.
+5. Cập nhật SRS, tài liệu US/BDD và report cùng phiên bản. Không đưa đề xuất thiết kế dữ liệu thành quyết định đã chốt khi trưởng nhóm chưa duyệt.
 
 ### Vị trí tệp khi đưa lên GitHub
 

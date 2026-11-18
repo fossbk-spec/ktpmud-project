@@ -1,6 +1,6 @@
 # Phụ lục: truy vết nguồn và đối chiếu dữ liệu
 
-Tài liệu làm việc hỗ trợ mục 5.3. Các bảng chi tiết giữ nguyên dấu vết nguồn và quyết định tại thời điểm rà; xem trang chính để biết phạm vi MVP hiện hành.
+Tài liệu làm việc hỗ trợ thiết kế dữ liệu. Các bảng chi tiết giữ nguyên dấu vết nguồn và quyết định tại thời điểm rà; xem trang chính để biết phạm vi MVP hiện hành.
 
 ## Truy vết trường nguồn suy tim và dữ liệu mẫu
 
