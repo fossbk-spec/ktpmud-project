@@ -1,8 +1,8 @@
 # Kiến trúc và các sơ đồ của hệ thống quản lý bệnh nhân suy tim
 
-Cập nhật ngày 31/10/2026. Nội dung theo phạm vi hiện hành của [SRS v1.0](../SRS-v1.0.md), [đặc tả Use Case](<../Đặc tả usecase đầy đủ.md>) và [User Story INVEST BDD](../User-Stories-INVEST-BDD.md). Tài liệu này thay nội dung kiến trúc tuần 3 cũ tại cùng đường dẫn.
+Cập nhật ngày 31/10/2026. Nội dung theo phạm vi hiện hành của [SRS v1.0](../SRS-v1.0.md), [đặc tả Use Case](<../Đặc tả usecase đầy đủ.md>) và [User Story INVEST BDD](../User-Stories.md). Tài liệu này thay nội dung kiến trúc tuần 3 cũ tại cùng đường dẫn.
 
-Thư mục lưu nguyên bảy ảnh Use Case trưởng nhóm cung cấp và hai ảnh C1/C2 đã thống nhất. Những ảnh `.drawio.png` giữ metadata nguồn trong ảnh nếu bản cung cấp có chứa; không mặc định các PNG khác có file draw.io chỉnh sửa riêng. Tên ảnh được dùng nhất quán trong SRS.
+Thư mục lưu nguyên bảy ảnh Use Case trưởng nhóm cung cấp và hai ảnh C1/C2 đã thống nhất. Nguồn chỉnh sửa C1/C2 được tách từ metadata của ảnh thành hai tệp `.drawio` đặt cạnh ảnh. Bốn ERD cũng có ảnh và nguồn `.drawio` riêng. Các ảnh Use Case không mặc định có tệp nguồn chỉnh sửa riêng.
 
 ## 1 Phạm vi và trình tự xây dựng
 
@@ -16,11 +16,15 @@ HIS/EMR là nguồn file do Bác sĩ đưa vào sản phẩm và cung cấp quy 
 
 ![C1 Ngữ cảnh hệ thống](C1-Ngu-canh-he-thong-v0.1.drawio.png)
 
+[Tệp nguồn draw.io C1](C1-Ngu-canh-he-thong-v0.1.drawio)
+
 C1 biểu diễn toàn hệ thống trong quan hệ với Bác sĩ, Người quản trị, Bệnh nhân ngoại trú và HIS. Hệ thống lưu dữ liệu khám và quyết định ở sản phẩm; Bác sĩ nhập, kiểm tra và xác nhận chuyên môn. Bệnh nhân chỉ xem phần được công bố sau liên kết tài khoản đã xác minh.
 
 ## 3 C2 Các container
 
 ![C2 Các container](C2-Container-v0.1.drawio.png)
+
+[Tệp nguồn draw.io C2](C2-Container-v0.1.drawio)
 
 | Thành phần | Công nghệ hoặc định hướng | Trách nhiệm |
 | --- | --- | --- |

@@ -500,9 +500,9 @@ Nhóm 3: cả bốn ca hỗ trợ đều include kiểm tra đầu vào và đi�
 
 ### 8.5 User Story và kiểm tra INVEST
 
-Danh mục đầy đủ **33 User Story** và bảng kiểm sáu tiêu chí INVEST được quản lý tại [User Story INVEST và BDD](User-Stories-INVEST-BDD.md#user-stories). [Bảng kiểm INVEST](User-Stories-INVEST-BDD.md#invest) ghi rõ các phần cần làm rõ hoặc chia nhỏ trước Sprint; không coi dấu kiểm là kết quả nghiệm thu.
+Danh mục đầy đủ **33 User Story** và bảng kiểm sáu tiêu chí INVEST được quản lý tại [User Story INVEST và BDD](User-Stories.md#user-stories). [Bảng kiểm INVEST](User-Stories.md#invest) ghi rõ các phần cần làm rõ hoặc chia nhỏ trước Sprint; không coi dấu kiểm là kết quả nghiệm thu.
 
-Mã US và ưu tiên được giữ để truy vết. Quan hệ từng Story với tiêu chí nghiệm thu xem tại [bảng Story và BDD](User-Stories-INVEST-BDD.md#story-bdd); FR/UC/C2 liên quan được liên kết trong RTM của SRS. Chi tiết Story chỉ duy trì ở file riêng để tránh hai danh sách khác nhau.
+Mã US và ưu tiên được giữ để truy vết. Quan hệ từng Story với tiêu chí nghiệm thu xem tại [bảng Story và BDD](User-Stories.md#story-bdd); FR/UC/C2 liên quan được liên kết trong RTM của SRS. Chi tiết Story chỉ duy trì ở file riêng để tránh hai danh sách khác nhau.
 
 <a id="nghiem-thu"></a>
 
@@ -522,9 +522,9 @@ Một chức năng chỉ được ghi đạt khi các yêu cầu trong phạm vi
 
 ### 9.2 Kịch bản BDD dự kiến
 
-Bộ **50 Scenario Gherkin BDD** được trình bày tại [Kịch bản BDD](User-Stories-INVEST-BDD.md#bdd), có mã BDD và tag Story. Giữ nguyên BDD01–BDD45; BDD46–BDD50 bổ sung tiêu chí trực tiếp cho đăng ký, đăng nhập và cập nhật/quản lý tài khoản đã thuộc phạm vi yêu cầu.
+Bộ **50 Scenario Gherkin BDD** được trình bày tại [Kịch bản BDD](User-Stories.md#bdd), có mã BDD và tag Story. Giữ nguyên BDD01–BDD45; BDD46–BDD50 bổ sung tiêu chí trực tiếp cho đăng ký, đăng nhập và cập nhật/quản lý tài khoản đã thuộc phạm vi yêu cầu.
 
-Các Scenario là tiêu chí hành vi dự kiến, chưa được ghi nhận là đã chạy đạt. Khi hiện thực bộ thử, bổ sung dữ liệu cụ thể, step definitions và kết quả thực thi; không dùng số Scenario để khẳng định đã phủ mọi ngoại lệ hoặc đạt NFR. Mỗi Story có đường dẫn tới các tiêu chí tại [bảng Story và BDD](User-Stories-INVEST-BDD.md#story-bdd).
+Các Scenario là tiêu chí hành vi dự kiến, chưa được ghi nhận là đã chạy đạt. Khi hiện thực bộ thử, bổ sung dữ liệu cụ thể, step definitions và kết quả thực thi; không dùng số Scenario để khẳng định đã phủ mọi ngoại lệ hoặc đạt NFR. Mỗi Story có đường dẫn tới các tiêu chí tại [bảng Story và BDD](User-Stories.md#story-bdd).
 
 <a id="truy-vet"></a>
 
@@ -662,7 +662,7 @@ Cấu trúc tài liệu tham khảo [bài giảng môn học về yêu cầu và
 
 Phiên bản 1.0 ngày 31/10/2026
 
-- Tách 33 User Story, bảng INVEST và 50 Scenario BDD vào [User Story INVEST và BDD](User-Stories-INVEST-BDD.md); SRS giữ phần giới thiệu, điều kiện nghiệm thu và RTM.
+- Tách 33 User Story, bảng INVEST và 50 Scenario BDD vào [User Story INVEST và BDD](User-Stories.md); SRS giữ phần giới thiệu, điều kiện nghiệm thu và RTM.
 - Giữ nguyên mã FR/NFR/UC/US và BDD01–BDD45; bổ sung BDD46–BDD50 cho các chức năng tài khoản đã có, cập nhật truy vết FR40.
 - Phiên bản tài liệu không đồng nghĩa mọi yêu cầu đã được bệnh viện phê duyệt hoặc phần mềm đã được kiểm thử đạt.
 
