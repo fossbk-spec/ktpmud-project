@@ -1406,6 +1406,114 @@
         "column": "TienSuKhac"
       },
       "version": 1
+    },
+    {
+      "code": "huyet_ap_tu_the",
+      "label": "Tư thế đo huyết áp",
+      "group": "Dấu hiệu sinh tồn",
+      "type": "choice",
+      "unit": null,
+      "choices": [
+        {
+          "code": "nam",
+          "label": "Nằm"
+        },
+        {
+          "code": "ngoi",
+          "label": "Ngồi"
+        },
+        {
+          "code": "dung",
+          "label": "Đứng"
+        }
+      ],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Gắn cùng event_key với tâm thu/tâm trương; chưa ghi tư thế thì để chưa biết."
+      },
+      "order": 310,
+      "source": {
+        "document": "TL06!24–25 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "lvef",
+      "label": "Phân suất tống máu thất trái (LVEF)",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": "%",
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Ghi kết quả, đơn vị, thời điểm và nguồn; không tự suy kiểu hình suy tim."
+      },
+      "order": 311,
+      "source": {
+        "document": "TL06!73 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "sieu_am_tim_bao_cao",
+      "label": "Báo cáo siêu âm tim",
+      "group": "Kết quả cận lâm sàng",
+      "type": "text",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Giữ nguyên văn kết luận; không thay thế tệp gốc."
+      },
+      "order": 312,
+      "source": {
+        "document": "TL06!73 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "bnp",
+      "label": "BNP",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Khác NT-proBNP; giữ đơn vị, thời điểm và tên gốc theo phiếu."
+      },
+      "order": 313,
+      "source": {
+        "document": "TL06!71 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "egfr",
+      "label": "eGFR",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự tính từ creatinin; giữ đơn vị, thời điểm và tên gốc theo phiếu."
+      },
+      "order": 314,
+      "source": {
+        "document": "TL06!75 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
     }
   ]
 }

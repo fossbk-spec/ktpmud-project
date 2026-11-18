@@ -18,7 +18,7 @@ Các file test SQL tự ROLLBACK dữ liệu giả lập. File `test-dong-thoi.p
 | Kiểm tra | Kết quả trên PostgreSQL thử |
 | --- | --- |
 | Tạo schema từ CSDL trống | Thành công; 25 bảng, chỉ mục và trigger được tạo. |
-| Nạp seed biểu mẫu | Thành công; 61 trường được nạp. |
+| Nạp seed biểu mẫu | Bản đầu: 61 trường; lần đối chiếu demo ngày 18/11: 66 trường. |
 | PK, FK, UNIQUE, NOT NULL, CHECK | Các trường hợp kiểm tra trong hai file SQL đều qua, gồm mã hồ sơ và mã lượt trùng, khóa chính trùng, khóa ngoại không có, tên bắt buộc thiếu và số phiên bản không hợp lệ. |
 | Giá trị | Đã thử trạng thái chưa biết, số 0 do người dùng nhập, giá trị sai kiểu/lựa chọn sai và hai giá trị cùng lúc. |
 | Quan hệ và phiên bản | Đã thử trường sai phiên bản, sửa mẫu đã phát hành, đổi bệnh nhân hoặc mẫu sau khi có dữ liệu, và hai kết quả cùng loại ở hai lần với đơn vị/thời điểm. |
@@ -33,3 +33,7 @@ Kiểm thử dùng dữ liệu giả lập. Kết quả không xác nhận an to
 ## Đợt chốt danh mục hiện tại
 
 Đã chạy lại schema sau khi bỏ field_id/source_column lặp khỏi import_item trên CSDL thử sạch schema_32_final_01 (PostgreSQL 16.15). Schema, seed, hai file SQL test và hai ca đồng thời đều chạy thành công. Đã chạy thêm ca tạo phiên bản mẫu mới, thêm trường và ghi dữ liệu mới, xác minh lượt cũ giữ nguyên mẫu và giá trị. Cấu hình ánh xạ đã được dùng được chặn sửa/xóa, phải tạo phiên bản mới; ca sửa quy tắc đã dùng bị từ chối như mong đợi.
+
+## Rà lại theo repo demo-web-3 ngày 18/11/2026
+
+Trên PostgreSQL portable 16.15, tạo CSDL thử riêng `schema32_review_20261118_c` từ trống. Chạy lần lượt `schema-MVP.sql`, `seed-bieu-mau-suy-tim-v1.sql`, `test-schema-MVP.sql` và `test-rang-buoc-nang-cao.sql`: cả bốn tệp chạy thành công. Truy vấn `SELECT count(*) FROM form_field` trả 66. Đã bổ sung ca kiểm tra thuốc có hoạt chất, hàm lượng, liều và trạng thái hợp lệ; từ chối liều số thiếu đơn vị và trạng thái ngoài danh mục; lưu tên xét nghiệm gốc và nguồn trên bản kết quả. Hai tệp test dùng `ROLLBACK`. Chưa chạy lại hai ca đồng thời sau lần mở rộng này; ràng buộc lịch và phiên bản không được sửa.

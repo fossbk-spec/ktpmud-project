@@ -1,6 +1,6 @@
 # 5.3 Thiết kế dữ liệu cho MVP
 
-**Phạm vi duyệt công việc 3.2:** lược đồ quan hệ 25 bảng, danh mục khởi tạo 61 trường lâm sàng và các trường hành chính. Các biến còn lại được quản lý trong bảng truy vết và bổ sung qua phiên bản biểu mẫu sau. Phạm vi gồm quản lý hồ sơ và lượt khám, tiếp nhận file, tài khoản và quản trị; các chức năng AI và cổng bệnh nhân thuộc hướng mở rộng.
+**Phạm vi duyệt công việc 3.2:** lược đồ quan hệ 25 bảng, danh mục khởi tạo 66 trường lâm sàng và các trường hành chính. Các biến còn lại được quản lý trong bảng truy vết và bổ sung qua phiên bản biểu mẫu sau. Phạm vi gồm quản lý hồ sơ và lượt khám, tiếp nhận file, tài khoản và quản trị; các chức năng AI và cổng bệnh nhân thuộc hướng mở rộng.
 
 ## Các nhóm dữ liệu
 
@@ -16,6 +16,8 @@
 
 Hồ sơ có nhiều lượt khám; mỗi lượt gắn một phiên bản mẫu. Một mẫu có nhiều phiên bản; phiên bản có nhiều nhóm, mỗi nhóm chứa các trường. Bản ghi khám gắn với lượt và trường, và có thể có nhiều phiên bản giá trị. File được tiếp nhận thành lần nhập, gồm nhiều phần dữ liệu để kiểm tra và đối chiếu. Khung giờ có thể có nhiều lịch hẹn.
 
+Sau khi đối chiếu repo demo, mẫu khởi tạo có thêm tư thế đo huyết áp, LVEF, báo cáo siêu âm tim, BNP và eGFR. Tâm thu, tâm trương và tư thế cùng một lần đo dùng cùng `event_key`; thời điểm đo nằm ở bản giá trị. BNP và NT-proBNP là hai trường riêng. Bản giá trị giữ được tên chỉ số trên phiếu và ghi chú nguồn; thuốc giữ hoạt chất, hàm lượng, liều nguyên văn, trạng thái và nguồn. Đây là khả năng ghi nhận dữ liệu, chưa phải quy tắc chẩn đoán hay xác nhận cấu trúc file bệnh viện.
+
 ## 3NF và những điều kiện cần tiếp tục kiểm tra
 
 Thiết kế tách tài khoản và vai trò, biểu mẫu và phiên bản, trường và lựa chọn, bản ghi và phiên bản giá trị. Mỗi trường biểu mẫu xác định phiên bản thông qua nhóm trường để giảm dữ liệu lặp. Phân tích chuẩn hóa dưới đây xác định khóa, phụ thuộc hàm và giả định của lược đồ trong phạm vi hiện tại; không dùng số lượng trường để kết luận 3NF.
@@ -24,7 +26,7 @@ Trigger kiểm tra trường thuộc mẫu của lượt, kiểu và lựa chọ
 
 ## Chỉ mục và ràng buộc
 
-DDL có khóa chính và khóa ngoại, ràng buộc duy nhất, kiểm tra và chỉ mục. Đã tạo 25 bảng trên PostgreSQL thử riêng, nạp 61 trường và chạy các ca mô tả tại [kết quả kiểm thử](kiem-thu-co-so-du-lieu-MVP.md).
+DDL có khóa chính và khóa ngoại, ràng buộc duy nhất, kiểm tra và chỉ mục. Đã tạo 25 bảng trên PostgreSQL thử riêng, nạp 66 trường và chạy các ca mô tả tại [kết quả kiểm thử](internal/kiem-thu-co-so-du-lieu-MVP.md).
 
 ## Lưu ý triển khai
 
@@ -65,12 +67,9 @@ Sao lưu/khôi phục thuộc quy trình vận hành PostgreSQL và kho tệp, k
 
 ## Biểu mẫu và truy vết nguồn
 
-- [Cấu hình biểu mẫu JSON](cau-hinh-bieu-mau-suy-tim-v1.json) và [seed nạp biểu mẫu](../database/seed-bieu-mau-suy-tim-v1.sql): 61 trường lâm sàng, cận lâm sàng và thông tin theo nguồn; trường hành chính được lưu riêng. Các trường đều cho phép chưa biết; nội dung, đơn vị và lựa chọn cần được bác sĩ rà soát.
-- [Truy vết 206 biến TL06](truy-vet-truong-nguon-suy-tim.md): 47 dòng thuộc MVP (bao gồm giới tính lưu ở hồ sơ), 65 dòng đầu ra dự kiến cho giai đoạn sau và 94 dòng cần xác nhận. Không hiểu các biến chưa xác nhận là đã loại bỏ.
-- [Truy vết 42 cột file mẫu](truy-vet-cot-file-mau.md): tên cột và hướng ánh xạ, không chứa dữ liệu người bệnh.
-- [95 mục đối chiếu TL04–TL05](truy-vet-nguon-TL04-TL05.md): kế thừa lần rà trước; kiểu và đích cần đối chiếu lại theo schema mới.
-- [Đối chiếu dữ liệu với repo demo-web-3](doi-chieu-du-lieu-voi-demo-web-3.md): so sánh mã trường, cấu trúc huyết áp, xét nghiệm, thuốc và các điểm cần xác nhận trước khi mở rộng biểu mẫu.
-- [Kiểm thử và cách chạy](kiem-thu-co-so-du-lieu-MVP.md).
+- [Cấu hình biểu mẫu JSON](cau-hinh-bieu-mau-suy-tim-v1.json) và [seed nạp biểu mẫu](../database/seed-bieu-mau-suy-tim-v1.sql): 66 trường lâm sàng, cận lâm sàng và thông tin theo nguồn; trường hành chính được lưu riêng. Các trường đều cho phép chưa biết; nội dung, đơn vị và lựa chọn cần được bác sĩ rà soát.
+- [Phụ lục truy vết và đối chiếu dữ liệu](internal/phu-luc-truy-vet-va-doi-chieu-du-lieu.md): 206 biến TL06, 42 cột file mẫu, 95 mục TL04–TL05 và bản rà repo demo-web-3. Trong bảng TL06, 47 dòng thuộc MVP, 65 dòng đầu ra giai đoạn sau và 94 dòng cần xác nhận; các mục ghi cấu trúc hỗ trợ một phần chưa được tính là hoàn tất.
+- [Kiểm thử và cách chạy](internal/kiem-thu-co-so-du-lieu-MVP.md).
 
 Nhóm tài liệu TL01–TL03 đã dùng làm căn cứ phạm vi lâm sàng nhưng chưa có bảng truy vết đầy đủ từng thông tin sang trường biểu mẫu. Các cột nguồn chưa rõ, đơn vị chưa chốt, trường dữ liệu tính toán, thuốc và dữ liệu nhiều lựa chọn cần tiếp tục xác nhận trước khi coi danh mục trường hoàn chỉnh.
 
@@ -88,4 +87,4 @@ Nhóm tài liệu TL01–TL03 đã dùng làm căn cứ phạm vi lâm sàng nh�
 4. Cập nhật cấu hình JSON, seed phiên bản mới, bảng truy vết và kiểm thử. Khi trường chỉ dùng các kiểu hiện có, không cần thêm cột SQL.
 5. Kiểu nghiệp vụ mới hoặc cấu trúc mới (ví dụ bảng thuốc chuyên biệt hơn) có thể cần migration riêng. Không sửa schema rồi chạy lại trên CSDL có dữ liệu.
 
-Đã chạy ca thêm trường ở bản mới, ghi giá trị cho lượt mới và xác minh mẫu/giá trị lượt cũ còn nguyên. Cách này cho phép chốt nền dữ liệu trước khi hoàn thiện toàn bộ danh mục lâm sàng. Không gọi danh mục 61 trường là đầy đủ toàn bộ dữ liệu suy tim.
+Đã chạy ca thêm trường ở bản mới, ghi giá trị cho lượt mới và xác minh mẫu/giá trị lượt cũ còn nguyên. Cách này cho phép chốt nền dữ liệu trước khi hoàn thiện toàn bộ danh mục lâm sàng. Không gọi danh mục 66 trường là đầy đủ toàn bộ dữ liệu suy tim.

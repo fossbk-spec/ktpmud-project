@@ -181,15 +181,22 @@ Ràng buộc của bảng: `UNIQUE(issuer_scope,identifier_type,raw_value)`
 | encounter_id | Lượt khám | `bigint NOT NULL REFERENCES encounter(id)` |
 | medication_name | Thuộc tính medication_name | `text NOT NULL` |
 | dose_number | Thuộc tính dose_number | `numeric CHECK(dose_number >= 0)` |
+| dose_text | Mô tả liều nguyên văn | `text` |
+| ingredient | Hoạt chất ghi nhận | `text` |
+| strength | Hàm lượng ghi nhận | `text` |
 | dose_unit | Thuộc tính dose_unit | `text` |
 | route | Thuộc tính route | `text` |
 | frequency | Thuộc tính frequency | `text` |
+| medication_status | Trạng thái thuốc, có thể chưa biết | `text CHECK(medication_status IN ('current','planned','stopped'))` |
+| medication_category | Loại sản phẩm | `text CHECK(medication_category IN ('prescription','otc','supplement','traditional'))` |
+| source_note | Nguồn thông tin do người dùng ghi | `text` |
+| observed_at | Thời điểm thông tin thuốc | `timestamptz` |
 | started_on | Thuộc tính started_on | `date` |
 | ended_on | Thuộc tính ended_on | `date` |
 | recorded_by | Thuộc tính recorded_by | `bigint NOT NULL REFERENCES app_user(id)` |
 | recorded_at | Thuộc tính recorded_at | `timestamptz NOT NULL DEFAULT now()` |
 
-Ràng buộc của bảng: `CHECK(started_on IS NULL OR ended_on IS NULL OR ended_on >= started_on)`
+Ràng buộc của bảng: `CHECK(started_on IS NULL OR ended_on IS NULL OR ended_on >= started_on)`; `CHECK(dose_number IS NULL OR dose_unit IS NOT NULL)`. Trạng thái để NULL khi chưa xác nhận thuốc đang dùng, dự kiến hay đã ngừng.
 
 Chỉ mục bổ sung: `ix_medication_encounter (encounter_id)`.
 
@@ -218,6 +225,8 @@ Chỉ mục bổ sung: `ix_observation_encounter (encounter_id)`.
 | value_number | Giá trị số | `numeric` |
 | value_date | Giá trị ngày | `date` |
 | value_boolean | Giá trị đúng sai | `boolean` |
+| reported_name | Tên chỉ số gốc trên phiếu | `text` |
+| source_note | Nguồn kết quả được ghi nhận | `text` |
 | value_code | Mã lựa chọn | `text` |
 | unit | Thuộc tính unit | `text` |
 | observed_at | Thuộc tính observed_at | `timestamptz` |
@@ -347,4 +356,4 @@ Khóa chính và UNIQUE tạo chỉ mục duy nhất trong PostgreSQL. Các đi�
 | Không sửa mẫu đã phát hành hoặc dùng | protect_version; protect_section; protect_field; protect_option |
 | Lịch hẹn không vượt sức chứa | appointment_capacity; slot_capacity_valid; khóa hàng khung giờ trong giao dịch |
 
-Ứng dụng chịu trách nhiệm phân quyền, xác minh mã nguồn đúng người bệnh, đọc file, trình bày xem trước, kiểm tra bắt buộc theo thao tác và ghi nhật ký. Các quy tắc chuyển đơn vị, suy diễn lâm sàng và danh mục chưa chốt không được tuyên bố là đã được DDL thực thi. Các phép kiểm thử đã chạy được nêu riêng tại [kết quả kiểm thử](kiem-thu-co-so-du-lieu-MVP.md).
+Ứng dụng chịu trách nhiệm phân quyền, xác minh mã nguồn đúng người bệnh, đọc file, trình bày xem trước, kiểm tra bắt buộc theo thao tác và ghi nhật ký. Các quy tắc chuyển đơn vị, suy diễn lâm sàng và danh mục chưa chốt không được tuyên bố là đã được DDL thực thi. Các phép kiểm thử đã chạy được nêu riêng tại [kết quả kiểm thử](internal/kiem-thu-co-so-du-lieu-MVP.md).

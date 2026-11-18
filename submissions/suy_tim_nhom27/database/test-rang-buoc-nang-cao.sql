@@ -58,6 +58,18 @@ BEGIN
  INSERT INTO observation_version(observation_id,version_no,value_status,value_number,recorded_by) VALUES(o2,1,'known',7,u);
  IF (SELECT form_version_id FROM encounter WHERE id=e) IS DISTINCT FROM v THEN RAISE EXCEPTION 'old encounter changed'; END IF;
  IF (SELECT value_code FROM observation_version WHERE id=ov) IS DISTINCT FROM 'A' THEN RAISE EXCEPTION 'old value changed'; END IF;
+ INSERT INTO medication_entry(encounter_id,medication_name,ingredient,strength,dose_number,dose_unit,dose_text,medication_status,medication_category,source_note,recorded_by)
+ VALUES(e,'Thuoc gia lap','Hoat chat gia lap','5 mg',1,'vien','Mot vien/ngay','planned','prescription','Bac si ghi nhan',u);
+ rejected:=false; BEGIN
+  INSERT INTO medication_entry(encounter_id,medication_name,dose_number,recorded_by) VALUES(e,'Thuoc thieu don vi',1,u);
+ EXCEPTION WHEN check_violation THEN rejected:=true; END;
+ IF NOT rejected THEN RAISE EXCEPTION 'numeric dose without unit accepted'; END IF;
+ rejected:=false; BEGIN
+  INSERT INTO medication_entry(encounter_id,medication_name,medication_status,recorded_by) VALUES(e,'Thuoc sai trang thai','unknown',u);
+ EXCEPTION WHEN check_violation THEN rejected:=true; END;
+ IF NOT rejected THEN RAISE EXCEPTION 'invalid medication status accepted'; END IF;
+ INSERT INTO observation_version(observation_id,version_no,value_status,value_number,unit,reported_name,source_note,recorded_by)
+ VALUES(o2,2,'known',8,'mg/L','Ten tren phieu','Phieu gia lap',u);
  RAISE NOTICE 'Advanced tests passed, including new form version preserving old data';
 END $$;
 ROLLBACK;
