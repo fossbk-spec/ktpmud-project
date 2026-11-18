@@ -23,7 +23,7 @@ Các file test SQL tự ROLLBACK dữ liệu giả lập. File `test-dong-thoi.p
 | Giá trị | Đã thử trạng thái chưa biết, số 0 do người dùng nhập, giá trị sai kiểu/lựa chọn sai và hai giá trị cùng lúc. |
 | Quan hệ và phiên bản | Đã thử trường sai phiên bản, sửa mẫu đã phát hành, đổi bệnh nhân hoặc mẫu sau khi có dữ liệu, và hai kết quả cùng loại ở hai lần với đơn vị/thời điểm. |
 | Thuốc | Đã thêm hai dòng thuốc giả lập vào cùng lượt; chưa kiểm thử danh mục, chuyển đổi liều hoặc an toàn thuốc. |
-| Nhập file | Đã thử không áp dụng giá trị nguồn 0 ở trạng thái hợp lệ; nguồn được đưa vào trạng thái cần rà soát; từ chối ghi sai lượt của bệnh nhân khác, sai cột nguồn; khóa thay đổi phần nguồn đã áp dụng. Không chạy luồng nhập file hoàn chỉnh. |
+| Nhập file | Đã thử không áp dụng giá trị nguồn 0 ở trạng thái hợp lệ; nguồn được đưa vào trạng thái cần rà soát; từ chối ghi sai lượt của bệnh nhân khác, sai cột nguồn; khóa thay đổi phần nguồn đã áp dụng. Chưa kiểm thử thay đổi cấu hình ánh xạ sau khi xác nhận, hay chạy luồng nhập file hoàn chỉnh. |
 | Lịch | Đã từ chối lịch thứ hai vượt sức chứa. Chạy hai tiến trình đồng thời: một lịch thành công, một lịch bị từ chối. |
 | Phiên bản đồng thời | Hai tiến trình tạo cùng số phiên bản: một thành công, một bị UNIQUE từ chối. |
 | Chạy lại schema trên CSDL đã có bảng | Bị từ chối tại `app_user already exists` như thiết kế; phải tạo CSDL thử trống mới để chạy lại. Seed cũng không phải script cập nhật dữ liệu đã có. |
