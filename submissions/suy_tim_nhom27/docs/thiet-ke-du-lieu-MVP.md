@@ -69,6 +69,7 @@ Sao lưu/khôi phục thuộc quy trình vận hành PostgreSQL và kho tệp, k
 - [Truy vết 206 biến TL06](truy-vet-truong-nguon-suy-tim.md): 47 dòng thuộc MVP (bao gồm giới tính lưu ở hồ sơ), 65 dòng đầu ra dự kiến cho giai đoạn sau và 94 dòng cần xác nhận. Không hiểu các biến chưa xác nhận là đã loại bỏ.
 - [Truy vết 42 cột file mẫu](truy-vet-cot-file-mau.md): tên cột và hướng ánh xạ, không chứa dữ liệu người bệnh.
 - [95 mục đối chiếu TL04–TL05](truy-vet-nguon-TL04-TL05.md): kế thừa lần rà trước; kiểu và đích cần đối chiếu lại theo schema mới.
+- [Đối chiếu dữ liệu với repo demo-web-3](doi-chieu-du-lieu-voi-demo-web-3.md): so sánh mã trường, cấu trúc huyết áp, xét nghiệm, thuốc và các điểm cần xác nhận trước khi mở rộng biểu mẫu.
 - [Kiểm thử và cách chạy](kiem-thu-co-so-du-lieu-MVP.md).
 
 Nhóm tài liệu TL01–TL03 đã dùng làm căn cứ phạm vi lâm sàng nhưng chưa có bảng truy vết đầy đủ từng thông tin sang trường biểu mẫu. Các cột nguồn chưa rõ, đơn vị chưa chốt, trường dữ liệu tính toán, thuốc và dữ liệu nhiều lựa chọn cần tiếp tục xác nhận trước khi coi danh mục trường hoàn chỉnh.
