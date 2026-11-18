@@ -57,7 +57,7 @@ Ràng buộc của bảng: `PRIMARY KEY(role_id,permission_id)`
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
 | id | Khóa nội bộ | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
-| patient_code | Mã hiển thị BN-xxxxx | `text NOT NULL UNIQUE` |
+| patient_code | Mã hiển thị BN-xxxxx | `text NOT NULL UNIQUE CHECK(patient_code ~ '^BN-[0-9]{5}$')` |
 | full_name | Họ tên người bệnh | `text NOT NULL` |
 | birth_date | Thuộc tính birth_date | `date` |
 | birth_year | Thuộc tính birth_year | `smallint CHECK (birth_year BETWEEN 1850 AND 2100)` |
@@ -67,6 +67,19 @@ Ràng buộc của bảng: `PRIMARY KEY(role_id,permission_id)`
 | created_by | Người tạo | `bigint NOT NULL REFERENCES app_user(id)` |
 
 Ràng buộc của bảng: `CHECK (birth_date IS NULL OR birth_year IS NULL)`
+
+## patient_identifier
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Khóa liên kết | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| patient_id | Hồ sơ được liên kết | `bigint NOT NULL REFERENCES patient(id)` |
+| issuer_scope | Nơi cấp và phạm vi mã | `text NOT NULL` |
+| identifier_type | Loại mã nguồn | `text NOT NULL` |
+| raw_value | Mã nguyên dạng | `text NOT NULL` |
+| verification_status | Trạng thái đối chiếu | `text NOT NULL CHECK(verification_status IN ('pending','verified','rejected'))` |
+
+Ràng buộc của bảng: `UNIQUE(issuer_scope,identifier_type,raw_value)`
 
 ## form_template
 
@@ -112,6 +125,9 @@ Ràng buộc của bảng: `UNIQUE(version_id,code)`
 | label | Tên hiển thị | `text NOT NULL` |
 | value_kind | Kiểu giá trị | `text NOT NULL CHECK(value_kind IN ('text','number','date','boolean','choice'))` |
 | unit | Thuộc tính unit | `text` |
+| required | Thuộc tính required | `boolean NOT NULL DEFAULT false` |
+| source_reference | Thuộc tính source_reference | `text` |
+| validation_note | Thuộc tính validation_note | `text` |
 | sort_order | Thứ tự | `integer NOT NULL CHECK(sort_order >= 0)` |
 
 Ràng buộc của bảng: `UNIQUE(section_id,code)`
@@ -144,6 +160,39 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 
 Chỉ mục bổ sung: `ix_encounter_patient_time (patient_id,occurred_at)`.
 
+## encounter_identifier
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Khóa liên kết | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| encounter_id | Lượt được liên kết | `bigint NOT NULL REFERENCES encounter(id)` |
+| issuer_scope | Nơi cấp và phạm vi mã | `text NOT NULL` |
+| identifier_type | Loại mã nguồn | `text NOT NULL` |
+| raw_value | Mã nguyên dạng | `text NOT NULL` |
+| verification_status | Trạng thái đối chiếu | `text NOT NULL CHECK(verification_status IN ('pending','verified','rejected'))` |
+
+Ràng buộc của bảng: `UNIQUE(issuer_scope,identifier_type,raw_value)`
+
+## medication_entry
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Định danh nội bộ | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| encounter_id | Lượt khám | `bigint NOT NULL REFERENCES encounter(id)` |
+| medication_name | Thuộc tính medication_name | `text NOT NULL` |
+| dose_number | Thuộc tính dose_number | `numeric CHECK(dose_number >= 0)` |
+| dose_unit | Thuộc tính dose_unit | `text` |
+| route | Thuộc tính route | `text` |
+| frequency | Thuộc tính frequency | `text` |
+| started_on | Thuộc tính started_on | `date` |
+| ended_on | Thuộc tính ended_on | `date` |
+| recorded_by | Thuộc tính recorded_by | `bigint NOT NULL REFERENCES app_user(id)` |
+| recorded_at | Thuộc tính recorded_at | `timestamptz NOT NULL DEFAULT now()` |
+
+Ràng buộc của bảng: `CHECK(started_on IS NULL OR ended_on IS NULL OR ended_on >= started_on)`
+
+Chỉ mục bổ sung: `ix_medication_encounter (encounter_id)`.
+
 ## observation
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
@@ -170,6 +219,8 @@ Chỉ mục bổ sung: `ix_observation_encounter (encounter_id)`.
 | value_date | Giá trị ngày | `date` |
 | value_boolean | Giá trị đúng sai | `boolean` |
 | value_code | Mã lựa chọn | `text` |
+| unit | Thuộc tính unit | `text` |
+| observed_at | Thuộc tính observed_at | `timestamptz` |
 | recorded_by | Thuộc tính recorded_by | `bigint NOT NULL REFERENCES app_user(id)` |
 | recorded_at | Thuộc tính recorded_at | `timestamptz NOT NULL DEFAULT now()` |
 
@@ -205,6 +256,7 @@ Ràng buộc của bảng: `UNIQUE(profile_id,source_column)`
 | source_name | Nguồn file | `text NOT NULL` |
 | file_ref | Tham chiếu tệp được lưu | `text` |
 | mapping_profile_id | Cấu hình ánh xạ được chọn | `bigint REFERENCES mapping_profile(id)` |
+| zero_requires_review | Thuộc tính zero_requires_review | `boolean NOT NULL DEFAULT true` |
 | status | Trạng thái tổng hợp | `text NOT NULL CHECK(status IN ('received','review','applied','failed'))` |
 | uploaded_by | Người tải file | `bigint NOT NULL REFERENCES app_user(id)` |
 | uploaded_at | Thời điểm tải file | `timestamptz NOT NULL DEFAULT now()` |
@@ -218,13 +270,15 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 | id | Khóa phần dữ liệu | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
 | batch_id | Lần nhập chứa phần này | `bigint NOT NULL REFERENCES import_batch(id)` |
 | source_location | Vị trí nguồn | `text NOT NULL` |
+| source_column | Tên cột nguồn | `text` |
+| mapping_rule_id | Thuộc tính mapping_rule_id | `bigint REFERENCES mapping_rule(id)` |
 | raw_value | Giá trị nguyên dạng | `text` |
 | encounter_id | Lượt khám | `bigint REFERENCES encounter(id)` |
 | field_id | Trường biểu mẫu | `bigint REFERENCES form_field(id)` |
 | status | Hợp lệ hoặc chờ hoặc lỗi | `text NOT NULL CHECK(status IN ('pending','valid','review','applied','error'))` |
 | message | Lý do và cảnh báo | `text` |
 
-Ràng buộc của bảng: `UNIQUE(batch_id,source_location)`
+Ràng buộc của bảng: `UNIQUE(batch_id,source_location)`; `CHECK(status NOT IN ('valid','applied') OR (source_column IS NOT NULL AND mapping_rule_id IS NOT NULL AND encounter_id IS NOT NULL AND field_id IS NOT NULL))`
 
 Chỉ mục bổ sung: `ix_import_item_batch_status (batch_id,status)`.
 

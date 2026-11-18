@@ -7,9 +7,9 @@
 | Nhóm | Bảng đề xuất | Mục đích |
 | --- | --- | --- |
 | Tài khoản | app_user, app_role, user_role, permission, role_permission | Xác thực và phân quyền |
-| Hồ sơ | patient, encounter | Quản lý người bệnh và các lượt khám |
+| Hồ sơ | patient, patient_identifier, encounter, encounter_identifier | Quản lý người bệnh, định danh nguồn và các lượt khám |
 | Biểu mẫu | form_template, form_version, form_section, form_field, field_option | Thiết kế phiên bản mẫu và các trường |
-| Dữ liệu khám | observation, observation_version | Giá trị theo lượt, trường và các phiên bản sửa đổi |
+| Dữ liệu khám | observation, observation_version, medication_entry | Giá trị theo lượt, trường, thời điểm; các bản sửa đổi và nhiều thuốc |
 | Nhập file | mapping_profile, mapping_rule, import_batch, import_item, import_application | Ánh xạ, tiếp nhận, đối chiếu và kết quả ghi |
 | Lịch khám | clinic_slot, appointment | Khung giờ và lịch hẹn |
 | Nhật ký | audit_event | Ghi nhận thao tác |
@@ -20,11 +20,11 @@ Hồ sơ có nhiều lượt khám; mỗi lượt gắn một phiên bản mẫu
 
 Thiết kế tách tài khoản và vai trò, biểu mẫu và phiên bản, trường và lựa chọn, bản ghi và phiên bản giá trị. Mỗi trường biểu mẫu xác định phiên bản thông qua nhóm trường để giảm dữ liệu lặp. Cần kiểm tra đầy đủ các khóa ứng viên và phụ thuộc hàm theo nghiệp vụ đã chốt trước khi kết luận toàn bộ schema đạt 3NF.
 
-Quy tắc liên bảng cần được thực thi bổ sung: trường của observation phải thuộc phiên bản mẫu của lượt khám; tùy chọn phải thuộc đúng trường; số lịch hẹn không vượt sức chứa; giá trị 0 của file mẫu phải chờ bác sĩ kiểm tra. Các ràng buộc này chưa được bảo đảm chỉ bằng schema.sql. Phiên bản mẫu đã sử dụng cần được bảo vệ khỏi sửa trực tiếp bằng logic ứng dụng và quyền phù hợp.
+Trigger kiểm tra trường thuộc mẫu của lượt, kiểu và lựa chọn, kết quả nhập đúng lượt/trường, bảo vệ mẫu đã phát hành, giữ nguồn 0 ở trạng thái cần kiểm tra, và khóa khung giờ khi nhận lịch. Mặc định kiểm tra 0 được bật cho lần nhập; quyền thay đổi thiết lập và việc bác sĩ xác nhận phải được ứng dụng quản lý. Không coi điều này thay thế xác nhận định danh người bệnh: bước đối chiếu mã nguồn và quyết định của bác sĩ vẫn do ứng dụng thực hiện. Chưa kiểm chứng đầy đủ mọi đường cập nhật dữ liệu liên bảng hoặc các giao dịch đồng thời. Tính bắt buộc theo từng thao tác, chuẩn hóa đơn vị và xử lý lâm sàng chưa được DDL kiểm chứng.
 
 ## Chỉ mục và ràng buộc
 
-DDL có khóa chính và khóa ngoại, ràng buộc duy nhất cho mã và phiên bản, kiểm tra trạng thái, số phiên bản, khoảng thời gian và số lượng giá trị; chỉ mục hỗ trợ tra lượt theo hồ sơ, bản ghi theo lượt, trạng thái nhập, lịch hẹn và nhật ký. Đã chạy tạo 22 bảng và 5 chỉ mục trên PostgreSQL thử riêng. Các thử nghiệm về mã hồ sơ trùng, khóa ngoại, số phiên bản, giá trị thiếu và số 0 do người dùng nhập cho kết quả mong đợi.
+DDL có khóa chính và khóa ngoại, ràng buộc duy nhất, kiểm tra và chỉ mục. Đã tạo 25 bảng trên PostgreSQL thử riêng, nạp 61 trường và chạy các ca mô tả tại [kết quả kiểm thử](kiem-thu-co-so-du-lieu-MVP.md).
 
 ## Lưu ý triển khai
 
@@ -32,25 +32,25 @@ DDL dự kiến dùng cho PostgreSQL trên cơ sở dữ liệu trống, chưa l
 
 ## Sơ đồ chi tiết
 
-### ERD ho so benh nhan va luot kham
+### Hồ sơ bệnh nhân và lượt khám
 
 ![ERD-ho-so-benh-nhan-va-luot-kham](architecture/ERD-ho-so-benh-nhan-va-luot-kham.png)
 
 [Sửa sơ đồ trong draw.io](architecture/ERD-ho-so-benh-nhan-va-luot-kham.drawio)
 
-### ERD bieu mau va truong du lieu
+### Biểu mẫu và trường dữ liệu
 
 ![ERD-bieu-mau-va-truong-du-lieu](architecture/ERD-bieu-mau-va-truong-du-lieu.png)
 
 [Sửa sơ đồ trong draw.io](architecture/ERD-bieu-mau-va-truong-du-lieu.drawio)
 
-### ERD tiep nhan file va anh xa
+### Tiếp nhận file và ánh xạ
 
 ![ERD-tiep-nhan-file-va-anh-xa](architecture/ERD-tiep-nhan-file-va-anh-xa.png)
 
 [Sửa sơ đồ trong draw.io](architecture/ERD-tiep-nhan-file-va-anh-xa.drawio)
 
-### ERD tai khoan lich kham va nhat ky
+### Tài khoản, lịch khám và nhật ký
 
 ![ERD-tai-khoan-lich-kham-va-nhat-ky](architecture/ERD-tai-khoan-lich-kham-va-nhat-ky.png)
 
@@ -60,6 +60,18 @@ DDL dự kiến dùng cho PostgreSQL trên cơ sở dữ liệu trống, chưa l
 [Từ điển dữ liệu](tu-dien-du-lieu-MVP.md) · [Kịch bản tạo bảng](../database/schema-MVP.sql)
 
 [Phân tích khóa và chuẩn hóa 3NF](kiem-tra-chuan-hoa-3NF-MVP.md)
+
+## Biểu mẫu và truy vết nguồn
+
+- [Cấu hình biểu mẫu JSON](cau-hinh-bieu-mau-suy-tim-v1.json) và [seed nạp biểu mẫu](../database/seed-bieu-mau-suy-tim-v1.sql): 61 trường lâm sàng, cận lâm sàng và thông tin theo nguồn; trường hành chính được lưu riêng. Các trường đều cho phép chưa biết; nội dung, đơn vị và lựa chọn cần được bác sĩ rà soát.
+- [Truy vết 206 biến TL06](truy-vet-truong-nguon-suy-tim.md): 47 dòng thuộc MVP (bao gồm giới tính lưu ở hồ sơ), 65 dòng đầu ra dự kiến cho giai đoạn sau và 94 dòng cần xác nhận. Không hiểu các biến chưa xác nhận là đã loại bỏ.
+- [Truy vết 42 cột file mẫu](truy-vet-cot-file-mau.md): tên cột và hướng ánh xạ, không chứa dữ liệu người bệnh.
+- [95 mục đối chiếu TL04–TL05](truy-vet-nguon-TL04-TL05.md): kế thừa lần rà trước; kiểu và đích cần đối chiếu lại theo schema mới.
+- [Kiểm thử và cách chạy](kiem-thu-co-so-du-lieu-MVP.md).
+
+Nhóm tài liệu TL01–TL03 đã dùng làm căn cứ phạm vi lâm sàng nhưng chưa có bảng truy vết đầy đủ từng thông tin sang trường biểu mẫu. Các cột nguồn chưa rõ, đơn vị chưa chốt, trường dữ liệu tính toán, thuốc và dữ liệu nhiều lựa chọn cần tiếp tục xác nhận trước khi coi danh mục trường hoàn chỉnh.
+
+Ảnh PNG là bản xem nhanh, có đường nối chưa ghi bội số; mở file draw.io để xem nhãn quan hệ. Các bảng liên kết có khóa chính ghép được nêu chính xác trong từ điển và SQL; ảnh chưa ký hiệu đầy đủ PK ghép.
 
 ## Căn cứ thiết kế
 

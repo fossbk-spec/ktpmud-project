@@ -6,9 +6,10 @@ BEGIN
  INSERT INTO app_user(login_name,password_hash) VALUES('bacsi_test','test-hash') RETURNING id INTO u;
  INSERT INTO patient(patient_code,full_name,created_by) VALUES('BN-00001','Nguoi benh gia lap',u) RETURNING id INTO p;
  INSERT INTO form_template(code,name) VALUES('ST','Suy tim') RETURNING id INTO t;
- INSERT INTO form_version(template_id,version_no,status) VALUES(t,1,'published') RETURNING id INTO v;
+ INSERT INTO form_version(template_id,version_no,status) VALUES(t,1,'draft') RETURNING id INTO v;
  INSERT INTO form_section(version_id,code,label,sort_order) VALUES(v,'chung','Thong tin chung',1) RETURNING id INTO s;
  INSERT INTO form_field(section_id,code,label,value_kind,sort_order) VALUES(s,'ef','EF','number',1) RETURNING id INTO f;
+ UPDATE form_version SET status='published' WHERE id=v;
  INSERT INTO encounter(patient_id,form_version_id,encounter_code,status,created_by) VALUES(p,v,'LK-TEST','draft',u) RETURNING id INTO e;
  INSERT INTO observation(encounter_id,field_id) VALUES(e,f) RETURNING id INTO o;
  INSERT INTO observation_version(observation_id,version_no,value_status,recorded_by) VALUES(o,1,'unknown',u);
