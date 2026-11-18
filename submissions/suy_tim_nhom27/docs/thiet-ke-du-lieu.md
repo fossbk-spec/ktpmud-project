@@ -1,8 +1,27 @@
 # Thiết kế dữ liệu
 
-**Phạm vi duyệt công việc 3.2:** lược đồ quan hệ 25 bảng, danh mục khởi tạo 66 trường lâm sàng và các trường hành chính. Các biến còn lại được quản lý trong bảng truy vết và bổ sung qua phiên bản biểu mẫu sau. Phạm vi gồm quản lý hồ sơ và lượt khám, tiếp nhận file, tài khoản và quản trị; các chức năng AI và cổng bệnh nhân thuộc hướng mở rộng.
+Hệ thống quản lý bệnh nhân suy tim — phạm vi MVP
 
-## Các nhóm dữ liệu
+Tài liệu này trình bày lần lượt phạm vi dữ liệu, sơ đồ quan hệ, từ điển dữ liệu, phân tích 3NF, biểu mẫu và truy vết nguồn, ràng buộc cùng cách kiểm tra. Dữ liệu đầu vào có thể được bác sĩ nhập tay hoặc tiếp nhận từ file sau khi đối chiếu; các module AI và cổng bệnh nhân thuộc giai đoạn sau.
+
+<a id="muc-luc"></a>
+
+## Mục lục
+
+- [1 Phạm vi và các nhóm dữ liệu](#pham-vi)
+- [2 Sơ đồ thực thể liên kết](#so-do-erd)
+- [3 Từ điển dữ liệu](#tu-dien)
+- [4 Phân tích chuẩn hóa 3NF](#chuan-hoa)
+- [5 Biểu mẫu và truy vết nguồn](#bieu-mau)
+- [6 Ràng buộc, kịch bản tạo bảng và kiểm thử](#rang-buoc)
+- [7 Mở rộng và giới hạn triển khai](#mo-rong)
+- [8 Căn cứ thiết kế](#can-cu)
+
+<a id="pham-vi"></a>
+
+## 1 Phạm vi và các nhóm dữ liệu
+
+**Phạm vi duyệt công việc 3.2:** lược đồ quan hệ 25 bảng, danh mục khởi tạo 66 trường lâm sàng và các trường hành chính. Các biến còn lại được quản lý trong bảng truy vết và bổ sung qua phiên bản biểu mẫu sau. Phạm vi gồm quản lý hồ sơ và lượt khám, tiếp nhận file, tài khoản và quản trị; các chức năng AI và cổng bệnh nhân thuộc hướng mở rộng.
 
 | Nhóm | Bảng đề xuất | Mục đích |
 | --- | --- | --- |
@@ -18,84 +37,40 @@ Hồ sơ có nhiều lượt khám; mỗi lượt gắn một phiên bản mẫu
 
 Sau khi đối chiếu repo demo, mẫu khởi tạo có thêm tư thế đo huyết áp, LVEF, báo cáo siêu âm tim, BNP và eGFR. Tâm thu, tâm trương và tư thế cùng một lần đo dùng cùng `event_key`; thời điểm đo nằm ở bản giá trị. BNP và NT-proBNP là hai trường riêng. Bản giá trị giữ được tên chỉ số trên phiếu và ghi chú nguồn; thuốc giữ hoạt chất, hàm lượng, liều nguyên văn, trạng thái và nguồn. Đây là khả năng ghi nhận dữ liệu, chưa phải quy tắc chẩn đoán hay xác nhận cấu trúc file bệnh viện.
 
-## 3NF và những điều kiện cần tiếp tục kiểm tra
+<a id="so-do-erd"></a>
 
-Thiết kế tách tài khoản và vai trò, biểu mẫu và phiên bản, trường và lựa chọn, bản ghi và phiên bản giá trị. Mỗi trường biểu mẫu xác định phiên bản thông qua nhóm trường để giảm dữ liệu lặp. Phân tích chuẩn hóa dưới đây xác định khóa, phụ thuộc hàm và giả định của lược đồ trong phạm vi hiện tại; không dùng số lượng trường để kết luận 3NF.
+## 2 Sơ đồ thực thể liên kết
 
-Trigger kiểm tra trường thuộc mẫu của lượt, kiểu và lựa chọn, kết quả nhập đúng lượt/trường, bảo vệ mẫu đã phát hành, giữ nguồn 0 ở trạng thái cần kiểm tra, và khóa khung giờ khi nhận lịch. Mặc định kiểm tra 0 được bật cho lần nhập; quyền thay đổi thiết lập và việc bác sĩ xác nhận phải được ứng dụng quản lý. Không coi điều này thay thế xác nhận định danh người bệnh: bước đối chiếu mã nguồn và quyết định của bác sĩ vẫn do ứng dụng thực hiện. Chưa kiểm chứng đầy đủ mọi đường cập nhật dữ liệu liên bảng hoặc các giao dịch đồng thời. Tính bắt buộc theo từng thao tác, chuẩn hóa đơn vị và xử lý lâm sàng chưa được DDL kiểm chứng.
+Bốn sơ đồ ERD thể hiện các nhóm bảng và quan hệ của thiết kế.
 
-## Chỉ mục và ràng buộc
-
-DDL có khóa chính và khóa ngoại, ràng buộc duy nhất, kiểm tra và chỉ mục. Đã tạo 25 bảng trên PostgreSQL thử riêng, nạp 66 trường và chạy các ca mô tả tại [kết quả kiểm thử](internal/kiem-thu-co-so-du-lieu-MVP.md).
-
-## Lưu ý triển khai
-
-DDL dự kiến dùng cho PostgreSQL trên cơ sở dữ liệu trống, chưa là migration cho bản demo cũ và chưa có quy trình chuyển dữ liệu. Các mô tả trạng thái, dữ liệu nhập và quy tắc lâm sàng phải được nhóm xác nhận; không dùng dữ liệu bệnh nhân thật trong bộ tài liệu.
-
-Sao lưu/khôi phục thuộc quy trình vận hành PostgreSQL và kho tệp, không cần tạo một bản sao các bảng nghiệp vụ trong schema. Kiểm thử khôi phục không nằm trong các kết quả SQL đã nêu ở đợt này.
-
-## Sơ đồ chi tiết
-
-### Hồ sơ bệnh nhân và lượt khám
+### 2.1 Hồ sơ bệnh nhân và lượt khám
 
 ![ERD-ho-so-benh-nhan-va-luot-kham](architecture/ERD-ho-so-benh-nhan-va-luot-kham.png)
 
-[Sửa sơ đồ trong draw.io](architecture/ERD-ho-so-benh-nhan-va-luot-kham.drawio)
 
-### Biểu mẫu và trường dữ liệu
+### 2.2 Biểu mẫu và trường dữ liệu
 
 ![ERD-bieu-mau-va-truong-du-lieu](architecture/ERD-bieu-mau-va-truong-du-lieu.png)
 
-[Sửa sơ đồ trong draw.io](architecture/ERD-bieu-mau-va-truong-du-lieu.drawio)
 
-### Tiếp nhận file và ánh xạ
+### 2.3 Tiếp nhận file và ánh xạ
 
 ![ERD-tiep-nhan-file-va-anh-xa](architecture/ERD-tiep-nhan-file-va-anh-xa.png)
 
-[Sửa sơ đồ trong draw.io](architecture/ERD-tiep-nhan-file-va-anh-xa.drawio)
 
-### Tài khoản, lịch khám và nhật ký
+### 2.4 Tài khoản, lịch khám và nhật ký
 
 ![ERD-tai-khoan-lich-kham-va-nhat-ky](architecture/ERD-tai-khoan-lich-kham-va-nhat-ky.png)
 
-[Sửa sơ đồ trong draw.io](architecture/ERD-tai-khoan-lich-kham-va-nhat-ky.drawio)
+<a id="tu-dien"></a>
 
-
-[Từ điển dữ liệu](#từ-điển-dữ-liệu-mvp) · [Kịch bản tạo bảng](../database/schema-MVP.sql)
-
-[Phân tích khóa và chuẩn hóa 3NF](#phân-tích-khóa-và-chuẩn-hóa-3nf-của-mvp)
-
-## Biểu mẫu và truy vết nguồn
-
-- [Cấu hình biểu mẫu JSON](cau-hinh-bieu-mau-suy-tim-v1.json) và [seed nạp biểu mẫu](../database/seed-bieu-mau-suy-tim-v1.sql): 66 trường lâm sàng, cận lâm sàng và thông tin theo nguồn; trường hành chính được lưu riêng. Các trường đều cho phép chưa biết; nội dung, đơn vị và lựa chọn cần được bác sĩ rà soát.
-- [Phụ lục truy vết và đối chiếu dữ liệu](internal/phu-luc-truy-vet-va-doi-chieu-du-lieu.md): 206 biến TL06, 42 cột file mẫu, 95 mục TL04–TL05 và bản rà repo demo-web-3. Trong bảng TL06, 47 dòng thuộc MVP, 65 dòng đầu ra giai đoạn sau và 94 dòng cần xác nhận; các mục ghi cấu trúc hỗ trợ một phần chưa được tính là hoàn tất.
-- [Kiểm thử và cách chạy](internal/kiem-thu-co-so-du-lieu-MVP.md).
-
-Nhóm tài liệu TL01–TL03 đã dùng làm căn cứ phạm vi lâm sàng nhưng chưa có bảng truy vết đầy đủ từng thông tin sang trường biểu mẫu. Các cột nguồn chưa rõ, đơn vị chưa chốt, trường dữ liệu tính toán, thuốc và dữ liệu nhiều lựa chọn cần tiếp tục xác nhận trước khi coi danh mục trường hoàn chỉnh.
-
-Ảnh PNG ghi kiểu, PK/FK và bảng bội số dưới mỗi hình; file draw.io ghi nhãn bội số trên liên kết. Các bảng liên kết có ký hiệu PK/FK trên từng cột của khóa ghép.
-
-## Căn cứ thiết kế
-
-Đối chiếu sáu nguồn nhóm cung cấp: hướng dẫn suy tim của Bộ Y tế; tài liệu suy tim người cao tuổi; tài liệu SUY TIM; schema tối thiểu năm bệnh; bảng biến bác sĩ AI-CDSS; từ điển dữ liệu suy tim. Các nguồn chuyên môn làm căn cứ chọn trường biểu mẫu và không tự tạo yêu cầu kết nối trực tiếp bệnh viện. Tham khảo [bài giảng kỹ thuật yêu cầu và thiết kế hệ thống](https://fossbk-spec.github.io/ktpmud-book/ch02_yeu_cau_thiet_ke_c4).
-
-## Thêm trường dữ liệu sau khi chốt 3.2
-
-1. Chọn biến từ bảng truy vết; xác định nhãn, mã ổn định, nhóm, kiểu, đơn vị, lựa chọn, quy tắc và nguồn.
-2. Tạo phiên bản nháp mới của mẫu, sao chép các nhóm/trường/lựa chọn cần giữ với ID mới; giữ mã logic của trường cũ. Thêm trường mới vào bản nháp.
-3. Kiểm tra và phát hành bản mới. Lượt mới dùng bản mới; lượt cũ giữ form_version_id cũ. Không tự chuyển dữ liệu giữa mẫu.
-4. Cập nhật cấu hình JSON, seed phiên bản mới, bảng truy vết và kiểm thử. Khi trường chỉ dùng các kiểu hiện có, không cần thêm cột SQL.
-5. Kiểu nghiệp vụ mới hoặc cấu trúc mới (ví dụ bảng thuốc chuyên biệt hơn) có thể cần migration riêng. Không sửa schema rồi chạy lại trên CSDL có dữ liệu.
-
-Đã chạy ca thêm trường ở bản mới, ghi giá trị cho lượt mới và xác minh mẫu/giá trị lượt cũ còn nguyên. Cách này cho phép chốt nền dữ liệu trước khi hoàn thiện toàn bộ danh mục lâm sàng. Không gọi danh mục 66 trường là đầy đủ toàn bộ dữ liệu suy tim.
-
----
-
-## Từ điển dữ liệu MVP
+## 3 Từ điển dữ liệu
 
 Tài liệu được tạo từ schema PostgreSQL; PK là khóa chính, FK là khóa ngoại. NOT NULL: bắt buộc; các trường khác được phép để trống. GENERATED AS IDENTITY: mã tự tăng.
 
-### app_user
+### 3.1 Tài khoản và phân quyền
+
+#### app_user
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -107,7 +82,7 @@ Tài liệu được tạo từ schema PostgreSQL; PK là khóa chính, FK là k
 
 Ràng buộc của bảng: không có ràng buộc bổ sung.
 
-### app_role
+#### app_role
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -117,7 +92,7 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 
 Ràng buộc của bảng: không có ràng buộc bổ sung.
 
-### user_role
+#### user_role
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -126,7 +101,7 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 
 Ràng buộc của bảng: `PRIMARY KEY(user_id,role_id)`
 
-### permission
+#### permission
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -136,7 +111,7 @@ Ràng buộc của bảng: `PRIMARY KEY(user_id,role_id)`
 
 Ràng buộc của bảng: không có ràng buộc bổ sung.
 
-### role_permission
+#### role_permission
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -145,7 +120,9 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 
 Ràng buộc của bảng: `PRIMARY KEY(role_id,permission_id)`
 
-### patient
+### 3.2 Hồ sơ bệnh nhân và lượt khám
+
+#### patient
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -161,7 +138,7 @@ Ràng buộc của bảng: `PRIMARY KEY(role_id,permission_id)`
 
 Ràng buộc của bảng: `CHECK (birth_date IS NULL OR birth_year IS NULL)`
 
-### patient_identifier
+#### patient_identifier
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -174,69 +151,7 @@ Ràng buộc của bảng: `CHECK (birth_date IS NULL OR birth_year IS NULL)`
 
 Ràng buộc của bảng: `UNIQUE(issuer_scope,identifier_type,raw_value)`
 
-### form_template
-
-| Trường | Ý nghĩa | Kiểu và ràng buộc |
-| --- | --- | --- |
-| id | Khóa mẫu | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
-| code | Mã mẫu | `text NOT NULL UNIQUE` |
-| name | Tên mẫu | `text NOT NULL` |
-
-Ràng buộc của bảng: không có ràng buộc bổ sung.
-
-### form_version
-
-| Trường | Ý nghĩa | Kiểu và ràng buộc |
-| --- | --- | --- |
-| id | Khóa phiên bản | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
-| template_id | Mẫu gốc | `bigint NOT NULL REFERENCES form_template(id)` |
-| version_no | Số phiên bản theo mẫu | `integer NOT NULL CHECK (version_no > 0)` |
-| status | Nháp hoặc được áp dụng | `text NOT NULL CHECK (status IN ('draft','published','retired'))` |
-| published_at | Thời điểm áp dụng | `timestamptz` |
-
-Ràng buộc của bảng: `UNIQUE(template_id,version_no)`
-
-### form_section
-
-| Trường | Ý nghĩa | Kiểu và ràng buộc |
-| --- | --- | --- |
-| id | Khóa nhóm | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
-| version_id | Thuộc tính version_id | `bigint NOT NULL REFERENCES form_version(id)` |
-| code | Mã nhận diện | `text NOT NULL` |
-| label | Tên nhóm | `text NOT NULL` |
-| sort_order | Thứ tự hiển thị | `integer NOT NULL CHECK(sort_order >= 0)` |
-
-Ràng buộc của bảng: `UNIQUE(version_id,code)`
-
-### form_field
-
-| Trường | Ý nghĩa | Kiểu và ràng buộc |
-| --- | --- | --- |
-| id | Khóa trường theo phiên bản | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
-| section_id | Nhóm chứa trường | `bigint NOT NULL REFERENCES form_section(id)` |
-| code | Mã nhận diện | `text NOT NULL` |
-| label | Tên hiển thị | `text NOT NULL` |
-| value_kind | Kiểu giá trị | `text NOT NULL CHECK(value_kind IN ('text','number','date','boolean','choice'))` |
-| unit | Thuộc tính unit | `text` |
-| required | Thuộc tính required | `boolean NOT NULL DEFAULT false` |
-| source_reference | Thuộc tính source_reference | `text` |
-| validation_note | Thuộc tính validation_note | `text` |
-| sort_order | Thứ tự | `integer NOT NULL CHECK(sort_order >= 0)` |
-
-Ràng buộc của bảng: `UNIQUE(section_id,code)`
-
-### field_option
-
-| Trường | Ý nghĩa | Kiểu và ràng buộc |
-| --- | --- | --- |
-| id | Khóa lựa chọn | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
-| field_id | Trường chủ | `bigint NOT NULL REFERENCES form_field(id)` |
-| code | Mã nhận diện | `text NOT NULL` |
-| label | Nội dung | `text NOT NULL` |
-
-Ràng buộc của bảng: `UNIQUE(field_id,code)`
-
-### encounter
+#### encounter
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -253,7 +168,7 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 
 Chỉ mục bổ sung: `ix_encounter_patient_time (patient_id,occurred_at)`.
 
-### encounter_identifier
+#### encounter_identifier
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -266,7 +181,108 @@ Chỉ mục bổ sung: `ix_encounter_patient_time (patient_id,occurred_at)`.
 
 Ràng buộc của bảng: `UNIQUE(issuer_scope,identifier_type,raw_value)`
 
-### medication_entry
+### 3.3 Biểu mẫu và phiên bản
+
+#### form_template
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Khóa mẫu | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| code | Mã mẫu | `text NOT NULL UNIQUE` |
+| name | Tên mẫu | `text NOT NULL` |
+
+Ràng buộc của bảng: không có ràng buộc bổ sung.
+
+#### form_version
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Khóa phiên bản | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| template_id | Mẫu gốc | `bigint NOT NULL REFERENCES form_template(id)` |
+| version_no | Số phiên bản theo mẫu | `integer NOT NULL CHECK (version_no > 0)` |
+| status | Nháp hoặc được áp dụng | `text NOT NULL CHECK (status IN ('draft','published','retired'))` |
+| published_at | Thời điểm áp dụng | `timestamptz` |
+
+Ràng buộc của bảng: `UNIQUE(template_id,version_no)`
+
+#### form_section
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Khóa nhóm | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| version_id | Thuộc tính version_id | `bigint NOT NULL REFERENCES form_version(id)` |
+| code | Mã nhận diện | `text NOT NULL` |
+| label | Tên nhóm | `text NOT NULL` |
+| sort_order | Thứ tự hiển thị | `integer NOT NULL CHECK(sort_order >= 0)` |
+
+Ràng buộc của bảng: `UNIQUE(version_id,code)`
+
+#### form_field
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Khóa trường theo phiên bản | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| section_id | Nhóm chứa trường | `bigint NOT NULL REFERENCES form_section(id)` |
+| code | Mã nhận diện | `text NOT NULL` |
+| label | Tên hiển thị | `text NOT NULL` |
+| value_kind | Kiểu giá trị | `text NOT NULL CHECK(value_kind IN ('text','number','date','boolean','choice'))` |
+| unit | Thuộc tính unit | `text` |
+| required | Thuộc tính required | `boolean NOT NULL DEFAULT false` |
+| source_reference | Thuộc tính source_reference | `text` |
+| validation_note | Thuộc tính validation_note | `text` |
+| sort_order | Thứ tự | `integer NOT NULL CHECK(sort_order >= 0)` |
+
+Ràng buộc của bảng: `UNIQUE(section_id,code)`
+
+#### field_option
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Khóa lựa chọn | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| field_id | Trường chủ | `bigint NOT NULL REFERENCES form_field(id)` |
+| code | Mã nhận diện | `text NOT NULL` |
+| label | Nội dung | `text NOT NULL` |
+
+Ràng buộc của bảng: `UNIQUE(field_id,code)`
+
+### 3.4 Dữ liệu khám và thuốc
+
+#### observation
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Định danh nội bộ | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| encounter_id | Lượt khám | `bigint NOT NULL REFERENCES encounter(id)` |
+| field_id | Trường biểu mẫu | `bigint NOT NULL REFERENCES form_field(id)` |
+| event_key | Định danh lần ghi trong lượt | `text NOT NULL DEFAULT 'default'` |
+
+Ràng buộc của bảng: `UNIQUE(encounter_id,field_id,event_key)`
+
+Chỉ mục bổ sung: `ix_observation_encounter (encounter_id)`.
+
+#### observation_version
+
+| Trường | Ý nghĩa | Kiểu và ràng buộc |
+| --- | --- | --- |
+| id | Định danh nội bộ | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
+| observation_id | Thuộc tính observation_id | `bigint NOT NULL REFERENCES observation(id)` |
+| version_no | Số phiên bản | `integer NOT NULL CHECK(version_no > 0)` |
+| value_status | Tình trạng giá trị | `text NOT NULL CHECK(value_status IN ('known','unknown','not_applicable'))` |
+| value_text | Giá trị văn bản | `text` |
+| value_number | Giá trị số | `numeric` |
+| value_date | Giá trị ngày | `date` |
+| value_boolean | Giá trị đúng sai | `boolean` |
+| reported_name | Tên chỉ số gốc trên phiếu | `text` |
+| source_note | Nguồn kết quả được ghi nhận | `text` |
+| value_code | Mã lựa chọn | `text` |
+| unit | Thuộc tính unit | `text` |
+| observed_at | Thuộc tính observed_at | `timestamptz` |
+| recorded_by | Thuộc tính recorded_by | `bigint NOT NULL REFERENCES app_user(id)` |
+| recorded_at | Thuộc tính recorded_at | `timestamptz NOT NULL DEFAULT now()` |
+
+Ràng buộc của bảng: `UNIQUE(observation_id,version_no)`; `CHECK ((value_status = 'known' AND num_nonnulls(value_text,value_number,value_date,value_boolean,value_code) = 1) OR (value_status <> 'known' AND num_nonnulls(value_text,value_number,value_date,value_boolean,value_code) = 0))`
+
+#### medication_entry
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -293,42 +309,9 @@ Ràng buộc của bảng: `CHECK(started_on IS NULL OR ended_on IS NULL OR ende
 
 Chỉ mục bổ sung: `ix_medication_encounter (encounter_id)`.
 
-### observation
+### 3.5 Tiếp nhận và ánh xạ file
 
-| Trường | Ý nghĩa | Kiểu và ràng buộc |
-| --- | --- | --- |
-| id | Định danh nội bộ | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
-| encounter_id | Lượt khám | `bigint NOT NULL REFERENCES encounter(id)` |
-| field_id | Trường biểu mẫu | `bigint NOT NULL REFERENCES form_field(id)` |
-| event_key | Định danh lần ghi trong lượt | `text NOT NULL DEFAULT 'default'` |
-
-Ràng buộc của bảng: `UNIQUE(encounter_id,field_id,event_key)`
-
-Chỉ mục bổ sung: `ix_observation_encounter (encounter_id)`.
-
-### observation_version
-
-| Trường | Ý nghĩa | Kiểu và ràng buộc |
-| --- | --- | --- |
-| id | Định danh nội bộ | `bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY` |
-| observation_id | Thuộc tính observation_id | `bigint NOT NULL REFERENCES observation(id)` |
-| version_no | Số phiên bản | `integer NOT NULL CHECK(version_no > 0)` |
-| value_status | Tình trạng giá trị | `text NOT NULL CHECK(value_status IN ('known','unknown','not_applicable'))` |
-| value_text | Giá trị văn bản | `text` |
-| value_number | Giá trị số | `numeric` |
-| value_date | Giá trị ngày | `date` |
-| value_boolean | Giá trị đúng sai | `boolean` |
-| reported_name | Tên chỉ số gốc trên phiếu | `text` |
-| source_note | Nguồn kết quả được ghi nhận | `text` |
-| value_code | Mã lựa chọn | `text` |
-| unit | Thuộc tính unit | `text` |
-| observed_at | Thuộc tính observed_at | `timestamptz` |
-| recorded_by | Thuộc tính recorded_by | `bigint NOT NULL REFERENCES app_user(id)` |
-| recorded_at | Thuộc tính recorded_at | `timestamptz NOT NULL DEFAULT now()` |
-
-Ràng buộc của bảng: `UNIQUE(observation_id,version_no)`; `CHECK ((value_status = 'known' AND num_nonnulls(value_text,value_number,value_date,value_boolean,value_code) = 1) OR (value_status <> 'known' AND num_nonnulls(value_text,value_number,value_date,value_boolean,value_code) = 0))`
-
-### mapping_profile
+#### mapping_profile
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -339,7 +322,7 @@ Ràng buộc của bảng: `UNIQUE(observation_id,version_no)`; `CHECK ((value_s
 
 Ràng buộc của bảng: `UNIQUE(name,version_no)`
 
-### mapping_rule
+#### mapping_rule
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -350,7 +333,7 @@ Ràng buộc của bảng: `UNIQUE(name,version_no)`
 
 Ràng buộc của bảng: `UNIQUE(profile_id,source_column)`
 
-### import_batch
+#### import_batch
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -365,7 +348,7 @@ Ràng buộc của bảng: `UNIQUE(profile_id,source_column)`
 
 Ràng buộc của bảng: không có ràng buộc bổ sung.
 
-### import_item
+#### import_item
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -382,7 +365,7 @@ Ràng buộc của bảng: `UNIQUE(batch_id,source_location)`; `CHECK(status NOT
 
 Chỉ mục bổ sung: `ix_import_item_batch_status (batch_id,status)`.
 
-### import_application
+#### import_application
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -394,7 +377,9 @@ Chỉ mục bổ sung: `ix_import_item_batch_status (batch_id,status)`.
 
 Ràng buộc của bảng: `UNIQUE(import_item_id,observation_version_id)`
 
-### clinic_slot
+### 3.6 Lịch khám
+
+#### clinic_slot
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -405,7 +390,7 @@ Ràng buộc của bảng: `UNIQUE(import_item_id,observation_version_id)`
 
 Ràng buộc của bảng: `CHECK(ends_at > starts_at)`
 
-### appointment
+#### appointment
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -419,7 +404,9 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 
 Chỉ mục bổ sung: `ix_appointment_patient (patient_id)`.
 
-### audit_event
+### 3.7 Nhật ký
+
+#### audit_event
 
 | Trường | Ý nghĩa | Kiểu và ràng buộc |
 | --- | --- | --- |
@@ -435,25 +422,15 @@ Ràng buộc của bảng: không có ràng buộc bổ sung.
 
 Chỉ mục bổ sung: `ix_audit_actor_time (actor_id,occurred_at)`.
 
-Khóa chính và UNIQUE tạo chỉ mục duy nhất trong PostgreSQL. Các điều kiện liên bảng sau được thực hiện bằng trigger, không phải CHECK tham chiếu bảng khác:
+<a id="chuan-hoa"></a>
 
-| Quy tắc | Cơ chế trong schema |
-| --- | --- |
-| Trường và lượt cùng phiên bản mẫu | observation_field_version; encounter_form_valid |
-| Kiểu giá trị và lựa chọn đúng trường | observation_value_valid; CHECK một ô giá trị |
-| Lịch sử giá trị không bị ghi đè | observation_version_immutable; observation_identity_locked |
-| Dữ liệu nguồn và giá trị áp dụng cùng lượt/trường | import_application_match; import_mapping_valid |
-| Nguồn 0 phải chờ rà soát khi chính sách được bật | import_zero_review |
-| Không đổi phần nguồn sau khi ghi | import_item_locked |
-| Không sửa cấu hình ánh xạ đã dùng | used_mapping_profile; used_mapping_rule |
-| Không sửa mẫu đã phát hành hoặc dùng | protect_version; protect_section; protect_field; protect_option |
-| Lịch hẹn không vượt sức chứa | appointment_capacity; slot_capacity_valid; khóa hàng khung giờ trong giao dịch |
+## 4 Phân tích chuẩn hóa 3NF
 
-Ứng dụng chịu trách nhiệm phân quyền, xác minh mã nguồn đúng người bệnh, đọc file, trình bày xem trước, kiểm tra bắt buộc theo thao tác và ghi nhật ký. Các quy tắc chuyển đơn vị, suy diễn lâm sàng và danh mục chưa chốt không được tuyên bố là đã được DDL thực thi. Các phép kiểm thử đã chạy được nêu riêng tại [kết quả kiểm thử](internal/kiem-thu-co-so-du-lieu-MVP.md).
+Thiết kế tách tài khoản và vai trò, biểu mẫu và phiên bản, trường và lựa chọn, bản ghi và phiên bản giá trị. Mỗi trường biểu mẫu xác định phiên bản thông qua nhóm trường để giảm dữ liệu lặp. Phân tích chuẩn hóa dưới đây xác định khóa, phụ thuộc hàm và giả định của lược đồ trong phạm vi hiện tại; không dùng số lượng trường để kết luận 3NF.
 
----
+Trigger kiểm tra trường thuộc mẫu của lượt, kiểu và lựa chọn, kết quả nhập đúng lượt/trường, bảo vệ mẫu đã phát hành, giữ nguồn 0 ở trạng thái cần kiểm tra, và khóa khung giờ khi nhận lịch. Mặc định kiểm tra 0 được bật cho lần nhập; quyền thay đổi thiết lập và việc bác sĩ xác nhận phải được ứng dụng quản lý. Không coi điều này thay thế xác nhận định danh người bệnh: bước đối chiếu mã nguồn và quyết định của bác sĩ vẫn do ứng dụng thực hiện. Chưa kiểm chứng đầy đủ mọi đường cập nhật dữ liệu liên bảng hoặc các giao dịch đồng thời. Tính bắt buộc theo từng thao tác, chuẩn hóa đơn vị và xử lý lâm sàng chưa được DDL kiểm chứng.
 
-## Phân tích khóa và chuẩn hóa 3NF của MVP
+### 4.1 Khóa và phụ thuộc hàm của từng bảng
 
 Bảng dưới đây liệt kê các phụ thuộc hàm theo giả định nghiệp vụ: mỗi khóa nhận diện duy nhất một bản ghi; mã được đánh dấu UNIQUE là duy nhất trong phạm vi ràng buộc. Các khóa UNIQUE có cột nullable không tự được coi là khóa ứng viên. Các ràng buộc CHECK và trigger không tự chứng minh toàn bộ tập phụ thuộc hàm.
 
@@ -485,7 +462,7 @@ Bảng dưới đây liệt kê các phụ thuộc hàm theo giả định nghi�
 | `appointment` | `id` | — | `patient_id`, `slot_id`, `status`, `created_at` | Khóa chính xác định các thuộc tính còn lại; cần xác nhận không có phụ thuộc bắc cầu ngoài các giả định nghiệp vụ. |
 | `audit_event` | `id` | — | `actor_id`, `action`, `target_type`, `target_id`, `occurred_at`, `result` | Khóa chính xác định các thuộc tính còn lại; cần xác nhận không có phụ thuộc bắc cầu ngoài các giả định nghiệp vụ. |
 
-### Các giả định và giới hạn
+### 4.2 Các giả định và giới hạn
 
 - **Ngày/năm sinh:** chỉ một trong hai được lưu. Không coi năm sinh suy ra từ ngày sinh là một cột được lưu đồng thời.
 - **Tên mã danh mục:** mã và nhãn lựa chọn nằm cùng bảng định nghĩa; cần xác nhận tính ổn định của mã và phạm vi duy nhất khi triển khai.
@@ -495,7 +472,7 @@ Bảng dưới đây liệt kê các phụ thuộc hàm theo giả định nghi�
 - **Trạng thái và giá trị:** trạng thái chưa biết/không áp dụng không suy thành giá trị 0 hoặc false. Cần xác nhận quan hệ nghiệp vụ giữa các trạng thái và thuộc tính giá trị.
 - **Dữ liệu lặp:** event_key cho phép nhiều quan sát của cùng trường trong lượt và mỗi phiên bản có thời điểm, đơn vị; medication_entry cho phép nhiều dòng thuốc. Chưa chứng minh cấu trúc biểu mẫu hỗ trợ đầy đủ mọi tình huống thuốc hoặc tập dữ liệu có cấu trúc.
 
-### Tập phụ thuộc và phép kiểm tra trong phạm vi thiết kế
+### 4.3 Tập phụ thuộc và phép kiểm tra
 
 Với mỗi bảng R trong bảng phân tích trên, lấy tập F gồm: PK → mọi thuộc tính còn lại, và mỗi khóa ứng viên K → mọi thuộc tính còn lại. Khóa nhiều cột được hiểu là cả bộ, không phải từng thành phần độc lập. Các thuộc tính không khóa được liệt kê theo hợp của tất cả khóa ứng viên.
 
@@ -509,6 +486,82 @@ Giả định nghiệp vụ dùng trong phép kiểm tra: mã và nhãn chỉ c�
 
 **Kết luận:** lược đồ 25 bảng đạt 3NF đối với tập phụ thuộc F và giả định nghiệp vụ được nêu cho phạm vi hiện tại. Đây là kết luận thiết kế có điều kiện, không là chứng nhận mọi dữ liệu lâm sàng có thể được đưa vào hoặc các biến giai đoạn sau đã được mô hình hóa. Khi bổ sung danh mục mã chuẩn, quy tắc suy diễn hoặc cấu trúc lặp mới, phải kiểm tra lại các phụ thuộc và cập nhật schema nếu cần. Kết quả chạy SQL được báo cáo riêng và không dùng làm chứng minh chuẩn hóa.
 
-### Các thuộc tính bổ sung sau đối chiếu demo
+### 4.4 Các thuộc tính bổ sung sau đối chiếu demo
 
 `medication_entry` ghi thêm hoạt chất, hàm lượng, liều nguyên văn, trạng thái, loại sản phẩm, nguồn và thời điểm; các thuộc tính này phụ thuộc vào chính dòng thuốc `id`, không suy từ tên thuốc. `observation_version` ghi tên chỉ số trên phiếu và nguồn do người dùng khai báo; hai thuộc tính phụ thuộc vào bản giá trị `id`, không lấy từ định nghĩa trường. Đơn vị và thời điểm tiếp tục thuộc bản giá trị, nên hai lần xét nghiệm cùng loại không ghi đè nhau. Kết luận 3NF vẫn giới hạn trong các giả định nghiệp vụ đã nêu; chưa chứng minh chuẩn hóa danh mục thuốc và thuật ngữ xét nghiệm.
+
+<a id="bieu-mau"></a>
+
+## 5 Biểu mẫu và truy vết nguồn
+
+- [Cấu hình biểu mẫu JSON](cau-hinh-bieu-mau-suy-tim-v1.json) và [seed nạp biểu mẫu](../database/seed-bieu-mau-suy-tim-v1.sql): 66 trường lâm sàng, cận lâm sàng và thông tin theo nguồn; trường hành chính được lưu riêng. Các trường đều cho phép chưa biết; nội dung, đơn vị và lựa chọn cần được bác sĩ rà soát.
+- [Phụ lục truy vết và đối chiếu dữ liệu](internal/phu-luc-truy-vet-va-doi-chieu-du-lieu.md): 206 biến TL06, 42 cột file mẫu, 95 mục TL04–TL05 và bản rà repo demo-web-3. Trong bảng TL06, 47 dòng thuộc MVP, 65 dòng đầu ra giai đoạn sau và 94 dòng cần xác nhận; các mục ghi cấu trúc hỗ trợ một phần chưa được tính là hoàn tất.
+- [Kiểm thử và cách chạy](internal/kiem-thu-co-so-du-lieu-MVP.md).
+
+Nhóm tài liệu TL01–TL03 đã dùng làm căn cứ phạm vi lâm sàng nhưng chưa có bảng truy vết đầy đủ từng thông tin sang trường biểu mẫu. Các cột nguồn chưa rõ, đơn vị chưa chốt, trường dữ liệu tính toán, thuốc và dữ liệu nhiều lựa chọn cần tiếp tục xác nhận trước khi coi danh mục trường hoàn chỉnh.
+
+Ảnh PNG ghi kiểu, PK/FK và bảng bội số dưới mỗi hình; file draw.io ghi nhãn bội số trên liên kết. Các bảng liên kết có ký hiệu PK/FK trên từng cột của khóa ghép.
+
+<a id="rang-buoc"></a>
+
+## 6 Ràng buộc, kịch bản tạo bảng và kiểm thử
+
+### 6.1 Ràng buộc trong lược đồ
+
+Khóa chính và UNIQUE tạo chỉ mục duy nhất trong PostgreSQL.
+
+Các điều kiện liên bảng sau được thực hiện bằng trigger, không phải CHECK tham chiếu bảng khác:
+
+| Quy tắc | Cơ chế trong schema |
+| --- | --- |
+| Trường và lượt cùng phiên bản mẫu | observation_field_version; encounter_form_valid |
+| Kiểu giá trị và lựa chọn đúng trường | observation_value_valid; CHECK một ô giá trị |
+| Lịch sử giá trị không bị ghi đè | observation_version_immutable; observation_identity_locked |
+| Dữ liệu nguồn và giá trị áp dụng cùng lượt/trường | import_application_match; import_mapping_valid |
+| Nguồn 0 phải chờ rà soát khi chính sách được bật | import_zero_review |
+| Không đổi phần nguồn sau khi ghi | import_item_locked |
+| Không sửa cấu hình ánh xạ đã dùng | used_mapping_profile; used_mapping_rule |
+| Không sửa mẫu đã phát hành hoặc dùng | protect_version; protect_section; protect_field; protect_option |
+| Lịch hẹn không vượt sức chứa | appointment_capacity; slot_capacity_valid; khóa hàng khung giờ trong giao dịch |
+
+Ứng dụng chịu trách nhiệm phân quyền, xác minh mã nguồn đúng người bệnh, đọc file, trình bày xem trước, kiểm tra bắt buộc theo thao tác và ghi nhật ký. Các quy tắc chuyển đơn vị, suy diễn lâm sàng và danh mục chưa chốt không được tuyên bố là đã được DDL thực thi. Các phép kiểm thử đã chạy được nêu riêng tại [kết quả kiểm thử](internal/kiem-thu-co-so-du-lieu-MVP.md).
+
+---
+
+DDL có khóa chính và khóa ngoại, ràng buộc duy nhất, kiểm tra và chỉ mục. Đã tạo 25 bảng trên PostgreSQL thử riêng, nạp 66 trường và chạy các ca mô tả tại [kết quả kiểm thử](internal/kiem-thu-co-so-du-lieu-MVP.md).
+
+### 6.2 Kịch bản tạo bảng và biểu mẫu
+
+[Kịch bản tạo bảng PostgreSQL](../database/schema-MVP.sql) · [Seed biểu mẫu suy tim](../database/seed-bieu-mau-suy-tim-v1.sql).
+
+### 6.3 Kiểm thử
+
+[Ca kiểm thử và kết quả thực chạy](internal/kiem-thu-co-so-du-lieu-MVP.md).
+
+<a id="mo-rong"></a>
+
+## 7 Mở rộng và giới hạn triển khai
+
+### 7.1 Giới hạn hiện tại
+
+DDL dự kiến dùng cho PostgreSQL trên cơ sở dữ liệu trống, chưa là migration cho bản demo cũ và chưa có quy trình chuyển dữ liệu. Các mô tả trạng thái, dữ liệu nhập và quy tắc lâm sàng phải được nhóm xác nhận; không dùng dữ liệu bệnh nhân thật trong bộ tài liệu.
+
+Sao lưu/khôi phục thuộc quy trình vận hành PostgreSQL và kho tệp, không cần tạo một bản sao các bảng nghiệp vụ trong schema. Kiểm thử khôi phục không nằm trong các kết quả SQL đã nêu ở đợt này.
+
+### 7.2 Cách thêm trường sau này
+
+1. Chọn biến từ bảng truy vết; xác định nhãn, mã ổn định, nhóm, kiểu, đơn vị, lựa chọn, quy tắc và nguồn.
+2. Tạo phiên bản nháp mới của mẫu, sao chép các nhóm/trường/lựa chọn cần giữ với ID mới; giữ mã logic của trường cũ. Thêm trường mới vào bản nháp.
+3. Kiểm tra và phát hành bản mới. Lượt mới dùng bản mới; lượt cũ giữ form_version_id cũ. Không tự chuyển dữ liệu giữa mẫu.
+4. Cập nhật cấu hình JSON, seed phiên bản mới, bảng truy vết và kiểm thử. Khi trường chỉ dùng các kiểu hiện có, không cần thêm cột SQL.
+5. Kiểu nghiệp vụ mới hoặc cấu trúc mới (ví dụ bảng thuốc chuyên biệt hơn) có thể cần migration riêng. Không sửa schema rồi chạy lại trên CSDL có dữ liệu.
+
+Đã chạy ca thêm trường ở bản mới, ghi giá trị cho lượt mới và xác minh mẫu/giá trị lượt cũ còn nguyên. Cách này cho phép chốt nền dữ liệu trước khi hoàn thiện toàn bộ danh mục lâm sàng. Không gọi danh mục 66 trường là đầy đủ toàn bộ dữ liệu suy tim.
+
+---
+
+<a id="can-cu"></a>
+
+## 8 Căn cứ thiết kế
+
+Đối chiếu sáu nguồn nhóm cung cấp: hướng dẫn suy tim của Bộ Y tế; tài liệu suy tim người cao tuổi; tài liệu SUY TIM; schema tối thiểu năm bệnh; bảng biến bác sĩ AI-CDSS; từ điển dữ liệu suy tim. Các nguồn chuyên môn làm căn cứ chọn trường biểu mẫu và không tự tạo yêu cầu kết nối trực tiếp bệnh viện. Tham khảo [bài giảng kỹ thuật yêu cầu và thiết kế hệ thống](https://fossbk-spec.github.io/ktpmud-book/ch02_yeu_cau_thiet_ke_c4).
