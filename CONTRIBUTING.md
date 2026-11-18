@@ -50,6 +50,12 @@ vô tình ghi đè hay xung đột với nhóm B.
    thường** (mọi cập nhật sau merge coi như nộp lại, cần trao đổi trực tiếp
    với giảng viên).
 
+> **README bắt buộc (từ Tuần 11, 18/11):** `README.md` của nhóm phải có đủ 6 mục
+> (giới thiệu sản phẩm, phạm vi MVP, kiến trúc & công nghệ, cài đặt & cách sử dụng,
+> hướng phát triển Tuần 11–15, nhóm & tuân thủ) — copy từ `submissions/_TEMPLATE/README.md`.
+> CI kiểm tra đủ mục, độ dài tối thiểu và không còn nội dung mẫu. Chi tiết:
+> https://fossbk-spec.github.io/ktpmud-book/nop_bai
+
 ## 2. Schema `submission.json`
 
 ```json
