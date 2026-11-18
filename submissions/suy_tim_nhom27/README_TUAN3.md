@@ -7,9 +7,8 @@ Phạm vi: Case 2, hệ thống hỗ trợ quyết định suy tim cho bác sĩ;
 | Yêu cầu | Tệp bàn giao |
 |---|---|
 | 3.1 — C4 C1/C2 | [Kiến trúc](docs/architecture/architecture.md) |
-| 3.2 — ERD | [ERD](database/erd.md) |
-| 3.2 — Data Dictionary | [Từ điển dữ liệu](database/data_dictionary.md), [ánh xạ nguồn](database/source_mapping.md) |
-| 3.2 — DDL | [schema.sql](database/schema.sql), [seed.sql](database/seed.sql) |
+| 3.2 — Thiết kế dữ liệu MVP hiện hành | [ERD, từ điển và phân tích 3NF](docs/thiet-ke-du-lieu.md) |
+| 3.2 — DDL của bản bàn giao tuần 3 | [schema.sql](database/schema.sql), [seed.sql](database/seed.sql) |
 | 3.3 — Class + 3 Sequence | [UML](docs/uml/uml.md) |
 | 3.4 — OpenAPI | [openapi.yaml](api/openapi.yaml), [hướng dẫn API](api/README.md) |
 | 3.4 — Gateway skeleton | [main.py](src/gateway/main.py), models.py, services.py, store.py |

@@ -8,7 +8,8 @@
 |---|---|---|
 | SRS và RTM (FR → US → UC → module → bảng dữ liệu) | [SRS_v1.0.md](docs/SRS_v1.0.md) | Bản review; các câu hỏi cho giảng viên ở mục 12 |
 | C4 C1/C2; DFD; UML Class/Sequence; ảnh và nguồn draw.io | [Kiến trúc](docs/architecture/architecture.md), [UML](docs/uml/uml.md), [tệp nguồn/ảnh](docs/architecture/) | C4, Class 05–06 là thiết kế đích; Sequence 07–09 mô tả stub |
-| ERD 3NF, từ điển dữ liệu, DDL | [ERD](database/erd.md), [Data Dictionary](database/data_dictionary.md), [schema.sql](database/schema.sql) | Lược đồ thiết kế; Gateway chưa kết nối PostgreSQL |
+| Thiết kế dữ liệu MVP: ERD, từ điển, 3NF, DDL | [Tài liệu thiết kế dữ liệu](docs/thiet-ke-du-lieu.md), [DDL MVP](database/mvp/schema.sql) | Phạm vi nhóm chức năng 1, 2, 6; tạo CSDL mới, chưa phải migration |
+| CSDL của bản bàn giao tuần 3 | [schema.sql](database/schema.sql), [seed.sql](database/seed.sql) | Vẫn được Docker Compose và kiểm thử Gateway sử dụng; tách biệt với DDL MVP |
 | OpenAPI 3.0.3 và Gateway | [openapi.yaml](api/openapi.yaml), [hướng dẫn API](api/README.md), [mã nguồn](src/gateway/) | Stub chạy trong RAM; không chẩn đoán/kê đơn |
 
 [Báo cáo tuần 3](docs/Bao_cao_tuan3.md) · [Điểm chưa khớp/việc chờ xác nhận](docs/consistency_review.md) · [Hướng dẫn chạy và kiểm thử](README_TUAN3.md)

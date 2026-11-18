@@ -5,13 +5,13 @@
 Đã dùng PostgreSQL 16.15 trên Windows với một cluster và CSDL thử riêng, không dùng CSDL demo. Từ thư mục `submissions/suy_tim_nhom27`, trên một CSDL PostgreSQL **mới, trống**, chạy:
 
 ```sh
-psql -v ON_ERROR_STOP=1 -d TEN_CSDL_THU -f database/schema-MVP.sql
-psql -v ON_ERROR_STOP=1 -d TEN_CSDL_THU -f database/seed-bieu-mau-suy-tim-v1.sql
-psql -v ON_ERROR_STOP=1 -d TEN_CSDL_THU -f database/test-schema-MVP.sql
-psql -v ON_ERROR_STOP=1 -d TEN_CSDL_THU -f database/test-rang-buoc-nang-cao.sql
+psql -v ON_ERROR_STOP=1 -d TEN_CSDL_THU -f database/mvp/schema.sql
+psql -v ON_ERROR_STOP=1 -d TEN_CSDL_THU -f database/mvp/seed-form-v1.sql
+psql -v ON_ERROR_STOP=1 -d TEN_CSDL_THU -f database/mvp/tests/schema.sql
+psql -v ON_ERROR_STOP=1 -d TEN_CSDL_THU -f database/mvp/tests/constraints.sql
 ```
 
-Các file test SQL tự ROLLBACK dữ liệu giả lập. File `test-dong-thoi.py` tạo dữ liệu giả lập và commit trong CSDL thử: chỉ chạy ở CSDL dùng riêng cho kiểm thử; cài `PSQL`, `PGDATABASE`, `PGPORT` và sửa tham số người dùng/địa chỉ trong script khi cần.
+Các file test SQL tự ROLLBACK dữ liệu giả lập. File `database/mvp/tests/concurrency.py` tạo dữ liệu giả lập và commit trong CSDL thử: chỉ chạy ở CSDL dùng riêng cho kiểm thử; cài `PSQL`, `PGDATABASE`, `PGPORT` và sửa tham số người dùng/địa chỉ trong script khi cần.
 
 ## Kết quả thực tế
 

@@ -494,7 +494,7 @@ Giả định nghiệp vụ dùng trong phép kiểm tra: mã và nhãn chỉ c�
 
 ## 5 Biểu mẫu và truy vết nguồn
 
-- [Cấu hình biểu mẫu JSON](cau-hinh-bieu-mau-suy-tim-v1.json) và [seed nạp biểu mẫu](../database/seed-bieu-mau-suy-tim-v1.sql): 66 trường lâm sàng, cận lâm sàng và thông tin theo nguồn; trường hành chính được lưu riêng. Các trường đều cho phép chưa biết; nội dung, đơn vị và lựa chọn cần được bác sĩ rà soát.
+- [Cấu hình biểu mẫu JSON](cau-hinh-bieu-mau-suy-tim-v1.json) và [seed nạp biểu mẫu](../database/mvp/seed-form-v1.sql): 66 trường lâm sàng, cận lâm sàng và thông tin theo nguồn; trường hành chính được lưu riêng. Các trường đều cho phép chưa biết; nội dung, đơn vị và lựa chọn cần được bác sĩ rà soát.
 - [Phụ lục truy vết và đối chiếu dữ liệu](internal/phu-luc-truy-vet-va-doi-chieu-du-lieu.md): 206 biến TL06, 42 cột file mẫu, 95 mục TL04–TL05 và bản rà repo demo-web-3. Trong bảng TL06, 47 dòng thuộc MVP, 65 dòng đầu ra giai đoạn sau và 94 dòng cần xác nhận; các mục ghi cấu trúc hỗ trợ một phần chưa được tính là hoàn tất.
 - [Kiểm thử và cách chạy](internal/kiem-thu-co-so-du-lieu-MVP.md).
 
@@ -532,7 +532,7 @@ DDL có khóa chính và khóa ngoại, ràng buộc duy nhất, kiểm tra và 
 
 ### 6.2 Kịch bản tạo bảng và biểu mẫu
 
-[Kịch bản tạo bảng PostgreSQL](../database/schema-MVP.sql) · [Seed biểu mẫu suy tim](../database/seed-bieu-mau-suy-tim-v1.sql).
+[Kịch bản tạo bảng PostgreSQL](../database/mvp/schema.sql) · [Seed biểu mẫu suy tim](../database/mvp/seed-form-v1.sql).
 
 ### 6.3 Kiểm thử
 
