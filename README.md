@@ -1,64 +1,118 @@
-# KTPMUD Project — Repo Nộp Bài Chung Của Lớp
 
-Repo này là nơi **sinh viên môn Kỹ Thuật Phần Mềm Ứng Dụng (KTPMUD)** nộp
-bài đồ án cuối khóa theo case study đã chọn trong
-[Ngân hàng Case Study](https://fossbk-spec.github.io/ktpmud-book/do_an_mon_hoc).
+# 🌱 Vườn Toán Lớp 3 — Trường Tiểu học Hoàng Mai
 
-- **Đề bài, kịch bản, rubric:** xem tại
-  [ktpmud-book](https://fossbk-spec.github.io/ktpmud-book/) — repo này
-  **không** chứa lại đề bài, chỉ chứa bài làm của sinh viên.
-- **Mỗi nhóm = 1 thư mục riêng** dưới `submissions/`, đặt tên theo đúng quy
-  ước ở [CONTRIBUTING.md](CONTRIBUTING.md).
-- **Nộp bài qua Pull Request** — không push trực tiếp vào `main`. Xem quy
-  trình đầy đủ trong [CONTRIBUTING.md](CONTRIBUTING.md); làm lần đầu thì theo
-  [HUONG_DAN_NOP_BAI.md](HUONG_DAN_NOP_BAI.md) (từng bước, có ví dụ).
+**Nhóm thực hiện:** Nhóm 43 — KTPMUD Hack Marathon 2026, Track B (`hoang_mai_toan`)
 
-## Vì sao dùng Pull Request thay vì push trực tiếp?
+## 1. Cách chạy
 
-1. **Cách ly giữa các nhóm** — mỗi PR chỉ được phép đổi file trong đúng 1
-   thư mục `submissions/<case_study_slug>_<ma_nhom>/` của nhóm đó. CI tự
-   động chặn PR nếu đụng vào thư mục của nhóm khác (xem
-   `.github/workflows/validate-submission.yml`).
-2. **Không mất bài** — lịch sử Git giữ nguyên toàn bộ commit của từng nhóm;
-   `main` chỉ nhận bản đã qua kiểm tra tự động + giảng viên duyệt.
-3. **Không nộp nhầm/nộp thiếu** — CI kiểm tra cấu trúc thư mục, file bắt
-   buộc (`submission.json`, `README.md`), và chặn các mẫu hình dữ liệu
-   nhạy cảm phổ biến (khóa API, thông tin bệnh nhân thật) trước khi merge.
+Yêu cầu: máy có **Node.js 18+**.
 
-## Cấu trúc repo
-
-```
-ktpmud-project/
-├── submissions/
-│   ├── _TEMPLATE/                  ← Copy thư mục này để bắt đầu nộp bài
-│   │   ├── submission.json         ← Thông tin nhóm + case study (bắt buộc)
-│   │   ├── README.md               ← Tóm tắt bài làm (bắt buộc)
-│   │   ├── report/                 ← Báo cáo (PDF/Markdown), SRS, C4 diagram
-│   │   ├── src/                    ← Mã nguồn
-│   │   └── slides/                 ← Slide thuyết trình (tuỳ chọn)
-│   │
-│   └── <case_study_slug>_<ma_nhom>/  ← 1 thư mục nộp bài của 1 nhóm
-│       └── ... (giống cấu trúc _TEMPLATE)
-│
-├── scripts/validate_submission.py  ← Script CI dùng để kiểm tra PR
-├── .github/workflows/validate-submission.yml
-├── CONTRIBUTING.md                 ← Hướng dẫn nộp bài chi tiết từng bước
-└── CODEOWNERS                      ← Định tuyến review PR tới giảng viên/TA
+```bash
+npm install     # chỉ cần chạy 1 lần đầu
+npm start       # mở http://localhost:3000
 ```
 
-## Case study hiện có
+Lần chạy đầu, server tự tạo `data/vuon-toan.db` và nạp dữ liệu mẫu từ `data/seed.json`.
 
-| Slug | Case Study | Ghi chú |
+### Tài khoản mẫu
+
+| Vai trò | Tên đăng nhập | Mật khẩu | Ghi chú |
+|---|---|---|---|
+| Học sinh | `hocsinh01` … `hocsinh99` | `123456` | 99 tài khoản giả lập lớp 3A2, dùng cho test/demo hackathon — không phải học sinh thật |
+| Giáo viên | `giaovien01` | `123456` | Vào thẳng Góc Giáo Viên |
+
+> Khi đưa lên Internet thật: đổi mật khẩu các tài khoản mẫu, và đặt biến môi trường
+> `SESSION_SECRET` bằng một chuỗi bí mật dài trước khi chạy `npm start`.
+
+## 2. Cấu trúc thư mục
+
+```
+vuon-toan-lop-3/
+├─ public/                    # Giao diện (server phục vụ thư mục này)
+│  ├─ *.html                  # Mỗi trang 1 file, CHỈ chứa nội dung trang
+│  └─ assets/
+│     ├─ css/app.css          # CSS nền dùng chung (trước đây lặp trong 11 file)
+│     └─ js/
+│        ├─ tailwind.config.js  # Cấu hình Tailwind dùng chung 1 chỗ duy nhất
+│        ├─ core/  (api.js = gọi API, app.js = đăng nhập + nối link, game-score.js = lưu điểm game)
+│        ├─ components/ (navbar.js, sidebar.js=bản đồ link, footer.js dùng chung)
+│        └─ pages/  (logic riêng từng trang: login.js, exercise.js, exam.js,...)
+├─ public/lesson.html       # Trang làm bài chung cho bộ đề giáo viên tự tạo
+├─ server/
+│  ├─ index.js   # Điểm vào: API /api/* + phục vụ giao diện
+│  ├─ db.js      # Tạo bảng + nạp dữ liệu mẫu vào SQLite
+│  ├─ auth.js    # Cookie đăng nhập httpOnly, băm mật khẩu bcrypt
+│  └─ api.js     # Toàn bộ API (đăng nhập, bài học, nộp bài, giáo viên...)
+├─ data/
+│  ├─ seed.json      # DỮ LIỆU GỐC: tài khoản mẫu, bài học, câu hỏi
+│  └─ vuon-toan.db   # CSDL SQLite (tự sinh khi chạy; sao lưu = chép file này)
+├─ tools/build-from-original.py  # Dựng lại giao diện từ bản gốc khi cần
+├─ original-backup/  # NGUYÊN BẢN code cũ trước khi sửa (để đối chiếu/khôi phục)
+└─ HUONG-DAN-THEM-BAI.md  # Cách thêm bài học/câu hỏi mới
+```
+
+## 3. API chính
+
+| Method | Đường dẫn | Mô tả |
 |---|---|---|
-| `may_day` | CS-1: Dr May Day v2.0 | Có 2 kịch bản: `mayday_sim` (mô phỏng) hoặc `mayday_tichhop` (tích hợp thật) — ghi rõ kịch bản trong `submission.json` |
-| `suy_tim` | CS-2: AI-CDSS Suy tim (HF-CDSS) | |
-| `alzheimer` | CS-3: AI-CDSS Alzheimer | |
-| `dreye` | CS-4: Phần mềm điều khiển thiết bị Edge AI (DrEye) | Phần mềm nhúng/di động — khác lớp CS-2/CS-3 (CDSS server/web) |
-| `dai_thao_duong` | CS-5: Hỗ trợ người chăm sóc theo dõi điều trị ngoại trú đái tháo đường type 2 | Đề nhóm đề xuất, giảng viên đã duyệt |
-| `nha_cho_thue` | CS-6: Phần mềm quản lý nhà cho thuê (nhà trọ, chung cư mini) | Đề ngoài y tế, nhóm đề xuất, giảng viên đã duyệt |
-| `ban_do_lich_su` | CS-7: Website Bản đồ Lịch sử Việt Nam | Đề ngoài y tế, nhóm đề xuất, giảng viên đã duyệt |
-| `ke_hoach_hoc_tap` | CS-8: Hệ thống hỗ trợ theo dõi tiến độ và lập kế hoạch học tập cho sinh viên | Đề ngoài y tế, nhóm đề xuất, giảng viên đã duyệt |
-| `quan_ly_thiet_bi_y_te` | CS-9: Hệ thống quản lý thiết bị y tế | Đề nhóm đề xuất (nhom49), giảng viên đã duyệt 10/11/2026 |
+| POST | `/api/auth/login` · `/api/auth/logout` | Đăng nhập (cookie httpOnly) / đăng xuất |
+| GET | `/api/auth/me` | Thông tin người đang đăng nhập |
+| GET | `/api/lessons`, `/api/me/progress` | Bài học kèm tiến độ, khóa/mở theo thứ tự |
+| GET | `/api/question-sets/:id/questions` | Câu hỏi — **không kèm đáp án** |
+| POST | `/api/submissions` | Nộp bài; server chấm, lưu điểm, cộng sao theo tiến bộ |
+| GET | `/api/leaderboard` | Bảng xếp hạng tính từ sao thật trong DB |
+| GET/POST | `/api/teacher/students` | Giáo viên xem / cấp tài khoản học sinh |
+| POST | `/api/teacher/students/:id/reset-password` | Giáo viên đặt lại mật khẩu |
 
-Slug phải khớp đúng tên trong
-[bảng case study](https://fossbk-spec.github.io/ktpmud-book/do_an_mon_hoc).
+## 4. Đã làm ở Đợt 1 (cốt lõi)
+
+- Tách cấu hình Tailwind + CSS + JS dùng chung (trước: sao chép vào cả 11 file HTML);
+  sửa tên file sai chính tả (`excersise→exercise`, `leadboard→leaderboard`, `schudule→schedule`).
+- Nối lại toàn bộ link menu từng là `href="#"` sang trang thật.
+- Backend Node.js + Express + SQLite; mật khẩu băm bcrypt; phân quyền học sinh/giáo viên.
+- Trang chủ render bài học từ API; luyện tập & kiểm tra (20 câu, đếm giờ, tự nộp khi hết giờ)
+  chấm điểm trên server và lưu tiến độ — tải lại trang không mất điểm.
+- Góc Giáo Viên: xem danh sách lớp với điểm trung bình thật, **cấp tài khoản + đặt lại mật khẩu** cho học sinh.
+
+## 5. Đợt 2 (đã hoàn thành)
+
+- **4 mini-game chơi thật & lưu điểm**: Bắn Bóng (10 vòng phép nhân), Đua Xe (chọn cổng đáp án),
+  Lật Thẻ Trí Nhớ (ghép cặp phép tính–kết quả), Câu Cá (10 vòng phép chia). Điểm gửi lên server,
+  sao chỉ cộng theo phần vượt kỷ lục cũ của từng em.
+- **Bảng xếp hạng render 100% từ dữ liệu thật** (`/api/leaderboard`): hạng, lượt làm bài, điểm TB, tổng sao.
+- **Trang làm bài chung `lesson.html`**: mọi bộ đề giáo viên tạo đều làm được tại đây
+  (`lesson.html?lesson=bai-16&set=...`), hỗ trợ trắc nghiệm / điền số / điền dấu / tô màu.
+- **Quản trị trên web (Góc Giáo Viên)**: thêm/sửa/xóa bài học, tạo bộ đề, thêm/sửa/xóa câu hỏi,
+  xuất báo cáo lớp ra CSV mở bằng Excel. Học sinh không vào được khu vực này.
+
+## 6. Đợt 3 (đã hoàn thành)
+
+- **Đăng nhập dự phòng 2 lớp**: cookie httpOnly + Bearer token trong trình duyệt
+  (tự động dùng khi cookie bị chặn, ví dụ xem qua khung iframe/xem trước).
+- **Thống kê lớp thật** (`/api/teacher/analytics`): 4 thẻ KPI đầu trang Góc Giáo Viên đã là số thật,
+  thêm biểu đồ lượt làm bài 7 ngày, top 3 dạng bài hay sai nhất, tiến độ từng bài học.
+  Hai khối biểu đồ/chẩn đoán mẫu cũ được ẩn để tránh nhầm số liệu.
+- **CSS Tailwind tĩnh** (`assets/css/tailwind.build.css`, chạy `npm run build:css` để gói lại):
+  phòng máy mất Internet giao diện vẫn giữ nguyên; CDN chỉ còn là lớp dự phòng.
+- **Sẵn sàng deploy**: endpoint `/api/health`, hỗ trợ `DB_PATH` cho ổ đĩa bền,
+  `Dockerfile` + `DEPLOY.md` (VPS/Render/Railway, việc cần làm với `SESSION_SECRET` và mật khẩu mẫu).
+
+## 7. Nếu muốn làm tiếp
+
+- Nhúng font/icon tại chỗ để offline 100% cả chữ và biểu tượng.
+- Thực hiện deploy thật (cần tài khoản hosting/tên miền của trường).
+- Thêm biểu đồ theo tuần/tháng và xuất phiếu bồi dưỡng PDF theo dạng bài hay sai.
+
+
+## Dạng bài ước lượng (Track B)
+
+- Bộ câu hỏi mới có ID `uoc-luong-truoc-khi-tinh`, được nạp từ `data/seed.json`.
+- 12 fixture synthetic được lưu tại `data/estimation_fixtures.json`; `server/db.js` seed bổ sung idempotent để DB đã tồn tại cũng nhận bộ câu hỏi mới.
+- Quy tắc chấp nhận: ±20% quanh kết quả chính xác; `correct_answer` lưu khoảng đóng `lo-hi`.
+- Module chấm điểm: `server/estimationScorer.js`.
+- API lấy câu hỏi không trả đáp án chính xác của câu `estimate`; API kiểm tra riêng ước lượng chỉ trả kết luận hợp lý/chưa hợp lý. Khi nộp, gửi `answers[questionId] = { estimate, exact }`; backend chấm độc lập hai phần.
+- Trang `lesson.html` hiển thị hai bước: nhập ước lượng trước, sau đó mới mở ô tính chính xác; kết quả cuối cùng phân biệt đủ bốn trường hợp phản hồi.
+- Từ hộp thoại bài học số 10 trong Mục lục SGK có liên kết riêng đến bộ bài ước lượng, không thay thế phiếu luyện tập cũ.
+- Chạy unit tests: `npm test`.
+
+**Giới hạn xác minh:** Giao diện và điều hướng đã được tích hợp vào mã nguồn; cần chạy thử trên trình duyệt cùng API/SQLite sau khi cài đủ dependencies. Các kịch bản API/UI và GitHub Actions chưa được xác nhận chạy thành công trong môi trường này.
