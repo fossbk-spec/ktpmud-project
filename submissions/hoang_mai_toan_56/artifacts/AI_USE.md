@@ -1,53 +1,20 @@
-# Hướng dẫn đưa Vườn Toán lên Internet
 
-> Trạng thái hiện tại: web đã chạy hoàn chỉnh trên máy/localhost. Để học sinh vào được
-> từ nhà, cần đặt server Node.js này lên một máy chủ có địa chỉ công khai.
-> **Không** dùng được GitHub Pages/Netlify tĩnh vì web cần backend + CSDL.
+# NHẬT KÝ SỬ DỤNG TRÍ TUỆ NHÂN TẠO (AI-USE LOG)
+- **Nhóm thực hiện:** Nhóm 56 (`nhom56` — Track B)
+- **Chính sách tuân thủ:** `ai-allowed` (Khai báo minh bạch, kiểm chứng độc lập, không dùng AI làm nguồn đáp án trong runtime).
 
-## Việc bắt buộc trước khi public
+## 1. Nguyên tắc sử dụng AI của Nhóm 56
+1. **Không dùng LLM trong Runtime (B-03):** Hệ thống Vườn Toán Lớp 3 của nhóm tuyệt đối không gọi bất kỳ API AI/LLM nào để sinh đề hay chấm điểm. 100% logic toán học là hàm tất định (deterministic) chạy tại `server/`.
+2. **Kiểm chứng thủ công và Tự động:** Mọi đoạn mã hoặc tài liệu có sự hỗ trợ gợi ý từ công cụ AI đều được các thành viên trong nhóm đọc hiểu, tính toán lại bằng tay trên bộ 12 fixtures và kiểm chứng qua bộ test tự động (`npm test`).
 
-1. Đặt biến môi trường `SESSION_SECRET` = một chuỗi bí mật dài, ngẫu nhiên (ký cookie đăng nhập).
-2. Đăng nhập `giaovien01/123456` và tạo tài khoản giáo viên thật, sau đó nhờ quản trị vô hiệu
-   tài khoản mẫu trong CSDL (hoặc đổi mật khẩu bằng cách đặt lại trong DB).
-   Học sinh mẫu `hocsinh01` cũng nên đổi mật khẩu nếu giữ lại.
-3. Chọn nơi chứa file CSDL **bền vững** (không bị xóa khi server khởi động lại):
-   - Docker/VPS: gắn volume vào `/data` (Dockerfile đã cấu hình sẵn `DB_PATH=/data/vuon-toan.db`).
-   - Render/Railway: gắn Persistent Disk/Volume và đặt biến `DB_PATH` trỏ vào thư mục đó.
-   - Nếu không gắn ổ bền, mỗi lần deploy lại sẽ mất hết điểm học sinh.
+## 2. Bảng truy vết sử dụng AI chi tiết
 
-## Cách A — VPS (ổn định nhất cho trường học)
+| Thời gian | Thành viên | Công cụ AI | Mục đích sử dụng (Tóm tắt Prompt) | Cách nhóm kiểm chứng & Chỉnh sửa |
+|---|---|---|---|---|
+| Giai đoạn M1 (Phân tích) | `N56-Member-02` | Gemini / ChatGPT | Tham khảo cách diễn đạt quy tắc làm tròn số và tìm bội số tương thích cho phép chia có dư phù hợp chương trình Toán lớp 3. | Nhóm tự chốt công thức toán học tất định `Math.floor(a / (10 * b) + 0.5) * (10 * b)`, tự lập bảng 12 fixtures (`B-F01` -> `B-F12`) và tính tay lại từng khoảng `[E_min, E_max]`. |
+| Giai đoạn Thiết kế | `N56-Member-01` | Gemini | Gợi ý cú pháp kiểm tra cột tồn tại trong SQLite (`PRAGMA table_info`) để viết hàm auto-migration an toàn không làm hỏng dữ liệu cũ. | Kiểm tra trực tiếp trên file CSDL SQLite của starter repo, đảm bảo chạy lại nhiều lần không báo lỗi trùng cột và 4 dạng bài cũ vẫn hoạt động. |
+| Giai đoạn Kiểm thử (PC-2) | `N56-Member-03` | Gemini | Hỗ trợ rà soát các ca kiểm thử giá trị biên (Boundary Value Analysis) và viết khung script kiểm thử tự động cho `npm test`. | Tự thiết lập các giá trị biên cụ thể (`139, 140, 160, 161` cho câu `48 x 3` và `17, 18, 22, 23` cho câu `87 : 4`), chạy thực tế trên máy và CI để xác nhận kết quả. |
+| Giai đoạn Đóng gói | Cả nhóm | Gemini | Rà soát cấu trúc thư mục nộp bài `submissions/hoang_mai_toan_56/` và đối chiếu danh sách 12 tiêu chí B-01..B-12. | Đối chiếu từng file với hướng dẫn của môn học, kiểm tra trạng thái bot validate trên Pull Request. |
 
-```bash
-# Trên VPS Ubuntu có Docker:
-docker build -t vuon-toan .
-docker run -d --name vuon-toan -p 3000:3000 \
-  -e SESSION_SECRET="chuoi-bi-mat-cua-ban" \
-  -v vuon-toan-data:/data vuon-toan
-```
-
-Sau đó trỏ tên miền về VPS và dùng Caddy/Nginx làm HTTPS (cookie đăng nhập cần HTTPS).
-
-## Cách B — Render / Railway (dễ, không quản server)
-
-1. Đưa thư mục này lên GitHub.
-2. Tạo Web Service từ repo, môi trường Docker (repo đã có Dockerfile) hoặc Node:
-   - Build: `npm ci` — Start: `npm start`
-3. Thêm Persistent Disk (ví dụ mount tại `/data`) và đặt các biến:
-   - `SESSION_SECRET` = chuỗi bí mật
-   - `DB_PATH=/data/vuon-toan.db`
-   - `NODE_ENV=production`
-4. Kiểm tra `https://ten-mien-cua-ban/api/health` trả về `{"ok":true}` là server sống.
-
-## Kiểm tra sau khi deploy
-
-- Mở trang, đăng nhập `hocsinh01/123456` (trước khi đổi mật khẩu mẫu).
-- Làm 1 bài luyện tập, tải lại trang — điểm vẫn còn là CSDL bền vững đã đúng.
-- Tắt/bật lại service một lần và kiểm tra lại điểm để chắc chắn volume hoạt động.
-
-## Chạy offline trong phòng máy (không Internet)
-
-- Giao diện đã có CSS tĩnh `public/assets/css/tailwind.build.css` nên không cần CDN Tailwind.
-- Chỉ còn font chữ/icon của Google Fonts cần Internet; mất mạng thì web vẫn dùng được,
-  font sẽ lùi về font hệ thống và một số icon có thể hiển thị thành chữ — nên ưu tiên
-  có mạng, hoặc cân nhắc nhúng font tại chỗ ở đợt sau.
-- Sau khi sửa giao diện có thêm class Tailwind mới, chạy `npm run build:css` để gói lại CSS.
+## 3. Cam kết trách nhiệm
+Tất cả thành viên Nhóm 56 cam kết nắm vững toàn bộ kiến trúc, thuật toán ước lượng, cấu trúc bảng SQLite và luồng code để trực tiếp giải thích, bảo vệ trong buổi vấn đáp (Viva) mà không phụ thuộc vào AI.
