@@ -5,6 +5,7 @@ on:
     branches:
       - submit/suy_tim-nhom27
     paths:
+      - .github/workflows/validate-nhom27-submit.yml
       - submissions/suy_tim_nhom27/**
 
 permissions:
@@ -84,7 +85,8 @@ jobs:
           PY
 
       - name: Check Gateway tests
-        run: python -m pytest -q submissions/suy_tim_nhom27/tests/test_gateway.py
+        working-directory: submissions/suy_tim_nhom27
+        run: python -m pytest -q tests/test_gateway.py
 
       - name: Check PostgreSQL schemas and MVP constraints
         run: |
