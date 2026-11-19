@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="ERD-ho-so-benh-nhan-va-luot-kham">
+    <mxGraphModel page="1" pageWidth="1500" pageHeight="1400" grid="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="e0" edge="1" parent="1" source="app_user" target="patient" value="1 : 0..n  created_by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="patient" target="patient_identifier" value="1 : 0..n  patient_id" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="patient" target="encounter" value="1 : 0..n  patient_id" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="form_version" target="encounter" value="1 : 0..n  form_version_id" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="app_user" target="encounter" value="1 : 0..n  created_by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="encounter" target="encounter_identifier" value="1 : 0..n  encounter_id" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="encounter" target="medication_entry" value="1 : 0..n  encounter_id" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="app_user" target="medication_entry" value="1 : 0..n  recorded_by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="encounter" target="observation" value="1 : 0..n  encounter_id" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="observation" target="observation_version" value="1 : 0..n  observation_id" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="app_user" target="observation_version" value="1 : 0..n  recorded_by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;html=0;strokeColor=#66859c;fontSize=11;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="app_user" vertex="1" parent="1" value="app_user&#xA;PK id : bigint&#xA;login_name : text&#xA;password_hash : text&#xA;active : boolean&#xA;created_at : timestamptz" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="40" y="90" width="440" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="patient" vertex="1" parent="1" value="patient&#xA;PK id : bigint&#xA;patient_code : text&#xA;full_name : text&#xA;birth_date : date ?&#xA;birth_year : smallint ?&#xA;sex : text ?&#xA;insurance_no : text ?&#xA;created_at : timestamptz&#xA;FK created_by : bigint" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="540" y="90" width="440" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="patient_identifier" vertex="1" parent="1" value="patient_identifier&#xA;PK id : bigint&#xA;FK patient_id : bigint&#xA;issuer_scope : text&#xA;identifier_type : text&#xA;raw_value : text&#xA;verification_status : text" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="1040" y="90" width="440" height="177" as="geometry" />
+        </mxCell>
+        <mxCell id="encounter" vertex="1" parent="1" value="encounter&#xA;PK id : bigint&#xA;FK patient_id : bigint&#xA;FK form_version_id : bigint&#xA;encounter_code : text&#xA;occurred_at : timestamptz ?&#xA;status : text&#xA;FK created_by : bigint&#xA;created_at : timestamptz" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="40" y="460" width="440" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="encounter_identifier" vertex="1" parent="1" value="encounter_identifier&#xA;PK id : bigint&#xA;FK encounter_id : bigint&#xA;issuer_scope : text&#xA;identifier_type : text&#xA;raw_value : text&#xA;verification_status : text" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="540" y="460" width="440" height="177" as="geometry" />
+        </mxCell>
+        <mxCell id="form_version" vertex="1" parent="1" value="form_version&#xA;PK id : bigint&#xA;FK template_id : bigint&#xA;version_no : integer&#xA;status : text&#xA;published_at : timestamptz ?" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="1040" y="460" width="440" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="medication_entry" vertex="1" parent="1" value="medication_entry&#xA;PK id : bigint&#xA;FK encounter_id : bigint&#xA;medication_name : text&#xA;ingredient : text ?&#xA;strength : text ?&#xA;dose_number : numeric ?&#xA;dose_unit : text ?&#xA;dose_text : text ?&#xA;route : text ?&#xA;frequency : text ?&#xA;started_on : date ?&#xA;ended_on : date ?&#xA;medication_status : text ?&#xA;medication_category : text ?&#xA;source_note : text ?&#xA;observed_at : timestamptz ?&#xA;FK recorded_by : bigint&#xA;recorded_at : timestamptz" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="40" y="830" width="440" height="485" as="geometry" />
+        </mxCell>
+        <mxCell id="observation" vertex="1" parent="1" value="observation&#xA;PK id : bigint&#xA;FK encounter_id : bigint&#xA;FK field_id : bigint&#xA;event_key : text" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="540" y="830" width="440" height="133" as="geometry" />
+        </mxCell>
+        <mxCell id="observation_version" vertex="1" parent="1" value="observation_version&#xA;PK id : bigint&#xA;FK observation_id : bigint&#xA;version_no : integer&#xA;value_status : text&#xA;value_text : text ?&#xA;value_number : numeric ?&#xA;value_date : date ?&#xA;value_boolean : boolean ?&#xA;value_code : text ?&#xA;unit : text ?&#xA;observed_at : timestamptz ?&#xA;reported_name : text ?&#xA;source_note : text ?&#xA;FK recorded_by : bigint&#xA;recorded_at : timestamptz" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacing=10;fontSize=15;fillColor=#edf5fb;strokeColor=#7da0b9;">
+          <mxGeometry x="1040" y="830" width="440" height="420" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,1519 @@
+{
+  "schema": "suy-tim-form-v1",
+  "scope": "MVP - subset chờ bác sĩ rà soát",
+  "version": 1,
+  "fields": [
+    {
+      "code": "chieu_cao",
+      "label": "Chiều cao",
+      "group": "Thể trạng",
+      "type": "number",
+      "unit": "cm",
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 3,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 4,
+        "stt": 3,
+        "original_type": "Số thực",
+        "original_options": "cm",
+        "provenance": "HIS/EMR – tự động hoặc bác sĩ nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "can_nang",
+      "label": "Cân nặng",
+      "group": "Thể trạng",
+      "type": "number",
+      "unit": "kg",
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 4,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 5,
+        "stt": 4,
+        "original_type": "Số thực",
+        "original_options": "kg",
+        "provenance": "HIS/EMR – tự động hoặc bác sĩ nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "kho_tho_khi_gang_suc",
+      "label": "Khó thở khi gắng sức",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 6,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 7,
+        "stt": 6,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "kho_tho_khi_nam",
+      "label": "Khó thở khi nằm",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 7,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 8,
+        "stt": 7,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "kho_tho_kich_phat_ve_dem",
+      "label": "Khó thở kịch phát về đêm",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 8,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 9,
+        "stt": 8,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "met_moi",
+      "label": "Mệt mỏi",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 9,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 10,
+        "stt": 9,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "giam_kha_nang_gang_suc",
+      "label": "Giảm khả năng gắng sức",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 10,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 11,
+        "stt": 10,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "phu_hai_chi_duoi",
+      "label": "Phù hai chi dưới",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 11,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 12,
+        "stt": 11,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "tang_can_nhanh",
+      "label": "Tăng cân nhanh",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 12,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 13,
+        "stt": 12,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "dau_nguc",
+      "label": "Đau ngực",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 13,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 14,
+        "stt": 13,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "hoi_hop",
+      "label": "Hồi hộp",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 14,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 15,
+        "stt": 14,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "ngat",
+      "label": "Ngất",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 15,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 16,
+        "stt": 15,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "lu_lan_sang",
+      "label": "Lú lẫn hoặc sảng",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 16,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 17,
+        "stt": 16,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "te_nga",
+      "label": "Té ngã",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 17,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 18,
+        "stt": 17,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "chan_an",
+      "label": "Chán ăn",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 18,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 19,
+        "stt": 18,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "mat_ngu",
+      "label": "Mất ngủ",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 19,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 20,
+        "stt": 19,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "giam_van_dong",
+      "label": "Giảm vận động",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 20,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 21,
+        "stt": 20,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "giam_kha_nang_tu_cham_soc",
+      "label": "Giảm khả năng tự chăm sóc",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 21,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 22,
+        "stt": 21,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "suy_giam_chuc_nang_khong_giai_thich",
+      "label": "Suy giảm chức năng không giải thích được",
+      "group": "Triệu chứng",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 22,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 23,
+        "stt": 22,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "mach",
+      "label": "Mạch",
+      "group": "Dấu hiệu sinh tồn",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 25,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 26,
+        "stt": 25,
+        "original_type": "Số đo / nhị phân",
+        "original_options": "lần/phút",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "nhip_tho",
+      "label": "Nhịp thở",
+      "group": "Dấu hiệu sinh tồn",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 26,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 27,
+        "stt": 26,
+        "original_type": "Số đo / nhị phân",
+        "original_options": "lần/phút",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "spo2",
+      "label": "SpO₂",
+      "group": "Dấu hiệu sinh tồn",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 27,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 28,
+        "stt": 27,
+        "original_type": "Số đo / nhị phân",
+        "original_options": "%",
+        "provenance": "Bác sĩ/điều dưỡng nhập"
+      },
+      "version": 1
+    },
+    {
+      "code": "benh_mach_vanh_nhoi_mau_co_tim",
+      "label": "Bệnh mạch vành/nhồi máu cơ tim",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 45,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 44,
+        "stt": 45,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không, HẸP NHƯ THẾ NÀO, CÓ CAN THIỆP GÌ?? (VĂN BẢN)",
+        "provenance": "HIS/EMR + bác sĩ xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "dai_thao_duong",
+      "label": "Đái tháo đường",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 46,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 45,
+        "stt": 46,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không (Hba1c ???)",
+        "provenance": "HIS/EMR + bác sĩ xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "beo_phi",
+      "label": "Béo phì",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 47,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 46,
+        "stt": 47,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "benh_than_man",
+      "label": "Bệnh thận mạn",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 48,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 47,
+        "stt": 48,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không (mức lọc cầu thận ?)",
+        "provenance": "HIS/EMR + bác sĩ xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "tien_su_hoa_tri_thuoc_doc_tim",
+      "label": "Tiền sử hóa trị hoặc sử dụng thuốc độc với tim",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 49,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 48,
+        "stt": 49,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "tien_su_benh_co_tim_cau_truc",
+      "label": "Tiền sử bệnh cơ tim hoặc bệnh tim cấu trúc",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 50,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 49,
+        "stt": 50,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "tang_huyet_ap_nguyen_nhan",
+      "label": "Tăng huyết áp",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 52,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 50,
+        "stt": 52,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "benh_van_tim",
+      "label": "Bệnh van tim",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 53,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 51,
+        "stt": 53,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "rung_nhi_roi_loan_nhip",
+      "label": "Rung nhĩ hoặc rối loạn nhịp khác",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 54,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 52,
+        "stt": 54,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "benh_co_tim",
+      "label": "Bệnh cơ tim",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 55,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 53,
+        "stt": 55,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "amyloidosis_tim",
+      "label": "Amyloidosis tim",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 56,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 54,
+        "stt": 56,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "viem_co_tim",
+      "label": "Viêm cơ tim",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 57,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 55,
+        "stt": 57,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "thuoc_doc_chat",
+      "label": "Thuốc hoặc độc chất",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 58,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 56,
+        "stt": 58,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "takotsubo",
+      "label": "Takotsubo",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 59,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 57,
+        "stt": 59,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "benh_noi_tiet_chuyen_hoa",
+      "label": "Bệnh nội tiết–chuyển hóa",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 60,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 58,
+        "stt": 60,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "suy_tim_cung_luong_cao",
+      "label": "Suy tim cung lượng cao",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 61,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 59,
+        "stt": 61,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không; Chưa xác định",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "copd",
+      "label": "COPD",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 64,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 60,
+        "stt": 64,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "thieu_mau",
+      "label": "Thiếu máu",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 65,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 61,
+        "stt": 65,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "benh_gan",
+      "label": "Bệnh gan",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 66,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 62,
+        "stt": 66,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "roi_loan_tuyen_giap",
+      "label": "Rối loạn tuyến giáp",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 67,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 63,
+        "stt": 67,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "sa_sut_tri_tue",
+      "label": "Sa sút trí tuệ",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 68,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 64,
+        "stt": 68,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "tram_cam",
+      "label": "Trầm cảm",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 69,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 65,
+        "stt": 69,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "benh_mach_mau_nao",
+      "label": "Bệnh mạch máu não",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 70,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 66,
+        "stt": 70,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "ung_thu",
+      "label": "Ung thư",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "boolean",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự gán khoảng sinh lý khi chưa được xác nhận"
+      },
+      "order": 71,
+      "source": {
+        "document": "TL06",
+        "sheet": "Trường dữ liệu",
+        "row": 67,
+        "stt": 71,
+        "original_type": "Nhị phân",
+        "original_options": "Có; Không",
+        "provenance": "HIS/EMR + bác sĩ"
+      },
+      "version": 1
+    },
+    {
+      "code": "huyet_ap_tam_thu",
+      "label": "Huyết áp tâm thu",
+      "group": "Dấu hiệu sinh tồn",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 300,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "HuyetApCao"
+      },
+      "version": 1
+    },
+    {
+      "code": "huyet_ap_tam_truong",
+      "label": "Huyết áp tâm trương",
+      "group": "Dấu hiệu sinh tồn",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 301,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "HuyetApThap"
+      },
+      "version": 1
+    },
+    {
+      "code": "nhiet_do",
+      "label": "Nhiệt độ",
+      "group": "Dấu hiệu sinh tồn",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 302,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "NhietDo"
+      },
+      "version": 1
+    },
+    {
+      "code": "ntprobnp",
+      "label": "NT-proBNP",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 303,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "NTproBNP_KetQua"
+      },
+      "version": 1
+    },
+    {
+      "code": "troponin",
+      "label": "Troponin",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 304,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "Troponin_KetQua"
+      },
+      "version": 1
+    },
+    {
+      "code": "creatinin",
+      "label": "Creatinin",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 305,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "Creatinin_KetQua"
+      },
+      "version": 1
+    },
+    {
+      "code": "natri",
+      "label": "Natri",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 306,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "Natri_KetQua"
+      },
+      "version": 1
+    },
+    {
+      "code": "kali",
+      "label": "Kali",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 307,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "Kali_KetQua"
+      },
+      "version": 1
+    },
+    {
+      "code": "clo",
+      "label": "Clo",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Chưa chốt đơn vị và giới hạn; ghi đơn vị nguồn theo từng kết quả"
+      },
+      "order": 308,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "Clo_KetQua"
+      },
+      "version": 1
+    },
+    {
+      "code": "ma_icd_vao_khoa",
+      "label": "Mã ICD vào khoa theo nguồn",
+      "group": "Chẩn đoán",
+      "type": "text",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Văn bản nguồn cần bác sĩ kiểm tra, xác nhận"
+      },
+      "order": 400,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "MaICD_VaoKhoa"
+      },
+      "version": 1
+    },
+    {
+      "code": "ten_icd_vao_khoa",
+      "label": "Tên ICD vào khoa theo nguồn",
+      "group": "Chẩn đoán",
+      "type": "text",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Văn bản nguồn cần bác sĩ kiểm tra, xác nhận"
+      },
+      "order": 401,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "TenICD_VaoKhoa"
+      },
+      "version": 1
+    },
+    {
+      "code": "ma_icd_phu",
+      "label": "Mã bệnh kèm theo ICD",
+      "group": "Chẩn đoán",
+      "type": "text",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Tách từng mã và đối chiếu trước khi lưu"
+      },
+      "order": 402,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "DanhSachMaICD_Phu"
+      },
+      "version": 1
+    },
+    {
+      "code": "tien_su_ban_than",
+      "label": "Tiền sử bản thân",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "text",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Văn bản nguồn cần bác sĩ kiểm tra, xác nhận"
+      },
+      "order": 403,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "TienSuBanThan"
+      },
+      "version": 1
+    },
+    {
+      "code": "di_ung",
+      "label": "Thông tin dị ứng",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "text",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Văn bản nguồn cần bác sĩ kiểm tra, xác nhận"
+      },
+      "order": 404,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "DiUng"
+      },
+      "version": 1
+    },
+    {
+      "code": "tien_su_khac",
+      "label": "Tiền sử khác",
+      "group": "Tiền sử và bệnh đồng mắc",
+      "type": "text",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Văn bản nguồn cần bác sĩ kiểm tra, xác nhận"
+      },
+      "order": 405,
+      "source": {
+        "document": "FILE_MAU",
+        "sheet": "Sheet3",
+        "column": "TienSuKhac"
+      },
+      "version": 1
+    },
+    {
+      "code": "huyet_ap_tu_the",
+      "label": "Tư thế đo huyết áp",
+      "group": "Dấu hiệu sinh tồn",
+      "type": "choice",
+      "unit": null,
+      "choices": [
+        {
+          "code": "nam",
+          "label": "Nằm"
+        },
+        {
+          "code": "ngoi",
+          "label": "Ngồi"
+        },
+        {
+          "code": "dung",
+          "label": "Đứng"
+        }
+      ],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Gắn cùng event_key với tâm thu/tâm trương; chưa ghi tư thế thì để chưa biết."
+      },
+      "order": 310,
+      "source": {
+        "document": "TL06!24–25 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "lvef",
+      "label": "Phân suất tống máu thất trái (LVEF)",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": "%",
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Ghi kết quả, đơn vị, thời điểm và nguồn; không tự suy kiểu hình suy tim."
+      },
+      "order": 311,
+      "source": {
+        "document": "TL06!73 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "sieu_am_tim_bao_cao",
+      "label": "Báo cáo siêu âm tim",
+      "group": "Kết quả cận lâm sàng",
+      "type": "text",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Giữ nguyên văn kết luận; không thay thế tệp gốc."
+      },
+      "order": 312,
+      "source": {
+        "document": "TL06!73 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "bnp",
+      "label": "BNP",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Khác NT-proBNP; giữ đơn vị, thời điểm và tên gốc theo phiếu."
+      },
+      "order": 313,
+      "source": {
+        "document": "TL06!71 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    },
+    {
+      "code": "egfr",
+      "label": "eGFR",
+      "group": "Kết quả cận lâm sàng",
+      "type": "number",
+      "unit": null,
+      "choices": [],
+      "required": false,
+      "validation": {
+        "allow_null": true,
+        "note": "Không tự tính từ creatinin; giữ đơn vị, thời điểm và tên gốc theo phiếu."
+      },
+      "order": 314,
+      "source": {
+        "document": "TL06!75 / bản rà demo",
+        "provenance": "Bác sĩ nhập hoặc file sau đối chiếu; cần xác nhận"
+      },
+      "version": 1
+    }
+  ]
+}

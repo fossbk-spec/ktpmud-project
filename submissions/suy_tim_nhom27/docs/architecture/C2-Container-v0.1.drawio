@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net" scale="1" border="0">
+  <diagram id="C2 Container Hệ thống quản lý bệnh nhân suy tim v0.1" name="C2 Container Hệ thống quản lý bệnh nhân suy tim v0.1">
+    <mxGraphModel dx="3757" dy="2196" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4200" pageHeight="3920" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t1" parent="1" style="text;html=0;align=left;verticalAlign=top;fontFamily=Arial;fontSize=79;fontColor=#282828;fontStyle=1;" value="C2 Container" vertex="1">
+          <mxGeometry height="68" width="480" x="1430" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="systemBoundary" parent="1" style="rounded=0;fillColor=#f8fbfe;strokeColor=#A8A8A8;strokeWidth=4;dashed=1;dashPattern=8 5;fontColor=#282828;fontSize=38;" value="" vertex="1">
+          <mxGeometry height="2490" width="2360" x="970" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="clinical" c4Proposal="" c4Type="person" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#A6D1A6;strokeColor=none;fontSize=36;" value="&lt;div style=&quot;font-size: 57px; font-weight: bold;&quot;&gt;Bác&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;font-size: 45px;&quot;&gt;[Người dùng theo quyền]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 52px;&quot;&gt;Bác sĩ nhập dữ liệu và xác nhận chuyên môn&lt;/div&gt;" vertex="1">
+          <mxGeometry height="540" width="590" x="240" y="1340" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" c4Proposal="" c4Type="person" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#A6D1A6;strokeColor=none;fontSize=36;" value="&lt;div style=&quot;font-size: 57px; font-weight: bold;&quot;&gt;Admin&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 45px;&quot;&gt;[Người dùng theo quyền]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 52px;&quot;&gt;Tài khoản, quyền, thiết lập và theo dõi&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;font-size: 52px;&quot;&gt;vận hành&lt;/div&gt;" vertex="1">
+          <mxGeometry height="510" width="560" x="240" y="2000" as="geometry" />
+        </mxCell>
+        <mxCell id="patient" c4Proposal="" c4Type="person" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#A6D1A6;strokeColor=none;fontSize=36;" value="&lt;div&gt;&lt;div style=&quot;font-size: 57px; font-weight: bold;&quot;&gt;Bệnh nhân&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 45px;&quot;&gt;[Người dùng]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 52px;&quot;&gt;Đặt lịch, xem kết quả&lt;br&gt;và nhận thông báo / nhắc&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="520" width="570" x="230" y="2630" as="geometry" />
+        </mxCell>
+        <mxCell id="his" c4Proposal="" c4Type="external" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#DFDFDF;strokeColor=none;fontSize=38;" value="&lt;div style=&quot;font-size: 62px; font-weight: bold;&quot;&gt;HIS&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 50px;&quot;&gt;[Hệ thống ngoài]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 57px;&quot;&gt;Dữ liệu bệnh án&lt;/div&gt;&lt;div style=&quot;font-size: 57px;&quot;&gt;dữ liệu khám&lt;/div&gt;" vertex="1">
+          <mxGeometry height="460" width="580" x="240" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="web" c4Proposal="" c4Type="container" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#C0D8F2;strokeColor=none;fontSize=38;" value="&lt;div&gt;&lt;div style=&quot;font-size: 63px; font-weight: bold;&quot;&gt;Ứng dụng web&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 51px;&quot;&gt;[Container · HTML + CSS + JavaScript]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 58px;&quot;&gt;Bệnh án, gợi ý và quyết định&lt;br&gt;Quản trị theo quyền&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="630" width="880" x="1190" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="mobile" c4Proposal="" c4Type="container" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#C0D8F2;strokeColor=none;fontSize=38;" value="&lt;div&gt;&lt;div style=&quot;font-size: 63px; font-weight: bold;&quot;&gt;App bệnh nhân&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 51px;&quot;&gt;[Container · React Native]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 58px;&quot;&gt;Đặt lịch, xem nội dung công bốc, lấy thông&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;font-size: 58px;&quot;&gt;báo / nhắc qua API&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="600" width="720" x="1100" y="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="backend" c4Proposal="" c4Type="container" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#C0D8F2;strokeColor=none;fontSize=38;" value="&lt;div&gt;&lt;div style=&quot;font-size: 65px; font-weight: bold;&quot;&gt;Backend API và nghiệp vụ&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 53px;&quot;&gt;[Container · Python + FastAPI]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 60px;&quot;&gt;Bệnh án, quyết định, AI-CDSS: Diagnosis · Lab/Test&lt;br&gt;Treatment · MedSafety&lt;/div&gt;&lt;div style=&quot;font-size: 60px;&quot;&gt;Nhận, chuẩn hóa dữ liệu&lt;br&gt;Căn cứ, phiên bản và nhật ký&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="750" width="960" x="2300" y="1460" as="geometry" />
+        </mxCell>
+        <mxCell id="database" c4Proposal="" c4Type="store" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#B1C5DD;strokeColor=none;fontSize=38;" value="&lt;div&gt;&lt;div style=&quot;font-size: 63px; font-weight: bold;&quot;&gt;Cơ sở dữ liệu sản phẩm&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 51px;&quot;&gt;[Container · PostgreSQL]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 58px;&quot;&gt;Bệnh án, quyết định.&lt;br&gt;Tài khoản, trao đổi và thông báo&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="650" width="720" x="2380" y="2480" as="geometry" />
+        </mxCell>
+        <mxCell id="files" c4Proposal="K01" c4Type="store" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=light-dark(#B1C5DD,#6FA9B2);strokeColor=none;strokeWidth=3;dashed=1;dashPattern=8 5;fontSize=38;" value="&lt;div style=&quot;font-size: 61px; font-weight: bold;&quot;&gt;Kho tệp&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 49px;&quot;&gt;[Container · File system]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 56px;&quot;&gt;File nhập, thông tin nguồn và bản sao&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="530" width="610" x="2570" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="worker" c4Proposal="K02" c4Type="container" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacing=12;fontFamily=Arial;fontColor=#282828;fillColor=#C0D8F2;strokeColor=none;strokeWidth=1;fontSize=38;" value="&lt;div&gt;&lt;div style=&quot;font-size: 61px; font-weight: bold;&quot;&gt;Worker theo lịch&amp;nbsp;&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 49px;&quot;&gt;[Container · Python + APScheduler *]&lt;/div&gt;&lt;br&gt;&lt;div style=&quot;font-size: 56px;&quot;&gt;Đọc lịch, tạo thông báo / nhắc, tiến trình&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;font-size: 56px;&quot;&gt;riêng: đề xuất K02&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="590" width="710" x="1110" y="2560" as="geometry" />
+        </mxCell>
+        <mxCell id="c2-clinical-web" c4Pending="false" c4Protocol="" edge="1" parent="1" source="clinical" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=43;fontColor=#282828;labelBackgroundColor=#ffffff;exitX=0.75;exitY=0;jumpStyle=arc;jumpSize=12;dashed=0;entryX=0;entryY=0.521;entryDx=0;entryDy=0;exitDx=0;exitDy=0;entryPerimeter=0;" target="web" value="Nhập, xác nhận,&#xa;tra cứu">
+          <mxGeometry relative="1" x="0.1678" y="25" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="682.5" y="1240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2-admin-web" c4Pending="false" c4Protocol="" edge="1" parent="1" source="admin" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=43;fontColor=#282828;labelBackgroundColor=#ffffff;exitX=1.0;exitY=0.5;entryX=0.0;entryY=0.8055555555555556;jumpStyle=arc;jumpSize=12;dashed=0;" target="web" value="Quản trị&#xa;biểu mẫu/quyền">
+          <mxGeometry relative="1" x="-0.3225" y="-20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="910" y="2255" />
+              <mxPoint x="910" y="1420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2-patient-mobile" c4Pending="false" c4Protocol="" edge="1" parent="1" source="patient" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=43;fontColor=#282828;labelBackgroundColor=#ffffff;exitX=1.0;exitY=0.5;entryX=0;entryY=0.75;jumpStyle=arc;jumpSize=12;dashed=0;entryDx=0;entryDy=0;" target="mobile" value="Sử dụng app&#xa;ngoại trú">
+          <mxGeometry relative="1" x="-0.4106" y="20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="990" y="2890" />
+              <mxPoint x="990" y="2250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2-web-api" c4Pending="false" c4Protocol="HTTPS/JSON" edge="1" parent="1" source="web" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=43;fontColor=#282828;labelBackgroundColor=#ffffff;exitX=0.997;exitY=0.551;jumpStyle=arc;jumpSize=12;dashed=0;entryX=0.147;entryY=0.002;entryDx=0;entryDy=0;entryPerimeter=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="backend" value="Gọi API theo quyền&#xa;HTTPS / JSON">
+          <mxGeometry relative="1" x="-0.2215" y="67" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2440" y="1257.13" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2-mobile-api" c4Pending="false" c4Protocol="HTTPS/JSON" edge="1" parent="1" source="mobile" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=42;fontColor=#282828;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.853;jumpStyle=arc;jumpSize=12;dashed=0;exitDx=0;exitDy=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="backend" value="Đặt lịch, tra cứu &#xa;HTTPS / JSON">
+          <mxGeometry relative="1" x="0.0021" y="60" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2-api-db" c4Pending="false" c4Protocol="SQL/PostgreSQL" edge="1" parent="1" source="backend" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=43;fontColor=#282828;labelBackgroundColor=#ffffff;exitX=0.473;exitY=0.993;entryX=0.5277777777777778;entryY=0.0;jumpStyle=arc;jumpSize=12;dashed=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="database" value="Đọc / ghi dữ liệu sản phẩm&#xa;SQL / PostgreSQL">
+          <mxGeometry relative="1" x="0.0245" y="32" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2-api-files" c4Pending="false" c4Protocol="Filesystem API" edge="1" parent="1" source="backend" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=43;fontColor=#282828;labelBackgroundColor=#ffffff;exitX=0.74;exitY=0;entryX=0.727;entryY=1;jumpStyle=arc;jumpSize=12;dashed=0;exitDx=0;exitDy=0;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" target="files" value="Lưu / đọc tệp đính kèm&#xa;Filesystem API *">
+          <mxGeometry relative="1" x="0.0605" y="-8" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2-worker-db" c4Pending="false" c4Protocol="SQL/PostgreSQL" edge="1" parent="1" source="worker" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=43;fontColor=#282828;labelBackgroundColor=#ffffff;exitX=1.0;exitY=0.48484848484848486;entryX=0;entryY=0.56;jumpStyle=arc;jumpSize=12;dashed=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="database" value="Đọc lịch; ghi thông báo&#xa;SQL / PostgreSQL">
+          <mxGeometry relative="1" x="-0.0326" y="77" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2-his-open" c4Pending="true" c4Protocol="Chưa chốt: cơ chế mở ca và xác thực" edge="1" parent="1" source="his" style="html=0;align=center;verticalAlign=middle;endArrow=block;endFill=1;startArrow=none;strokeColor=#5a6e7d;strokeWidth=4;fontFamily=Arial;fontSize=44;fontColor=#282828;labelBackgroundColor=#ffffff;entryX=0.004;entryY=0.144;jumpStyle=arc;jumpSize=12;exitX=1.011;exitY=0.678;exitDx=0;exitDy=0;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" target="web" value="Dữ liệu đưa&#xa; vào qua file ">
+          <mxGeometry relative="1" x="0.0137" y="66" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+            <mxPoint x="3787.76" y="780" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

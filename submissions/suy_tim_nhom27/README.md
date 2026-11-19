@@ -1,22 +1,20 @@
-# CS-2: Hỗ trợ quyết định suy tim ở người cao tuổi — nhom27
+# Nhóm 27 — Hệ thống quản lý bệnh nhân suy tim
 
-**Trạng thái:** Sprint 1, tuần 2–3. Tài liệu thiết kế và Gateway stub đã có; bốn module lâm sàng **chưa được hiện thực/kiểm chứng**. Bản demo chỉ sử dụng ca synthetic. Ba vai trò trong phạm vi hiện tại: bác sĩ, dược sĩ, quản trị viên.
+Tài liệu hiện hành mô tả hệ thống web suy tim. MVP ưu tiên nhóm chức năng **1. Hồ sơ và lượt khám**, **2. Tiếp nhận và tiền xử lý dữ liệu**, **6. Quản trị hệ thống**. Các nhóm chức năng còn lại thuộc lộ trình tiếp theo. Mã Gateway tuần 3 là bản thử độc lập, chưa được nối với cơ sở dữ liệu MVP.
 
-## Checklist bàn giao
+## Tài liệu và vị trí tệp
 
-| Mục | Tệp chính | Trạng thái |
+| Nội dung | Vị trí | Trạng thái |
 |---|---|---|
-| SRS và RTM (FR → US → UC → module → bảng dữ liệu) | [SRS_v1.0.md](docs/SRS_v1.0.md) | Bản review; các câu hỏi cho giảng viên ở mục 12 |
-| C4 C1/C2; DFD; UML Class/Sequence; ảnh và nguồn draw.io | [Kiến trúc](docs/architecture/architecture.md), [UML](docs/uml/uml.md), [tệp nguồn/ảnh](docs/architecture/) | C4, Class 05–06 là thiết kế đích; Sequence 07–09 mô tả stub |
-| ERD 3NF, từ điển dữ liệu, DDL | [ERD](database/erd.md), [Data Dictionary](database/data_dictionary.md), [schema.sql](database/schema.sql) | Lược đồ thiết kế; Gateway chưa kết nối PostgreSQL |
-| OpenAPI 3.0.3 và Gateway | [openapi.yaml](api/openapi.yaml), [hướng dẫn API](api/README.md), [mã nguồn](src/gateway/) | Stub chạy trong RAM; không chẩn đoán/kê đơn |
+| Yêu cầu và truy vết | [SRS](docs/SRS-v1.0.md), [Use Case](<docs/Đặc tả usecase đầy đủ.md>), [User Story](docs/User-Stories.md), [RTM](docs/RTM.md) | RTM đã liên kết FR với UC và nhóm bảng dự kiến; cần đối chiếu lại với DDL MVP trước khi kết luận độ phủ schema. |
+| C4 C1/C2 | [Thuyết minh kiến trúc](docs/architecture/architecture.md), [ảnh và nguồn](docs/architecture/) | Có ảnh và tệp `.drawio` riêng cho C1, C2. |
+| ERD | [Thiết kế dữ liệu](docs/thiet-ke-du-lieu.md), [ảnh và nguồn](docs/architecture/) | Bốn cặp ảnh và tệp `.drawio`. |
+| DFD, UML Class và Sequence hiện hành | `docs/architecture/` | Chưa bổ sung vào bộ sơ đồ hiện hành. |
+| Cơ sở dữ liệu MVP | [Hướng dẫn database](database/README.md), [DDL](database/mvp/schema.sql), [seed biểu mẫu](database/mvp/seed-form-v1.sql) | Tạo CSDL PostgreSQL mới; chưa phải migration từ bản demo. |
+| OpenAPI và Gateway tuần 3 | [Đặc tả OpenAPI](api/openapi.yaml), [hướng dẫn API](api/README.md), [mã nguồn](src/gateway/) | Khung API cũ dùng dữ liệu giả lập trong RAM; chưa là hợp đồng API của MVP hiện hành. |
 
-[Báo cáo tuần 3](docs/Bao_cao_tuan3.md) · [Điểm chưa khớp/việc chờ xác nhận](docs/consistency_review.md) · [Hướng dẫn chạy và kiểm thử](README_TUAN3.md)
-
-## Chạy thử Gateway trên máy
-
-Mở terminal **ngay tại thư mục `submissions/suy_tim_nhom27/`**, làm theo [README_TUAN3.md](README_TUAN3.md). Swagger UI ở `http://127.0.0.1:8000/docs` khi server chạy. API trả `mode=stub` và `mock_not_evaluated`, không đưa ra kết luận y khoa.
+`database/schema.sql` và `database/seed.sql` là bộ SQL tuần 3 được `compose.yaml` và kiểm thử Gateway tham chiếu. Không chạy chung với bộ SQL trong `database/mvp/` trên cùng một CSDL.
 
 ## Kiểm tra bài nộp
 
-Từ gốc repository: `python scripts/validate_submission.py submissions/suy_tim_nhom27`. Workflow sẵn có của repo chạy khi mở PR vào `main`; script này kiểm tra cách ly thư mục, manifest, kích thước và dấu hiệu secret. Kiểm tra cú pháp OpenAPI, DDL và test Gateway dùng lệnh riêng trong [README_TUAN3.md](README_TUAN3.md).
+Từ gốc repository, chạy `python scripts/validate_submission.py submissions/suy_tim_nhom27`. Workflow `validate-nhom27-submit.yml` kiểm tra các PR vào nhánh `submit/suy_tim-nhom27`: giới hạn tệp nộp, mã Python, OpenAPI, JSON, sơ đồ draw.io, liên kết trong tài liệu được sửa, kiểm thử Gateway và các schema PostgreSQL hiện có. Kết quả kiểm thử CSDL MVP được ghi trong [tài liệu kiểm thử](docs/internal/kiem-thu-co-so-du-lieu-MVP.md).

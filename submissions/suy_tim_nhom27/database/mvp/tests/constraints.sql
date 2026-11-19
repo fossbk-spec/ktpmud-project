@@ -1,0 +1,75 @@
+\set ON_ERROR_STOP on
+BEGIN;
+DO $$
+DECLARE u bigint; p bigint; p2 bigint; t bigint; v bigint; v2 bigint; s bigint; s2 bigint; f bigint; f2 bigint; f3 bigint; e bigint; e2 bigint; o bigint; o2 bigint; ov bigint; b bigint; mp bigint; mr bigint; it bigint; it2 bigint; slot bigint; rejected boolean;
+BEGIN
+ INSERT INTO app_user(login_name,password_hash) VALUES('bs_kiem_thu','x') RETURNING id INTO u;
+ INSERT INTO patient(patient_code,full_name,created_by) VALUES('BN-00002','Nguoi gia lap',u) RETURNING id INTO p;
+ INSERT INTO patient(patient_code,full_name,created_by) VALUES('BN-00003','Nguoi gia lap 2',u) RETURNING id INTO p2;
+ rejected:=false; BEGIN INSERT INTO patient(patient_code,full_name,created_by) VALUES('BN-00004',NULL,u); EXCEPTION WHEN not_null_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'null name'; END IF;
+ rejected:=false; BEGIN INSERT INTO patient(id,patient_code,full_name,created_by) OVERRIDING SYSTEM VALUE VALUES(p,'BN-00005','Duplicate PK',u); EXCEPTION WHEN unique_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'duplicate PK'; END IF;
+ INSERT INTO form_template(code,name) VALUES('TEST','Test') RETURNING id INTO t;
+ INSERT INTO form_version(template_id,version_no,status) VALUES(t,1,'draft') RETURNING id INTO v;
+ INSERT INTO form_version(template_id,version_no,status) VALUES(t,2,'draft') RETURNING id INTO v2;
+ INSERT INTO form_section(version_id,code,label,sort_order) VALUES(v,'S','S',1) RETURNING id INTO s;
+ INSERT INTO form_section(version_id,code,label,sort_order) VALUES(v2,'S','S',1) RETURNING id INTO s2;
+ INSERT INTO form_field(section_id,code,label,value_kind,sort_order) VALUES(s,'F','F','choice',1) RETURNING id INTO f;
+ INSERT INTO form_field(section_id,code,label,value_kind,sort_order) VALUES(s2,'F','F','choice',1) RETURNING id INTO f2;
+ INSERT INTO form_field(section_id,code,label,value_kind,sort_order) VALUES(s,'LAB','Lab','number',2) RETURNING id INTO f3;
+ INSERT INTO field_option(field_id,code,label) VALUES(f,'A','A'),(f2,'B','B');
+ UPDATE form_version SET status='published' WHERE id IN(v,v2);
+ INSERT INTO encounter(patient_id,form_version_id,encounter_code,status,created_by) VALUES(p,v,'LK-A','draft',u) RETURNING id INTO e;
+ INSERT INTO encounter(patient_id,form_version_id,encounter_code,status,created_by) VALUES(p2,v,'LK-B','draft',u) RETURNING id INTO e2;
+ rejected:=false; BEGIN INSERT INTO encounter(patient_id,form_version_id,encounter_code,status,created_by) VALUES(p,v,'LK-A','draft',u); EXCEPTION WHEN unique_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'duplicate encounter'; END IF;
+ rejected:=false; BEGIN INSERT INTO observation(encounter_id,field_id) VALUES(e,f2); EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'field-version'; END IF;
+ INSERT INTO observation(encounter_id,field_id) VALUES(e,f) RETURNING id INTO o;
+ rejected:=false; BEGIN INSERT INTO observation_version(observation_id,version_no,value_status,value_number,recorded_by) VALUES(o,1,'known',42,u); EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'wrong value kind'; END IF;
+ rejected:=false; BEGIN INSERT INTO observation_version(observation_id,version_no,value_status,value_code,recorded_by) VALUES(o,1,'known','B',u); EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'wrong option'; END IF;
+ INSERT INTO observation_version(observation_id,version_no,value_status,value_code,recorded_by) VALUES(o,1,'known','A',u) RETURNING id INTO ov;
+ INSERT INTO observation(encounter_id,field_id,event_key) VALUES(e,f,'lan-2');
+ INSERT INTO observation(encounter_id,field_id,event_key) VALUES(e,f3,'xet-nghiem-lan-1') RETURNING id INTO o2;
+ INSERT INTO observation_version(observation_id,version_no,value_status,value_number,unit,observed_at,recorded_by) VALUES(o2,1,'known',42,'mg/L',now(),u);
+ INSERT INTO observation(encounter_id,field_id,event_key) VALUES(e,f3,'xet-nghiem-lan-2') RETURNING id INTO o2;
+ INSERT INTO observation_version(observation_id,version_no,value_status,value_number,unit,observed_at,recorded_by) VALUES(o2,1,'known',40,'mg/L',now(),u);
+ INSERT INTO medication_entry(encounter_id,medication_name,dose_number,dose_unit,recorded_by) VALUES(e,'Thuoc gia lap 1',1,'mg',u),(e,'Thuoc gia lap 2',2,'mg',u);
+ rejected:=false; BEGIN UPDATE encounter SET form_version_id=v2 WHERE id=e; EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'encounter version changed'; END IF;
+ rejected:=false; BEGIN UPDATE encounter SET patient_id=p2 WHERE id=e; EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'patient changed'; END IF;
+ rejected:=false; BEGIN UPDATE form_field SET label='Changed' WHERE id=f; EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'published form editable'; END IF;
+ INSERT INTO mapping_profile(name,version_no,form_version_id) VALUES('Test',1,v) RETURNING id INTO mp;
+ INSERT INTO mapping_rule(profile_id,source_column,field_id) VALUES(mp,'A',f) RETURNING id INTO mr;
+ INSERT INTO import_batch(source_name,mapping_profile_id,status,uploaded_by) VALUES('test',mp,'review',u) RETURNING id INTO b;
+ INSERT INTO import_item(batch_id,source_location,mapping_rule_id,raw_value,encounter_id,status) VALUES(b,'A1',mr,'A',e2,'valid') RETURNING id INTO it;
+ rejected:=false; BEGIN INSERT INTO import_application(import_item_id,observation_version_id,applied_by) VALUES(it,ov,u); EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'wrong encounter import'; END IF;
+ rejected:=false; BEGIN INSERT INTO import_item(batch_id,source_location,mapping_rule_id,raw_value,encounter_id,status) VALUES(b,'A2',mr,'0',e,'valid'); EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'source zero accepted'; END IF;
+ INSERT INTO import_item(batch_id,source_location,raw_value,status) VALUES(b,'A3','0','review');
+ INSERT INTO import_item(batch_id,source_location,mapping_rule_id,raw_value,encounter_id,status) VALUES(b,'A4',mr,'A',e,'valid') RETURNING id INTO it2;
+ INSERT INTO import_application(import_item_id,observation_version_id,applied_by) VALUES(it2,ov,u);
+ rejected:=false; BEGIN UPDATE import_item SET encounter_id=e2 WHERE id=it2; EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'applied import changed'; END IF;
+ INSERT INTO clinic_slot(starts_at,ends_at,capacity) VALUES(now(),now()+interval '1 hour',1) RETURNING id INTO slot;
+ INSERT INTO appointment(patient_id,slot_id,status) VALUES(p,slot,'booked');
+ rejected:=false; BEGIN INSERT INTO appointment(patient_id,slot_id,status) VALUES(p,slot,'booked'); EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'over capacity'; END IF;
+ rejected:=false; BEGIN UPDATE mapping_rule SET source_column='changed' WHERE id=mr; EXCEPTION WHEN check_violation THEN rejected:=true; END; IF NOT rejected THEN RAISE EXCEPTION 'used mapping editable'; END IF;
+ INSERT INTO form_version(template_id,version_no,status) VALUES(t,3,'draft') RETURNING id INTO v2;
+ INSERT INTO form_section(version_id,code,label,sort_order) VALUES(v2,'S','Nhom moi',1) RETURNING id INTO s2;
+ INSERT INTO form_field(section_id,code,label,value_kind,sort_order) VALUES(s2,'NEW','Truong bo sung','number',1) RETURNING id INTO f2;
+ UPDATE form_version SET status='published' WHERE id=v2;
+ INSERT INTO encounter(patient_id,form_version_id,encounter_code,status,created_by) VALUES(p,v2,'LK-NEW','draft',u) RETURNING id INTO e2;
+ INSERT INTO observation(encounter_id,field_id) VALUES(e2,f2) RETURNING id INTO o2;
+ INSERT INTO observation_version(observation_id,version_no,value_status,value_number,recorded_by) VALUES(o2,1,'known',7,u);
+ IF (SELECT form_version_id FROM encounter WHERE id=e) IS DISTINCT FROM v THEN RAISE EXCEPTION 'old encounter changed'; END IF;
+ IF (SELECT value_code FROM observation_version WHERE id=ov) IS DISTINCT FROM 'A' THEN RAISE EXCEPTION 'old value changed'; END IF;
+ INSERT INTO medication_entry(encounter_id,medication_name,ingredient,strength,dose_number,dose_unit,dose_text,medication_status,medication_category,source_note,recorded_by)
+ VALUES(e,'Thuoc gia lap','Hoat chat gia lap','5 mg',1,'vien','Mot vien/ngay','planned','prescription','Bac si ghi nhan',u);
+ rejected:=false; BEGIN
+  INSERT INTO medication_entry(encounter_id,medication_name,dose_number,recorded_by) VALUES(e,'Thuoc thieu don vi',1,u);
+ EXCEPTION WHEN check_violation THEN rejected:=true; END;
+ IF NOT rejected THEN RAISE EXCEPTION 'numeric dose without unit accepted'; END IF;
+ rejected:=false; BEGIN
+  INSERT INTO medication_entry(encounter_id,medication_name,medication_status,recorded_by) VALUES(e,'Thuoc sai trang thai','unknown',u);
+ EXCEPTION WHEN check_violation THEN rejected:=true; END;
+ IF NOT rejected THEN RAISE EXCEPTION 'invalid medication status accepted'; END IF;
+ INSERT INTO observation_version(observation_id,version_no,value_status,value_number,unit,reported_name,source_note,recorded_by)
+ VALUES(o2,2,'known',8,'mg/L','Ten tren phieu','Phieu gia lap',u);
+ RAISE NOTICE 'Advanced tests passed, including new form version preserving old data';
+END $$;
+ROLLBACK;

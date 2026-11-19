@@ -28,7 +28,7 @@
 
 SRS có quản lý tài khoản ở US-11 nhưng chưa có UC riêng; skeleton chưa thêm CRUD tài khoản. Endpoint đánh giá là routing chung với `modules` để chọn trong bốn module; phản hồi giữ kết quả riêng theo module. Các endpoint hiện chạy handler và adapter cục bộ, chưa proxy tới dịch vụ mạng.
 
-**Mã FR trong bảng là phạm vi thiết kế của route, không phải các yêu cầu đã hoàn tất.** Đặc biệt FR-08–22 chưa có logic lâm sàng: `/evaluations` luôn trả `mock_not_evaluated`, danh sách gợi ý/cảnh báo rỗng. FR-03–05 chỉ có tập biến demo. FR-27 chỉ tạo/test cấu trúc, luôn từ chối kích hoạt khi thiếu phê duyệt. Xem [bảng kiểm tra](../docs/consistency_review.md) trước khi phân công xây module.
+**Mã FR trong bảng là phạm vi thiết kế của route, không phải các yêu cầu đã hoàn tất.** Đặc biệt FR-08–22 chưa có logic lâm sàng: `/evaluations` luôn trả `mock_not_evaluated`, danh sách gợi ý/cảnh báo rỗng. FR-03–05 chỉ có tập biến demo. FR-27 chỉ tạo/test cấu trúc, luôn từ chối kích hoạt khi thiếu phê duyệt. Đối chiếu với [SRS hiện hành](../docs/SRS-v1.0.md) trước khi phân công xây module.
 
 ## Ví dụ
 
