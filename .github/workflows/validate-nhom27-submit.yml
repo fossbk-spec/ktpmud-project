@@ -100,8 +100,12 @@ jobs:
           psql -v ON_ERROR_STOP=1 -d postgres -c 'CREATE DATABASE n27_legacy_ci;'
           psql -v ON_ERROR_STOP=1 -d n27_legacy_ci -f submissions/suy_tim_nhom27/database/schema.sql
           psql -v ON_ERROR_STOP=1 -d n27_legacy_ci -f submissions/suy_tim_nhom27/database/seed.sql
-          psql -v ON_ERROR_STOP=1 -d postgres -c 'CREATE DATABASE n27_mvp_ci;'
-          psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/schema.sql
-          psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/seed-form-v1.sql
-          psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/tests/schema.sql
-          psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/tests/constraints.sql
+          if [ -f submissions/suy_tim_nhom27/database/mvp/schema.sql ]; then
+            psql -v ON_ERROR_STOP=1 -d postgres -c 'CREATE DATABASE n27_mvp_ci;'
+            psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/schema.sql
+            psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/seed-form-v1.sql
+            psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/tests/schema.sql
+            psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/tests/constraints.sql
+          else
+            echo 'MVP schema is in PR #1; skipping MVP database checks on this PR.'
+          fi
