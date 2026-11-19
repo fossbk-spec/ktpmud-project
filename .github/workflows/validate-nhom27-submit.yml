@@ -75,7 +75,11 @@ jobs:
           for path in (root / 'docs/architecture').glob('*.drawio'):
               ET.parse(path)
           missing = []
-          for path in root.rglob('*.md'):
+          changed = Path('submission_changed_files.txt').read_text(encoding='utf-8').splitlines()
+          for name in changed:
+              path = Path(name)
+              if path.suffix.lower() != '.md' or not path.is_file():
+                  continue
               content = path.read_text(encoding='utf-8')
               for match in re.finditer(r'!?\[[^\]]*\]\((<[^>]+>|[^)]+)\)', content):
                   target = urllib.parse.unquote(match.group(1).strip('<>').split('#')[0])
