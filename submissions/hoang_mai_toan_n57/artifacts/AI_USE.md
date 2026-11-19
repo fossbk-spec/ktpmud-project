@@ -108,9 +108,9 @@ Giữ tách biệt xác nhận của thành viên, kết quả kiểm thử và 
 |---|---|
 | Công cụ và mục đích | Nhóm dùng ChatGPT/Codex hỗ trợ đối chiếu đề và diễn đạt lại hồ sơ theo các quyết định, kết quả kiểm thử và phân công của nhóm. |
 | Phạm vi | Kịch bản demo, bảng tiến độ, báo cáo test, bảo mật, đóng góp, README, hướng dẫn nộp và cấu hình CI. Mốc giao diện được đối chiếu là `0bc0176`. |
-| Kiểm chứng | Đối chiếu mã và lịch sử Git, chạy lại bộ test MVP, đối chiếu mục 6, 8, 11, 12 và mẫu nộp Track B. Bằng chứng và giới hạn nằm trong [TEST_REPORT.md](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/d98c33feb787395d3701d2235a354da428cfd20b/TEST_REPORT.md). |
+| Kiểm chứng | Đối chiếu mã và lịch sử Git, chạy lại bộ test MVP, đối chiếu mục 6, 8, 11, 12 và mẫu nộp Track B. Bằng chứng và giới hạn nằm trong [TEST_REPORT.md](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/TEST_REPORT.md). |
 | Quyết định của nhóm | Nhóm dùng MVP đã kiểm tra làm căn cứ bàn giao và bổ sung bằng chứng theo hướng dẫn của môn học. |
-| Người chịu trách nhiệm | N57-A lên ý tưởng, kiểm chứng phần AI hỗ trợ và chịu trách nhiệm về bản bàn giao. Xem [CONTRIBUTIONS.md](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/d98c33feb787395d3701d2235a354da428cfd20b/CONTRIBUTIONS.md). |
+| Người chịu trách nhiệm | N57-A lên ý tưởng, kiểm chứng phần AI hỗ trợ và chịu trách nhiệm về bản bàn giao. Xem [CONTRIBUTIONS.md](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/CONTRIBUTIONS.md). |
 
 
 ## Đợt sửa theo phương án tối ưu — bắt đầu 17/11/2026
@@ -135,3 +135,7 @@ Bằng chứng CI của đợt sửa: [43e3302](https://github.com/ndm2006/ktpmu
 Đại diện nhóm yêu cầu kiểm thử trực tiếp tại Codex, đối chiếu kế hoạch/phản biện và sửa lần cuối; đồng thời xác nhận ngoại lệ hai thành viên đã được GV chấp thuận. Yêu cầu riêng: bỏ lời văn hộp bút ở câu 6.
 
 Codex kiểm tra bằng IAB trên DB synthetic riêng: lỗi/focus, khóa/refresh, bốn tổ hợp feedback, 75% và sao lần đầu/lặp lại. Ảnh trong artifacts/review. AI tái hiện lỗi randomUUID bằng E2E trước sửa, bổ sung fallback, kiểm tra metadata, migration nhãn câu 6, báo cáo review và công cụ đóng gói. Bộ sau sửa đạt 14 unit/API và 4 E2E cục bộ. Không dùng AI chấm runtime, không ghi rằng nhóm đã review code cuối hoặc GV đã nghiệm thu. Việc tạo tag/nộp Draft PR cần đại diện duyệt ứng viên cụ thể trước khi thực hiện.
+
+## Bổ sung hồ sơ theo follow-up PC-2 — 19/11/2026
+
+Đại diện nhóm yêu cầu đọc nhận xét các nhóm trong issue #18 và thực hiện phần cần thiết trên GitHub. Codex dùng tài khoản ndm2006 đã đăng nhập để fork kho môn học, đưa gói vào đúng một thư mục, mở Draft PR #52, kiểm tra validate, bổ sung bảng tiến độ và gửi câu hỏi thủ tục ở #32. Không sửa code của candidate d98c33f, không xác nhận nộp đúng hạn PC-2, không nhận là GV đã duyệt nội dung. Nhóm đã chọn tự tạo tag và nộp cuối; PR giữ Draft để đại diện review/chuyển Ready for review.

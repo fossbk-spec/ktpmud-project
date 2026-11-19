@@ -6,7 +6,7 @@
 
 - Ngày: **10/11/2026**.
 - Trạng thái: đại diện nhóm đã chốt luồng hai bước, chấm và lưu trên server, tích hợp Phòng Luyện Tập. Bản triển khai PC-1 cụ thể hóa bộ câu, gợi ý và luồng luyện tập. Phạm vi vẫn chờ phản hồi GV/TA.
-- Căn cứ: [kiến trúc starter](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/d98c33feb787395d3701d2235a354da428cfd20b/docs/architecture-reference.md), [tiêu chí B-01–B-12](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/d98c33feb787395d3701d2235a354da428cfd20b/REQUIREMENTS.md).
+- Căn cứ: [kiến trúc starter](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/docs/architecture-reference.md), [tiêu chí B-01–B-12](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/REQUIREMENTS.md).
 
 ### Bối cảnh và lựa chọn
 
@@ -42,7 +42,7 @@ Phương án tích hợp là một mục trong `public/exercise.html`, điều k
 | est-11 | 3 | 65 ÷ 5 | 50 và 100 | 13 | 10–19 |
 | est-12 | 3 | 96 ÷ 3 | 90 và 120 | 32 | 30–39 |
 
-Dữ liệu chạy nằm trong [server/estimation-questions.js](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/d98c33feb787395d3701d2235a354da428cfd20b/server/estimation-questions.js). Việc hai mốc xác định đúng một khoảng được kiểm thử bằng số nguyên. Độ khó giữa các chặng là giả thuyết thiết kế, chưa có dữ liệu thử với học sinh.
+Dữ liệu chạy nằm trong [server/estimation-questions.js](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/server/estimation-questions.js). Việc hai mốc xác định đúng một khoảng được kiểm thử bằng số nguyên. Độ khó giữa các chặng là giả thuyết thiết kế, chưa có dữ liệu thử với học sinh.
 
 ### Hợp đồng API và lưu trạng thái
 
@@ -63,7 +63,7 @@ Trong giao diện, các câu được trình bày theo thứ tự fixture. Học
 - Bài có một lượt đã lưu cho mỗi tài khoản. Chế độ làm lại, lịch sử nhiều lượt, bảng xếp hạng và bổ sung nội dung SGK nằm ngoài lát cắt này.
 - Cấu hình fixture giữ ổn định ID, thứ tự và nghĩa trong thời gian của bài. Nếu thay câu về sau, dùng ID mới để tránh đọc sai kết quả cũ.
 - Lưu tách bảng bảo toàn `attempts`, `progress` và sao của phiếu cũ. Phải kiểm tra chạy với DB mới và DB starter đã tồn tại.
-- Không dùng LLM lúc sinh/chấm đáp án runtime. Test theo [kế hoạch kiểm thử](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/d98c33feb787395d3701d2235a354da428cfd20b/TEST_PLAN.md).
+- Không dùng LLM lúc sinh/chấm đáp án runtime. Test theo [kế hoạch kiểm thử](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/TEST_PLAN.md).
 
 ## ADR-002 — Khóa cả phần ước lượng, tích hợp chấm và tiến độ hiện hữu
 
