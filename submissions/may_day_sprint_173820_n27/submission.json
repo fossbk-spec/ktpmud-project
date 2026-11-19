@@ -1,0 +1,26 @@
+{
+  "case_study_slug": "may_day_sprint",
+  "case_study_id": "BKT-1",
+  "group_code": "173820_n27",
+  "members": [
+    "202414049",
+    "202414079",
+    "202414050"
+  ],
+  "scenario": "khong_ap_dung",
+  "submitted_at": "2026-11-17",
+  "member_details": [
+    {
+      "name": "Phạm Huy Đức",
+      "student_id": "202414049"
+    },
+    {
+      "name": "Trần Nguyễn Hoàng Hải",
+      "student_id": "202414079"
+    },
+    {
+      "name": "Đào Việt Đức",
+      "student_id": "202414050"
+    }
+  ]
+}
