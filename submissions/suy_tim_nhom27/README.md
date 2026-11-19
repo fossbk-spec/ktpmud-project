@@ -17,4 +17,4 @@ Tài liệu hiện hành mô tả hệ thống web suy tim. MVP ưu tiên nhóm 
 
 ## Kiểm tra bài nộp
 
-Từ gốc repository, chạy `python scripts/validate_submission.py submissions/suy_tim_nhom27`. Workflow hiện có chỉ kích hoạt cho PR vào `main`; phép kiểm tra này chưa thay thế kiểm thử DDL, OpenAPI và ứng dụng. Kết quả kiểm thử CSDL MVP được ghi trong [tài liệu kiểm thử](docs/internal/kiem-thu-co-so-du-lieu-MVP.md).
+Từ gốc repository, chạy `python scripts/validate_submission.py submissions/suy_tim_nhom27`. Workflow `validate-nhom27-submit.yml` kiểm tra các PR vào nhánh `submit/suy_tim-nhom27`: giới hạn tệp nộp, mã Python, OpenAPI, JSON, sơ đồ draw.io, liên kết trong tài liệu được sửa, kiểm thử Gateway và các schema PostgreSQL hiện có. Kết quả kiểm thử CSDL MVP được ghi trong [tài liệu kiểm thử](docs/internal/kiem-thu-co-so-du-lieu-MVP.md).
