@@ -10,7 +10,7 @@
 - Nhập ký tự sai: báo lỗi/focus. Ca bốn tổ hợp có 10/12 ước lượng hợp lý và 10/12 kết quả chính xác, giao nhau 9/12 → 75%; lượt đầu +30 sao. Refresh giữ kết quả. Lượt sau cùng 75% không cộng lại sao.
 - Câu 6 sau yêu cầu của đại diện nhóm chỉ còn `48 × 6`, kể cả DB đã có và lượt chưa nộp. Kết quả đã nộp giữ snapshot lịch sử.
 - Sau sửa cuối: 14/14 unit/API và 4/4 Chromium E2E đạt trên Windows/Node 22. Các run CI mới cần khớp commit thực tế, không dùng run cũ thay chứng nhận code mới.
-- [Ảnh tổng kết Codex](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/artifacts/review/codex-live-result.jpg) và [ảnh toàn trang](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/artifacts/review/codex-live-result-full.jpg).
+- [Ảnh tổng kết Codex](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/artifacts/review/codex-live-result.jpg) và [ảnh toàn trang](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/artifacts/review/codex-live-result-full.jpg).
 
 ## Đối chiếu bảy tiêu chí phản biện
 

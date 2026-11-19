@@ -108,9 +108,9 @@ Giữ tách biệt xác nhận của thành viên, kết quả kiểm thử và 
 |---|---|
 | Công cụ và mục đích | Nhóm dùng ChatGPT/Codex hỗ trợ đối chiếu đề và diễn đạt lại hồ sơ theo các quyết định, kết quả kiểm thử và phân công của nhóm. |
 | Phạm vi | Kịch bản demo, bảng tiến độ, báo cáo test, bảo mật, đóng góp, README, hướng dẫn nộp và cấu hình CI. Mốc giao diện được đối chiếu là `0bc0176`. |
-| Kiểm chứng | Đối chiếu mã và lịch sử Git, chạy lại bộ test MVP, đối chiếu mục 6, 8, 11, 12 và mẫu nộp Track B. Bằng chứng và giới hạn nằm trong [TEST_REPORT.md](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/TEST_REPORT.md). |
+| Kiểm chứng | Đối chiếu mã và lịch sử Git, chạy lại bộ test MVP, đối chiếu mục 6, 8, 11, 12 và mẫu nộp Track B. Bằng chứng và giới hạn nằm trong [TEST_REPORT.md](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/TEST_REPORT.md). |
 | Quyết định của nhóm | Nhóm dùng MVP đã kiểm tra làm căn cứ bàn giao và bổ sung bằng chứng theo hướng dẫn của môn học. |
-| Người chịu trách nhiệm | N57-A lên ý tưởng, kiểm chứng phần AI hỗ trợ và chịu trách nhiệm về bản bàn giao. Xem [CONTRIBUTIONS.md](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/CONTRIBUTIONS.md). |
+| Người chịu trách nhiệm | N57-A lên ý tưởng, kiểm chứng phần AI hỗ trợ và chịu trách nhiệm về bản bàn giao. Xem [CONTRIBUTIONS.md](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/CONTRIBUTIONS.md). |
 
 
 ## Đợt sửa theo phương án tối ưu — bắt đầu 17/11/2026
@@ -139,3 +139,7 @@ Codex kiểm tra bằng IAB trên DB synthetic riêng: lỗi/focus, khóa/refres
 ## Bổ sung hồ sơ theo follow-up PC-2 — 19/11/2026
 
 Đại diện nhóm yêu cầu đọc nhận xét các nhóm trong issue #18 và thực hiện phần cần thiết trên GitHub. Codex dùng tài khoản ndm2006 đã đăng nhập để fork kho môn học, đưa gói vào đúng một thư mục, mở Draft PR #52, kiểm tra validate, bổ sung bảng tiến độ và gửi câu hỏi thủ tục ở #32. Không sửa code của candidate d98c33f, không xác nhận nộp đúng hạn PC-2, không nhận là GV đã duyệt nội dung. Nhóm đã chọn tự tạo tag và nộp cuối; PR giữ Draft để đại diện review/chuyển Ready for review.
+
+## Ủy quyền chốt freeze — 19/11/2026
+
+Sau khi xem báo cáo PR #52 và CI, đại diện yêu cầu Codex hoàn thiện nốt công việc trước 23:59. Codex được ủy quyền tạo tag bkt-2026-N57-rc1 vào bản cuối có CI đạt, kiểm tra tag remote, đóng gói với --require-tag, đồng bộ hồ sơ và theo dõi validate. Việc này thay lựa chọn tự tạo tag trước đó. Code giữ nguyên candidate; không tự xác nhận GV nghiệm thu, không merge PR và không thay thế demo/viva của thành viên.

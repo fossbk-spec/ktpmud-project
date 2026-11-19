@@ -7,7 +7,7 @@
 - Lỗi randomUUID đã được tái hiện: E2E trước sửa không render được 36 lựa chọn; sau fallback getRandomValues, cả bộ bốn ca đạt.
 - Trình duyệt tích hợp Codex, DB review synthetic riêng, hocsinh90: đi từ menu, thiếu câu/error/focus, khóa đủ 12, refresh, lỗi ký tự, bốn tổ hợp feedback. 9/12 câu đúng cả hai → 75%, lần đầu +30 sao; làm lại cùng mức điểm không cộng thêm sao; refresh giữ kết quả.
 - Câu 6 được xác nhận trực tiếp chỉ còn `48 × 6`. Migration đúng nhãn cũ giữ ước lượng của lượt chưa nộp; không viết lại kết quả cũ.
-- [Ảnh tổng kết](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/artifacts/review/codex-live-result.jpg), [toàn trang](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/artifacts/review/codex-live-result-full.jpg), [phản biện cuối bảy tiêu chí](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/docs/FINAL_REVIEW.md).
+- [Ảnh tổng kết](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/artifacts/review/codex-live-result.jpg), [toàn trang](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/artifacts/review/codex-live-result-full.jpg), [phản biện cuối bảy tiêu chí](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/docs/FINAL_REVIEW.md).
 - Kết quả máy chạy không thay review/nghiệm thu của nhóm/GV. Run CI dưới đây thuộc phiên bản trước chỉnh cuối; ứng viên mới cần run đúng SHA mới. Gói hồ sơ kiểm tra bằng validator chính thức riêng.
 
 ## Bằng chứng trước lần chỉnh cuối
@@ -32,17 +32,17 @@ CI code hiện hành: [43e3302](https://github.com/ndm2006/ktpmud-bkt-vuontoan-s
 
 ## Hồ sơ PC-1 lịch sử
 
-**MVP đối chiếu:** giao diện tại `0bc0176` trên nhánh `track-b-work`. **Phạm vi:** ước lượng, tính chính xác, khôi phục tiến độ và hồi quy phiếu Bài 9–10. Xem [kế hoạch T01–T14](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/TEST_PLAN.md) và [tiêu chí B-01–B-12](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/REQUIREMENTS.md).
+**MVP đối chiếu:** giao diện tại `0bc0176` trên nhánh `track-b-work`. **Phạm vi:** ước lượng, tính chính xác, khôi phục tiến độ và hồi quy phiếu Bài 9–10. Xem [kế hoạch T01–T14](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/TEST_PLAN.md) và [tiêu chí B-01–B-12](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/REQUIREMENTS.md).
 
 ## Kết quả có bằng chứng
 
 | Kiểm tra | Môi trường và cách tái hiện | Kết quả |
 |---|---|---|
 | Bộ kiểm thử MVP | Windows build 19045, Node.js 24.22.1, npm 12.2.1, SQLite đã cài trong workspace. Chạy `node --test test/estimation-practice.test.js`. Mỗi lượt tạo DB synthetic tạm. | **8/8 đạt**. |
-| Checkout sạch | Windows x64 build 19045, Node.js 22.23.4, npm 10.9.9, bản xuất Git tại `0408e96`. Chạy `npm ci` rồi `npm test`. | Cài thành công từ lockfile, **8/8 đạt**. `npm audit` ghi nhận hai cảnh báo, xem [checklist](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/SECURITY_PRIVACY_CHECKLIST.md). |
-| Luồng học sinh | Trình duyệt tích hợp, localhost, tài khoản học sinh mẫu. Xem [kịch bản](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/docs/PC1-DEMO.md). | Từ Phòng Luyện Tập mở được hai hoạt động; lưu khoảng, mở gợi ý, tính đúng và đọc giải thích. Đổi qua lại giữ được khoảng đã lưu và lựa chọn trên phiếu trong cùng trang. |
+| Checkout sạch | Windows x64 build 19045, Node.js 22.23.4, npm 10.9.9, bản xuất Git tại `0408e96`. Chạy `npm ci` rồi `npm test`. | Cài thành công từ lockfile, **8/8 đạt**. `npm audit` ghi nhận hai cảnh báo, xem [checklist](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/SECURITY_PRIVACY_CHECKLIST.md). |
+| Luồng học sinh | Trình duyệt tích hợp, localhost, tài khoản học sinh mẫu. Xem [kịch bản](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/docs/PC1-DEMO.md). | Từ Phòng Luyện Tập mở được hai hoạt động; lưu khoảng, mở gợi ý, tính đúng và đọc giải thích. Đổi qua lại giữ được khoảng đã lưu và lựa chọn trên phiếu trong cùng trang. |
 | Bàn phím, T10 | Trình duyệt tích hợp, câu `48 × 6`. Dùng Tab, phím mũi tên và Enter, nhập `a` rồi sửa thành `288`. | Chọn được khoảng 240–299. Focus chuyển đến ô đáp số. Giao diện báo lỗi dễ hiểu, sau đó chấm đúng cả hai bước và chuyển focus đến tiêu đề kết quả. |
-| CI trên PR | [Workflow Track B](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/.github/workflows/track-b.yml) dùng Ubuntu và Node.js 22, chạy `npm ci` rồi `npm test` tại commit `88f7f127bf6775b140f07d40f720d934f29a53c5`. | **Đạt** trên [PR nội bộ #1](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/actions/runs/42870604600). |
+| CI trên PR | [Workflow Track B](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/.github/workflows/track-b.yml) dùng Ubuntu và Node.js 22, chạy `npm ci` rồi `npm test` tại commit `88f7f127bf6775b140f07d40f720d934f29a53c5`. | **Đạt** trên [PR nội bộ #1](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/actions/runs/42870604600). |
 
 ## Bằng chứng trình duyệt cho PC-1
 
@@ -58,7 +58,7 @@ Nhóm dự kiến tự động hóa các luồng trên bằng Playwright trướ
 
 ## Đối chiếu các ca tự động
 
-| Ca trong [bộ test](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/f3eb5eaa22723fca3da56adbd4bc4652f6a9b174/test/estimation-practice.test.js) | Bằng chứng |
+| Ca trong [bộ test](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/test/estimation-practice.test.js) | Bằng chứng |
 |---|---|
 | Bộ câu và hai mốc | 12 câu cố định, 6 nhân và 6 chia hết; mọi số nguyên giữa hai mốc sau phép tính cùng thuộc một khoảng. |
 | Tải bài | Có ba chặng và kiểm tra xác thực; dữ liệu trước khi nộp không chứa lời giải hoặc cờ chấm. |
