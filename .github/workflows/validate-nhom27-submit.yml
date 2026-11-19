@@ -1,0 +1,111 @@
+name: Validate N27 Submission
+
+on:
+  pull_request:
+    branches:
+      - submit/suy_tim-nhom27
+    paths:
+      - .github/workflows/validate-nhom27-submit.yml
+      - submissions/suy_tim_nhom27/**
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ci_only_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: ci_only_password
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check submission boundaries and secrets
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git diff --name-only "$BASE_SHA...$HEAD_SHA" > changed_files.txt
+          grep -v -x '.github/workflows/validate-nhom27-submit.yml' changed_files.txt > submission_changed_files.txt || true
+          if [ -s submission_changed_files.txt ]; then
+            python scripts/validate_submission.py --pr-files submission_changed_files.txt
+          fi
+
+      - name: Install validation dependencies
+        run: python -m pip install -r submissions/suy_tim_nhom27/requirements-dev.txt
+
+      - name: Check Python, OpenAPI, JSON, diagrams and local links
+        run: |
+          python -m compileall -q submissions/suy_tim_nhom27/src submissions/suy_tim_nhom27/database/mvp/tests
+          python - <<'PY'
+          import json
+          import re
+          import urllib.parse
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          import yaml
+          from openapi_spec_validator import validate_spec
+
+          root = Path('submissions/suy_tim_nhom27')
+          validate_spec(yaml.safe_load((root / 'api/openapi.yaml').read_text(encoding='utf-8')))
+          for path in root.rglob('*.json'):
+              json.loads(path.read_text(encoding='utf-8'))
+          for path in (root / 'docs/architecture').glob('*.drawio'):
+              ET.parse(path)
+          missing = []
+          changed = Path('submission_changed_files.txt').read_text(encoding='utf-8').splitlines()
+          for name in changed:
+              path = Path(name)
+              if path.suffix.lower() != '.md' or not path.is_file():
+                  continue
+              content = path.read_text(encoding='utf-8')
+              for match in re.finditer(r'!?\[[^\]]*\]\((<[^>]+>|[^)]+)\)', content):
+                  target = urllib.parse.unquote(match.group(1).strip('<>').split('#')[0])
+                  if target and '://' not in target and not target.startswith('mailto:'):
+                      if not (path.parent / target).exists():
+                          missing.append(f'{path}: {target}')
+          if missing:
+              raise SystemExit('Broken local links:\n' + '\n'.join(missing))
+          print('OpenAPI, JSON, draw.io and local Markdown links: valid')
+          PY
+
+      - name: Check Gateway tests
+        working-directory: submissions/suy_tim_nhom27
+        run: python -m pytest -q tests/test_gateway.py
+
+      - name: Check PostgreSQL schemas and MVP constraints
+        run: |
+          psql -v ON_ERROR_STOP=1 -d postgres -c 'CREATE DATABASE n27_legacy_ci;'
+          psql -v ON_ERROR_STOP=1 -d n27_legacy_ci -f submissions/suy_tim_nhom27/database/schema.sql
+          psql -v ON_ERROR_STOP=1 -d n27_legacy_ci -f submissions/suy_tim_nhom27/database/seed.sql
+          if [ -f submissions/suy_tim_nhom27/database/mvp/schema.sql ]; then
+            psql -v ON_ERROR_STOP=1 -d postgres -c 'CREATE DATABASE n27_mvp_ci;'
+            psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/schema.sql
+            psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/seed-form-v1.sql
+            psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/tests/schema.sql
+            psql -v ON_ERROR_STOP=1 -d n27_mvp_ci -f submissions/suy_tim_nhom27/database/mvp/tests/constraints.sql
+          else
+            echo 'MVP schema is in PR #1; skipping MVP database checks on this PR.'
+          fi
