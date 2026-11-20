@@ -1,0 +1,8 @@
+{
+  "starter_repo": "https://github.com/fossbk-spec/ktpmud-bkt-ruleengine-starter",
+  "starter_commit": "1c0a5b11fe8ea2b8a3126665cfe13ff551ad3469",
+  "fork_url": "https://github.com/DangDuyarch/ktpmud-bkt-ruleengine-starter",
+  "final_commit": "a12ef800b9a22f12622249edacc477e88c17ed81",
+  "release_tag": "bkt-2026-nhom26-rc1",
+  "ci_run_url": "https://github.com/DangDuyarch/ktpmud-bkt-ruleengine-starter/actions/runs/44764296736"
+}
