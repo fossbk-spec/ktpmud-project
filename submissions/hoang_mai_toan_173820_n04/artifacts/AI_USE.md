@@ -1,0 +1,50 @@
+# 🤖 NHẬT KÝ SỬ DỤNG TRÍ TUỆ NHÂN TẠO (AI USE LOG)
+> **Dự án:** Vườn Toán Lớp 3 — Track 2 (Track B: Thêm dạng bài *"Ước lượng trước khi tính đúng"*)  
+> **Mã đề:** `KTPMUD-BKT-2026-PILOT` | **Mã nhóm:** `173820_n04`  
+> **Thành viên:** Bùi Tiến Đạt (202414018), Võ Tấn Đạt (202414021), Nguyễn Minh Quang (20233605)  
+> **Chính sách áp dụng:** Tuân thủ 100% Mục 3 (Luật thi, Quy định chung & Chính sách AI)  
+
+---
+
+## 1. Tuyên bố tuân thủ nguyên tắc sử dụng AI có trách nhiệm
+
+Nhóm 04 (Lớp 173820) cam kết:
+1. **Không dùng LLM lúc runtime:** Toàn bộ thuật toán chấm điểm và ước lượng chạy bằng code tất định (deterministic) thuần trên Node.js server, không gọi API AI để sinh đáp án hoặc chấm bài lúc học sinh nộp bài.
+2. **Không để lộ bí mật/dữ liệu:** Không gửi bất kỳ dữ liệu nhạy cảm hay bí mật hệ thống nào lên mô hình AI.
+3. **Mọi đề xuất từ AI đều có con người kiểm chứng:** Thành viên nhóm chịu trách nhiệm rà soát toán học sư phạm, đọc hiểu từng dòng mã nguồn, tự tay chạy test và chịu trách nhiệm độc lập trong buổi vấn đáp trực tiếp.
+
+---
+
+## 2. Bảng truy vết và nhật ký sử dụng AI chi tiết
+
+| Công cụ / Model | Mục đích | Phạm vi (File / Module / Commit) | Cách thức nhóm kiểm chứng | Quyết định của nhóm | Thành viên chịu trách nhiệm |
+|:---|:---|:---|:---|:---|:---|
+| **Gemini 3.8 Flash** | Hỗ trợ giải thích và bóc tách cấu trúc 12 tiêu chí Acceptance Criteria từ đề thi `Huong_Dan.md` | `artifacts/REQUIREMENTS.md` | Đọc đối chiếu từng tiêu chí với tài liệu kiến trúc chuẩn `docs/architecture-reference.md` và mã nguồn starter gốc | Chấp thuận cấu trúc, bổ sung thêm các kịch bản BDD Gherkin chi tiết | Bùi Tiến Đạt (BA/Tester) |
+| **Gemini 3.8 Flash** | Gợi ý mô hình toán học cho thuật toán ước lượng tất định tổng quát cho CẢ 4 PHÉP TÍNH (+, -, ×, :) | `artifacts/DECISIONS.md` (ADR-01) | Thử nghiệm tính toán thủ công trên giấy với các ca cộng/trừ 2 chữ số (có nhớ/không nhớ) và nhân/chia lớp 3; đối chiếu SGK Toán 3 Kết nối tri thức | Tinh chỉnh lại ngưỡng: thiết lập $\Delta_{min} = \max(3, \lceil 0.15 \times A \rceil)$ cho phép cộng/trừ 2 chữ số để không phạt oan học sinh khi kết quả nhỏ; giữ $\Delta_{min} = \max(2, \lceil 0.15 \times A \rceil)$ cho nhân/chia | Võ Tấn Đạt (Backend/Arch) |
+| **Gemini 3.8 Flash** | Đánh giá 3 phương án mở rộng Schema SQLite cho bảng `questions` (thêm cột vs lưu JSON trong `correct_answer`) | `artifacts/DECISIONS.md` (ADR-02) | Phân tích tính tương thích ngược với 4 type câu hỏi có sẵn và kiểm tra hàm seeder trong `server/db.js` | Chọn Phương án B (lưu JSON trong `correct_answer`) vì không làm thay đổi cấu trúc bảng SQL, tương thích 100% với cả 4 phép toán | Võ Tấn Đạt (Backend/Arch) |
+| **Gemini 3.8 Flash** | Tư vấn thiết kế tương tác người dùng thẻ 2 pha (Phased interaction) và khả năng tiếp cận bằng phím | `artifacts/DECISIONS.md` (ADR-04) | Thử nghiệm hành vi gõ phím Tab/Enter trên HTML và CSS Tailwind thuần | Giữ nguyên đề xuất giao diện 2 pha (Ước lượng trước, Tính đúng sau), thêm viền focus trực quan cho trẻ lớp 3 | Nguyễn Minh Quang (Frontend/UX) |
+| **Gemini 3.8 Flash** | Gợi ý danh mục câu hỏi mẫu synthetic phù hợp với tâm lý học sinh lớp 3 cho 4 phép tính | `tai-lieu-tham-khao/SEED_FIXTURES.md` / `data/seed.json` | Kiểm tra lại từng phép cộng, trừ 2 chữ số và nhân, chia trong phạm vi 1.000, không có số dư phức tạp | Chấp thuận cấu trúc, bổ sung lời giải thích sư phạm chi tiết cho từng phép tính | Bùi Tiến Đạt (BA/Tester) |
+| **Antigravity CLI** | Kiểm chứng mã nguồn hàm `evaluateEstimateQuestion` và ma trận test 4 phép toán | `server/scoring.js` & `tests/unit/scoring.test.js` | Viết các ca kiểm thử giả lập đầu vào (Normal, Boundary, Invalid) cho cả 4 phép tính và chạy thử nghiệm | Mã nguồn chạy tất định 100%, pass toàn bộ test case | Võ Tấn Đạt (Backend/Arch) |
+| **Gemini 3.8 Flash** | Soạn thảo khung kế hoạch kiểm thử tự động toàn diện bao phủ 4 phép tính, ma trận ca test (Normal, Boundary, Invalid), API và A11y | `artifacts/TEST_PLAN.md` | Rà soát từng ca kiểm thử, đối chiếu công thức dung sai ADR-01 và 16 fixture trong `SEED_FIXTURES.md` | Phê duyệt kế hoạch, bổ sung chi tiết ca kiểm thử bàn phím Tab/Enter và ranh giới bảo mật B-07 | Bùi Tiến Đạt (BA/Tester) |
+| **Windows Package Manager (winget)** | Cài đặt và cấu hình môi trường Node.js 20 LTS cục bộ | Môi trường hệ điều hành máy trạm | Chạy `node -v` (v20.20.2), `npm -v` (10.8.2), chạy `npm install` và test `server/db.js` | Môi trường hoạt động ổn định, nạp DB thành công | Võ Tấn Đạt (Backend/Arch) |
+| **Gemini 3.8 Flash** | Thiết kế cơ chế bộ đếm thời gian thích ứng 60s/pha và xây dựng phân cấp logic sư phạm 5 bậc (Vàng/Bạc/Exact-in-est/Trong khoảng/Ngoài khoảng) với tỷ lệ trọng số 70/30 theo yêu cầu người dùng | `artifacts/REQUIREMENTS.md`, `tai-lieu-tham-khao/SEED_FIXTURES.md`, `progress/PROGRESS.md` | Rà soát phân bổ điểm: 70% Ước lượng (55% Base + 15% Time Bonus) và 30% Đặt tính đúng (25% Base + 5% Time Bonus); kiểm chứng tâm lý học sinh lớp 3 với thời gian 60s/pha và phản hồi sư phạm nhắc nhở không gây ức chế | Phê duyệt thiết kế, cập nhật toàn bộ SRS, ma trận BDD và 16 câu hỏi fixture có `gold_anchor` và `silver_anchors` | Bùi Tiến Đạt (BA/Tester) & Võ Tấn Đạt (Backend/Arch) |
+| **Antigravity Multi-Agent** | Triển khai song song mã nguồn 3 thành phần chính: (1) Core Math Engine (`server/scoring.js`) & Unit tests; (2) Data Seed & API (`data/seed.json`, `server/db.js`, `server/api.js`); (3) Frontend UX 2 pha & A11y (`public/assets/js/pages/lesson.js`) | `server/scoring.js`, `server/api.js`, `server/db.js`, `data/seed.json`, `public/assets/js/pages/lesson.js`, `tests/` | Chạy bộ kiểm thử tự động Jest 58/58 tests PASS (48 Unit + 10 Integration tests); kiểm thử cú pháp `node -c`; kiểm tra thực tế giao diện và phản xạ bàn phím | Đạt chuẩn 100% acceptance criteria, bảo mật anti-cheat trên server, sẵn sàng cho Checkpoint 2 | Cả nhóm |
+| **Antigravity Multi-Agent** | Chuẩn hóa phân cấp sư phạm 5 bậc: Tách neo Cận trên/dưới (`BOUNDING_ANCHOR`) cùng nhận Huy hiệu Đồng (50% Base) ngang bằng Đặt tính đúng; gán Huy hiệu Khuyến khích (35% Base) cho số gõ bừa trong dung sai; cô lập bộ đếm 60s từng câu & gợi ý sau 30s | `server/scoring.js`, `public/assets/js/pages/lesson.js`, `data/seed.json`, `tests/`, `artifacts/` | Chạy Jest đạt 65/65 tests PASS (55 Unit + 10 Integration); kiểm thử thực tế phép tính 54 + 27 đạt chuẩn điểm số Vàng (80), Bạc (77, 84), Đồng (70, 90, 81), Khuyến khích (75, 83) | Phê duyệt chuẩn hóa theo đúng yêu cầu sư phạm; cập nhật trọn vẹn 16 fixture, code và test suites | Cả nhóm |
+| **Antigravity Multi-Agent** | Nâng cấp công thái học người dùng (UI/UX Guards): Loại bỏ hoàn toàn cử chỉ lăn chuột (Mouse Wheel Guard) gây nhảy số; cài đặt cơ chế Empty Input Guard ngăn bấm Enter/chuyển pha khi chưa điền đáp án trong lúc còn giờ kèm hộp nhắc nhở sư phạm | `public/assets/js/pages/lesson.js`, `public/assets/css/app.css`, `artifacts/`, `tai-lieu-tham-khao/` tại commit [`b0f2e16`](https://github.com/votandat-K69HUST/ktpmud-bkt-vuontoan-starter/commit/b0f2e16) | Kiểm thử cú pháp `node -c`, kiểm tra hành vi gõ phím Enter trên ô rỗng, chạy trọn bộ 65 automated tests | Hoàn thiện trải nghiệm bảo vệ học sinh tiểu học, cập nhật đồng bộ toàn bộ tài liệu | Cả nhóm |
+| **Antigravity Multi-Agent** | Hoàn thiện trọn bộ 6 đầu việc M3 (Hardening & Delivery): Thiết lập GitHub Actions CI (`.github/workflows/ci.yml`), lập Security/Privacy Checklist 10 tiêu chí (`SECURITY_PRIVACY_CHECKLIST.md`), phân định tỷ lệ đóng góp (`CONTRIBUTIONS.md`), chuẩn hóa README Clean Checkout, thiết kế Slide Marp 7 phút (`slide_thuyet_trinh.md`), cập nhật PROGRESS.md PC-2 | `.github/workflows/ci.yml`, `artifacts/SECURITY_PRIVACY_CHECKLIST.md`, `artifacts/CONTRIBUTIONS.md`, `slides/slide_thuyet_trinh.md`, `README.md`, `progress/PROGRESS.md` tại commit [`5c2695d`](https://github.com/votandat-K69HUST/ktpmud-bkt-vuontoan-starter/commit/5c2695d) | Kiểm thử cú pháp YAML `ci.yml`, chạy toàn bộ 65/65 tests PASS, rà soát 10/10 mục security không dính secret/PII, đối chiếu 12/12 ACs đạt chuẩn | Phê duyệt hoàn tất toàn bộ 6 đầu việc M3 trước hạn PC-2 (18/11/2026); sẵn sàng cho Code Freeze | Cả nhóm |
+
+---
+
+## 3. Quy trình xác nhận của nhóm trước mỗi lần áp dụng AI
+```mermaid
+flowchart LR
+    Prompt["1. Đặt câu hỏi / Yêu cầu cụ thể"] --> AIResp["2. AI sinh đề xuất / Mã nguồn"]
+    AIResp --> HumanReview["3. Thành viên rà soát & Phân tích"]
+    HumanReview --> ManualVerify["4. Kiểm chứng: Chạy thử & Tính nhẩm"]
+    ManualVerify --> Decision{"5. Quyết định?"}
+    Decision -- Đạt chuẩn --> Commit["6. Chấp thuận & Lưu nhật ký"]
+    Decision -- Chưa chuẩn --> Refine["7. Tinh chỉnh / Viết lại thủ công"]
+    Refine --> Commit
+```
+
+*Nhật ký này sẽ tiếp tục được cập nhật liên tục qua các giai đoạn M2 (Build) và M3 (Harden) cho đến khi chốt Code Freeze.*
