@@ -23,3 +23,7 @@ Mốc source freeze: tag `bkt-2026-N57-rc1` trên fork code. Không force-push/x
 - Chứng thực đóng góp cá nhân, mức hiểu code, ngoại lệ nhóm hoặc việc nghiệm thu của GV.
 - Quyết định có chấp nhận bổ sung PC-2 muộn hay không.
 - Approve/merge bài vào kho môn học bằng quyền của giảng viên.
+
+## Cập nhật hoàn tất thủ tục — 21/11/2026
+
+Đại diện nhóm đã yêu cầu Codex thực hiện nốt các bước cuối. Hồ sơ được kiểm tra lại trên cùng PR #52 và chuyển Ready for review sau khi validate đạt; không xác nhận đã chuyển ngày 20/11. Kiểm tra trạng thái thực tế trên PR/timeline. Nhóm không cần mở PR mới hoặc tạo lại tag. Các phần demo/viva, đóng góp cá nhân và xử lý nộp muộn vẫn thuộc nhóm/GV.

@@ -10,7 +10,7 @@ Clean run (Node 22): git clone https://github.com/ndm2006/ktpmud-bkt-vuontoan-st
 
 Từ menu Phòng Luyện Tập → chọn 12 khoảng → lưu/khóa → tính chính xác → nộp. Mỗi câu đạt điểm khi cả hai bước đúng. [Demo 7 phút](slides/DEMO.md). [Review cuối](artifacts/FINAL_REVIEW.md).
 
-Chỉ đưa thư mục này vào submissions/hoang_mai_toan_n57 của ktpmud-project. Candidate không thay bước nhóm review, tag/release và xác nhận PC-2.
+Chỉ đưa thư mục này vào submissions/hoang_mai_toan_n57 của ktpmud-project. Tag freeze đã công bố; hồ sơ không thay việc nhóm giải thích đóng góp và demo/viva.
 
 ## Freeze đã công bố — 19/11/2026
 
@@ -20,4 +20,10 @@ Chỉ đưa thư mục này vào submissions/hoang_mai_toan_n57 của ktpmud-pro
 - [Tiến độ PC-2 và kết quả freeze](https://github.com/ndm2006/ktpmud-bkt-vuontoan-starter/blob/dcbf0219c8318814c9358f7d4c543955b2496050/progress/PROGRESS.md).
 - [Biên bản kiểm tra freeze](artifacts/FREEZE_RECORD.md) · [Hướng dẫn nộp cuối/demo](HANDOFF_AFTER_FREEZE.md).
 
-Draft PR: https://github.com/fossbk-spec/ktpmud-project/pull/52. Hồ sơ bổ sung muộn sau PC-2; câu hỏi đã gửi tại https://github.com/fossbk-spec/ktpmud-project/issues/32#issuecomment-7015415399. Không xác nhận đã nộp đúng hạn 18/11. Giữ cùng PR, ngày 20/11 nhóm chuyển Ready for review sau khi đọc hồ sơ và kiểm tra validate của head mới nhất.
+Draft PR: https://github.com/fossbk-spec/ktpmud-project/pull/52. Hồ sơ bổ sung muộn sau PC-2; câu hỏi đã gửi tại https://github.com/fossbk-spec/ktpmud-project/issues/32#issuecomment-7015415399. Không xác nhận đã nộp đúng hạn 18/11.
+
+## Hoàn tất thủ tục nộp cuối — 21/11/2026
+
+Đối chiếu source-ref, tag remote và CI đúng SHA: khớp. Không có phản hồi yêu cầu sửa từ GV tại thời điểm rà soát. Theo yêu cầu đại diện nhóm, hoàn tất hồ sơ và chuyển cùng PR #52 sang Ready for review sau khi validate của bản cuối đạt. Thao tác này thực hiện ngày 21/11, sau ngày nộp 20/11; không ghi nhận là đúng hạn. Thời điểm chuyển trạng thái xem timeline của PR. Source và tag freeze ngày 19/11 giữ nguyên.
+
+Nhóm tự thực hiện demo/viva; GV quyết định ghi nhận nộp bổ sung, review nội dung và merge. Xem HANDOFF_AFTER_FREEZE.md để chuẩn bị trình bày.
