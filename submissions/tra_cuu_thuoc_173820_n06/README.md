@@ -1,84 +1,44 @@
 # Hệ thống hỗ trợ tra cứu & phân tích thuốc — tra_cuu_thuoc_173820_n06
 
-> Hệ thống hỗ trợ dược sĩ tra cứu thông tin thuốc, xử lý đơn thuốc và rà soát tương tác giữa các hoạt chất dựa trên cơ sở dữ liệu có nguồn tham khảo.
+> Ứng dụng hỗ trợ mọi đối tượng có nhu cầu tra cứu thông tin thuốc, đọc đơn thuốc và kiểm tra tương tác giữa các thuốc dựa trên cơ sở dữ liệu tham chiếu.
 
 ## 1. Giới thiệu sản phẩm
 
-- **Bài toán / người dùng đích:** Hỗ trợ dược sĩ trong việc tra cứu thông tin thuốc, tiếp nhận đơn thuốc dưới dạng hình ảnh và kiểm tra tương tác thuốc. Bác sĩ là người dùng phụ có thể tham khảo kết quả phân tích. Bệnh nhân là đối tượng hưởng lợi từ hệ thống.
-- **Tính năng chính của MVP:**
-  1. Tra cứu thuốc và thông tin hoạt chất từ cơ sở dữ liệu.
-  2. Nhận diện nội dung đơn thuốc từ hình ảnh bằng OCR.
-  3. Chuẩn hóa văn bản OCR thành danh sách thuốc.
-  4. Kiểm tra tương tác thuốc (DDI) dựa trên cơ sở dữ liệu đã xác minh.
-  5. Lưu trữ lịch sử đơn thuốc và hỗ trợ rà soát tương tác giữa các đơn.
-- **Demo:** Chưa triển khai công khai.
-- **Ảnh chụp:** `report/screenshot-01.png` (sẽ bổ sung).
+- **Bài toán / người dùng đích:** Việc tra cứu thông tin thuốc, đọc nội dung đơn thuốc và kiểm tra tương tác giữa nhiều loại thuốc có thể mất thời gian và khó tiếp cận với người không có chuyên môn. Sản phẩm hướng đến tất cả những ai có nhu cầu tìm hiểu thông tin thuốc, bao gồm người dân, bệnh nhân, người chăm sóc, sinh viên và nhân viên y tế.
+- **Tính năng chính của MVP (3–5):**
+  1. Tra cứu thông tin thuốc theo tên thuốc.
+  2. Nhận dạng và trích xuất thông tin từ hình ảnh đơn thuốc bằng OCR.
+  3. Hỗ trợ chuẩn hóa nội dung nhận dạng để hạn chế lỗi văn bản OCR.
+  4. Kiểm tra tương tác giữa các thuốc dựa trên cơ sở dữ liệu có nguồn tham chiếu.
+  5. Hỗ trợ kiểm tra tương tác giữa đơn thuốc hiện tại và lịch sử đơn thuốc.
+- **Demo:** Chưa có · **Ảnh chụp:** `report/screenshot-01.png`
 
 ## 2. Phạm vi MVP
 
 | **Trạng thái** | **Nội dung** |
 |---|---|
-| ✅ Đã làm | Xây dựng backend Python/FastAPI; thiết lập cơ sở dữ liệu SQLite; xây dựng dữ liệu thuốc và dữ liệu tương tác thuốc ban đầu; thử nghiệm quy trình nhận diện văn bản đơn thuốc. |
-| 🚧 Đang làm | Hoàn thiện luồng OCR và chuẩn hóa văn bản bằng PaddleOCR; đánh giá Qwen trong việc hiệu chỉnh lỗi OCR; hoàn thiện kiểm tra tương tác thuốc và rà soát lịch sử đơn thuốc. |
-| ⬜ Chưa làm | Hoàn thiện giao diện người dùng; hoàn thiện kiểm thử tích hợp; triển khai demo; hoàn thiện báo cáo đánh giá hiệu năng và bảo mật. |
-| 🚫 Ngoài phạm vi | Chẩn đoán bệnh; tự động kê đơn; thay thế quyết định chuyên môn của bác sĩ hoặc dược sĩ. |
+| ✅ Đã làm | Xây dựng backend bằng Python/FastAPI; thiết lập cơ sở dữ liệu SQLite; tích hợp dữ liệu thuốc và dữ liệu tương tác thuốc ban đầu; thử nghiệm quy trình nhận dạng văn bản từ hình ảnh đơn thuốc. |
+| 🚧 Đang làm | Hoàn thiện xử lý OCR bằng PaddleOCR; thử nghiệm chuẩn hóa văn bản bằng Qwen2.5:3b; hoàn thiện chức năng kiểm tra tương tác thuốc và xử lý lịch sử đơn thuốc. |
+| ⬜ Chưa làm | Hoàn thiện giao diện người dùng; tích hợp toàn bộ frontend và backend; kiểm thử tích hợp; hoàn thiện báo cáo kiểm thử, bảo mật và hiệu năng; triển khai demo. |
+| 🚫 Ngoài phạm vi | Chẩn đoán bệnh; tự động kê đơn; đề xuất hoặc quyết định phác đồ điều trị; thay thế tư vấn và quyết định chuyên môn của bác sĩ, dược sĩ. |
 
 ## 3. Kiến trúc & công nghệ
 
-### 3.1. Kiến trúc hệ thống
-
-**C4 Context:**
-
 ```mermaid
-flowchart TB
-    Pharmacist["Dược sĩ"]
-    Doctor["Bác sĩ"]
-    System["Hệ thống hỗ trợ tra cứu và phân tích thuốc"]
-    DB[("Cơ sở dữ liệu thuốc và tương tác")]
-    OCR["Module OCR"]
-    AI["Module hỗ trợ xử lý văn bản"]
-
-    Pharmacist --> System
-    Doctor --> System
-    System --> DB
-    System --> OCR
-    System --> AI
+flowchart TD
+    U[Người dùng] --> FE[Giao diện ứng dụng]
+    FE --> API[Backend - FastAPI]
+    API --> DB[(SQLite Database)]
+    API --> OCR[PaddleOCR]
+    OCR --> TXT[Chuẩn hóa văn bản]
+    TXT --> AI[Qwen2.5:3b - Ollama]
+    AI --> API
+    DB --> API
+    API --> FE
 ```
 
-**C4 Container (mô hình dự kiến):**
-
-```mermaid
-flowchart TB
-    User["Người dùng"]
-    UI["Web Application"]
-    API["Backend API - FastAPI"]
-    OCR["PaddleOCR"]
-    Qwen["Qwen - hiệu chỉnh OCR"]
-    Engine["Drug Interaction Engine"]
-    DB[("SQLite Database")]
-
-    User --> UI
-    UI --> API
-    API --> OCR
-    OCR --> Qwen
-    API --> Engine
-    Engine --> DB
-    API --> DB
-```
-
-### 3.2. Công nghệ sử dụng
-
-| Thành phần | Công nghệ / phiên bản |
-|---|---|
-| Ngôn ngữ backend | Python 3.12.5 |
-| Backend framework | FastAPI |
-| Database | SQLite |
-| OCR | PaddleOCR 3.7.0 |
-| Xử lý văn bản | Ollama 0.40.15, Qwen2.5:3b (thử nghiệm) |
-| Kiểm thử | Python testing framework |
-| Quản lý mã nguồn | Git, GitHub |
-
-### 3.3. Cấu trúc thư mục `src/`
+- Ngôn ngữ/framework + phiên bản: Python 3.12.5, FastAPI, SQLite; PaddleOCR 3.7.0; Ollama 0.40.15; Qwen2.5:3b; Git và GitHub.
+- Cấu trúc thư mục `src/`:
 
 ```text
 src/
@@ -92,66 +52,55 @@ src/
 └── README.md
 ```
 
-Cấu trúc trên là cấu trúc tổ chức dự kiến cho mã nguồn được đưa vào bài nộp và sẽ được đồng bộ với mã nguồn thực tế.
+*Cấu trúc trên cần được đối chiếu và cập nhật theo mã nguồn thực tế trước khi hoàn thiện bài nộp.*
 
 ## 4. Cài đặt & cách sử dụng
 
-### 4.1. Yêu cầu môi trường
-
-- Windows 10/11 hoặc hệ điều hành tương thích.
-- Python 3.12.5.
-- pip và môi trường ảo Python.
-- SQLite.
-- Ollama và Qwen2.5:3b nếu sử dụng module hiệu chỉnh OCR.
-
-### 4.2. Cài đặt và chạy
-
-Các lệnh dưới đây là quy trình cài đặt dự kiến. Đường dẫn module chạy và tên file requirements sẽ được xác nhận theo mã nguồn thực tế trước khi phát hành bản README cuối.
+**Yêu cầu môi trường:** Windows 10/11; Python 3.12.5; pip; SQLite; Ollama và Qwen2.5:3b nếu sử dụng chức năng hỗ trợ chuẩn hóa văn bản bằng AI.
 
 ```powershell
+# Di chuyển vào thư mục backend
 cd src/backend
 
+# Tạo và kích hoạt môi trường ảo
 python -m venv .venv
-
 .venv\Scripts\activate
 
+# Cài đặt thư viện
 pip install -r requirements.txt
 ```
 
-Lệnh khởi chạy backend và chạy kiểm thử sẽ được cập nhật sau khi chốt cấu trúc mã nguồn trong thư mục `src/`.
+Lệnh khởi chạy backend và chạy test sẽ được cập nhật theo entry point, cấu hình và cấu trúc kiểm thử thực tế của mã nguồn.
 
-### 4.3. Dữ liệu và tài khoản mẫu
+**Dữ liệu/tài khoản mẫu (synthetic):** Sử dụng dữ liệu thuốc và dữ liệu tương tác thuốc có nguồn tham chiếu; dữ liệu đơn thuốc và thông tin người dùng phục vụ kiểm thử, trình diễn phải là dữ liệu tổng hợp. Không sử dụng thông tin định danh cá nhân hoặc hồ sơ sức khỏe thật.
 
-- Sử dụng dữ liệu thuốc và tương tác thuốc phục vụ tra cứu.
-- Dữ liệu đơn thuốc kiểm thử được tạo dưới dạng synthetic.
-- Không sử dụng thông tin bệnh nhân thật.
-- Tài khoản thử nghiệm sẽ được bổ sung khi hoàn thiện chức năng xác thực và phân quyền.
+**Kịch bản sử dụng (≥ 3):**
 
-### 4.4. Kịch bản sử dụng
-
-**Kịch bản 1: Tra cứu thuốc**
-
-1. Dược sĩ truy cập chức năng tra cứu.
-2. Nhập tên thuốc hoặc hoạt chất.
-3. Hệ thống tìm kiếm trong cơ sở dữ liệu.
-4. Hiển thị thông tin thuốc phù hợp.
-
-**Kịch bản 2: Phân tích đơn thuốc bằng OCR**
-
-1. Dược sĩ tải ảnh đơn thuốc lên hệ thống.
-2. Backend tiếp nhận hình ảnh.
-3. PaddleOCR thực hiện nhận diện văn bản.
-4. Hệ thống chuẩn hóa danh sách thuốc.
-5. Dược sĩ kiểm tra và xác nhận kết quả nhận diện.
-
-**Kịch bản 3: Kiểm tra tương tác thuốc**
-
-1. Dược sĩ cung cấp danh sách thuốc cần kiểm tra.
-2. Hệ thống xác định các hoạt chất tương ứng.
-3. Drug Interaction Engine đối chiếu các cặp hoạt chất với cơ sở dữ liệu.
-4. Hệ thống hiển thị tương tác tìm thấy, mức độ nghiêm trọng và thông tin tham khảo.
+1. **Tra cứu thuốc:** Người dùng nhập tên thuốc → hệ thống tìm kiếm trong cơ sở dữ liệu → hiển thị thông tin thuốc tương ứng.
+2. **Đọc đơn thuốc:** Người dùng tải lên hình ảnh đơn thuốc → hệ thống sử dụng OCR để nhận dạng và xử lý văn bản → hiển thị nội dung trích xuất để người dùng kiểm tra.
+3. **Kiểm tra tương tác thuốc:** Người dùng cung cấp danh sách thuốc → hệ thống đối chiếu các cặp thuốc với cơ sở dữ liệu tương tác → hiển thị cảnh báo và thông tin tham chiếu nếu có dữ liệu phù hợp.
 
 ## 5. Hướng phát triển Tuần 11–15
 
 | **Tuần** | **Mục tiêu** | **Đầu việc chính** | **Phụ trách (MSSV)** | **Tiêu chí hoàn thành** | **Trạng thái** |
-|---|---|---|---|
+|---|---|---|---|---|---|
+| 11 (từ 18/11) | Chốt MVP & CI | Xác định phạm vi MVP; hoàn thiện cấu trúc dự án; chuẩn bị README, submission.json và CI. | 202414030, 202414334 | Xác định được chức năng MVP; cấu trúc bài nộp đúng yêu cầu; CI hoạt động. | 🚧 |
+| 12 | Kiểm thử & tích hợp | Hoàn thiện các chức năng chính; tích hợp các thành phần; kiểm thử API và luồng sử dụng. | 202414030, 202414334 | Các luồng chính hoạt động; có báo cáo kiểm thử và ghi nhận lỗi. | ⬜ |
+| 13 | Bảo mật, hiệu năng & AI | Kiểm tra bảo mật; đánh giá hiệu năng; đánh giá OCR và khả năng hỗ trợ chuẩn hóa văn bản của AI. | 202414030, 202414334 | Có báo cáo đánh giá; kiểm soát dữ liệu đầu vào và đầu ra; AI không tự tạo kết luận tương tác thuốc. | ⬜ |
+| 14 | Review chéo & code freeze | Rà soát mã nguồn; sửa lỗi; cập nhật tài liệu; đóng băng phiên bản mã nguồn. | 202414030, 202414334 | Hoàn thành review; xử lý lỗi quan trọng; mã nguồn và tài liệu thống nhất. | ⬜ |
+| 15 | Nghiệm thu & bảo vệ | Hoàn thiện sản phẩm; chuẩn bị slide, video demo và tài liệu nghiệm thu. | 202414030, 202414334 | Có sản phẩm demo; đầy đủ tài liệu; sẵn sàng trình bày và bảo vệ. | ⬜ |
+
+Cập nhật cột *Trạng thái* (⬜ chưa / 🚧 đang / ✅ xong) vào cuối mỗi tuần.
+
+## 6. Nhóm & tuân thủ
+
+- Mã nhóm: `173820_n06` · Thành viên: `202414030 – Phát triển sản phẩm`, `202414334 – Phát triển sản phẩm`.
+- Zero PII/PHI: Cam kết sử dụng dữ liệu tổng hợp cho kiểm thử và trình diễn; không đưa thông tin định danh cá nhân hoặc hồ sơ sức khỏe thật vào bài nộp.
+- Công cụ AI đã dùng & phạm vi: ChatGPT hỗ trợ phân tích yêu cầu, thiết kế và phát triển; Qwen2.5:3b được thử nghiệm để hỗ trợ chuẩn hóa văn bản OCR. Kết quả AI cần được kiểm tra, không dùng AI làm nguồn tự quyết định tương tác thuốc.
+- Dữ liệu lớn (>10MB): Chưa có liên kết dữ liệu lớn riêng.
+
+## Cấu trúc thư mục bài nộp
+
+- `report/` — SRS, C4 Model, Test Report, báo cáo cuối kỳ
+- `src/` — mã nguồn
+- `slides/` — slide thuyết trình
