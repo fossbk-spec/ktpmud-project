@@ -39,7 +39,7 @@ Kiến trúc dự kiến gồm các thành phần:
 - Backend: Python, FastAPI.
 - Database: SQLite trong giai đoạn phát triển.
 - OCR: PaddleOCR.
-- Xử lý văn bản: Qwen chạy cục bộ, được đánh giá theo nhu cầu thực tế.
+- Xử lý văn bản: Qwen chạy cục bộ, được đánh giá theo nhu cầu thực tế (dự kiến bỏ).
 - Drug Interaction Engine: Đối chiếu hoạt chất với dữ liệu tương tác thuốc đã được xây dựng từ nguồn tham khảo.
 
 Luồng xử lý chính:
@@ -103,4 +103,4 @@ Cam kết tuân thủ:
 - Chỉ sử dụng MSSV trong tài liệu và repository.
 - Các kết quả phân tích tương tác thuốc phải dựa trên dữ liệu có nguồn tham khảo.
 
-Công cụ AI hỗ trợ phát triển: ChatGPT, Qwen (thử nghiệm xử lý văn bản OCR).
+Công cụ AI hỗ trợ phát triển: Claude, ChatGPT, Qwen (thử nghiệm xử lý văn bản OCR).
