@@ -77,7 +77,7 @@ CS-2 đến CS-9 điền `khong_ap_dung`.
 
 ## 3. Quy tắc bắt buộc về quyền riêng tư (CI sẽ chặn nếu vi phạm)
 
-1. **Không đưa dữ liệu bệnh nhân thật** vào bất kỳ đâu trong PR — tất cả 9 case study đều bắt buộc dùng dữ liệu synthetic/mô phỏng theo nguyên
+1. **Không đưa dữ liệu bệnh nhân thật** vào bất kỳ đâu trong PR — tất cả 15 case study đều bắt buộc dùng dữ liệu synthetic/mô phỏng theo nguyên
    tắc Zero PII/PHI của khung chung. Vi phạm: 0 điểm toàn phần theo Rubric.
 2. **Không commit khóa API, token, mật khẩu, file `.env`.**
 3. **Không dùng họ tên thật đầy đủ** của thành viên trong code/README/tên
