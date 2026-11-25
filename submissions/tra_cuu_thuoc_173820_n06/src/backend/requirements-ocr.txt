@@ -1,0 +1,9 @@
+# OCR local (Python 3.12, Windows CPU)
+paddlepaddle==3.2.0
+paddleocr==3.7.0
+opencv-python>=4.10.0
+numpy>=1.26.0
+
+# Ollama HTTP client and existing .env support
+requests>=2.32.0
+python-dotenv>=1.0.1
