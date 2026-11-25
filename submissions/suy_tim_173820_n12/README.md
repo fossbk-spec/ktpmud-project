@@ -14,11 +14,11 @@
     3. **Nhân viên tiếp đón (Receptionist):** Tiếp nhận bệnh nhân tại quầy, tra cứu mã định danh bệnh nhân, tạo lượt khám mới và cấp số thứ tự vào hàng đợi phòng khám.
 
 - **Tính năng chính của MVP:**
-  1. **Xác thực & Phân quyền đa vai trò (RBAC):** Đăng nhập an toàn bằng JWT và mật khẩu mã hóa bcrypt cho 3 nhóm đối tượng riêng biệt (Bác sĩ, Bệnh nhân, Nhân viên tiếp đón).
-  2. **Quản lý tiếp đón & Hàng đợi khám bệnh:** Tiếp nhận tại quầy, cấp mã bệnh nhân chuẩn hóa (`BNxxxx`), tự động cấp số thứ tự và cập nhật trạng thái hàng đợi thời gian thực (`registered` $\rightarrow$ `waiting` $\rightarrow$ `in_progress` $\rightarrow$ `waiting_result` $\rightarrow$ `completed`).
-  3. **Ghi nhận sinh hiệu & Cảnh báo sớm:** Ghi nhận chuỗi chỉ số (cân nặng, huyết áp tâm thu/tâm trương, SpO2, nhịp tim) kèm triệu chứng phù/khó thở/đau ngực; tự động kích hoạt cảnh báo nguy cơ vượt ngưỡng lâm sàng.
-  4. **Trợ lý hỗ trợ quyết định lâm sàng (AI-CDSS Simulator):** Phân tích dữ liệu cận lâm sàng/sinh hiệu để đưa ra gợi ý chẩn đoán phân độ NYHA, đề xuất danh mục xét nghiệm và cảnh báo tương tác thuốc dựa trên guideline điều trị.
-  5. **Quản lý mẫu kết luận & Lịch sử bệnh án:** Cung cấp sẵn các mẫu bệnh án chuẩn (khám định kỳ, đợt mất bù cấp, tăng huyết áp kết hợp), lưu vết các phiên bản kết luận khám (Audit Versioning) và công bố đơn thuốc cho bệnh nhân.
+  1. **Xác thực & Phân quyền đa vai trò (RBAC):** Đăng nhập an toàn bằng JWT và mật khẩu mã hóa bcrypt cho 3 nhóm đối tượng riêng biệt (Bác sĩ, Bệnh nhân, Nhân viên tiếp đón/y tế).
+  2. **Tiếp đón, Đo sinh hiệu check-in & Hàng đợi khám bệnh:** Bệnh nhân đặt lịch trước hoặc đăng ký trực tiếp; nhân viên y tế kiểm tra thông tin, nhập chỉ số sinh hiệu tại quầy (cân nặng, huyết áp, nhịp tim, SpO2, triệu chứng) rồi cấp số thứ tự và phân công bác sĩ theo thời gian thực (`registered` $\rightarrow$ `waiting` $\rightarrow$ `called` $\rightarrow$ `in_progress` $\rightarrow$ `waiting_result` $\rightarrow$ `completed`).
+  3. **Theo dõi sinh hiệu, Số thứ tự & Cảnh báo sớm:** Bệnh nhân xem số thứ tự khám hiện tại, diễn tiến lịch sử sinh hiệu, cảnh báo nguy cơ mất bù vượt ngưỡng lâm sàng, đơn thuốc đã công bố và lịch tái khám.
+  4. **Trợ lý hỗ trợ quyết định lâm sàng (AI-CDSS Simulator):** Phân tích dữ liệu HIS/EMR và sinh hiệu để gợi ý chẩn đoán phân độ NYHA, đề xuất xét nghiệm, phác đồ điều trị và cảnh báo an toàn thuốc; bác sĩ có thể duyệt/phản hồi độc lập từng khối gợi ý (`ai_block_reviews`).
+  5. **Kê đơn, Kiểm tra tương tác thuốc, Mẫu kết luận & Ký xác nhận:** Cung cấp 4 mẫu kết luận chuẩn hóa, kiểm tra tương tác cặp thuốc, lưu vết phiên bản bệnh án (`visit_versions`), quản lý lịch làm việc bác sĩ và ký xác nhận điện tử kết quả đã công bố.
 
 - **Web Demo:** [https://cre-hint.onrender.com](https://cre-hint.onrender.com) · **Ảnh chụp:** `docs/screenshot-01.png`
 
@@ -28,13 +28,13 @@
 
 | Trạng thái | Nội dung |
 |---|---|
-| ✅ **Đã làm** | Xác thực người dùng, bảo mật mật khẩu `bcrypt` và phiên làm việc `JWT` cho 3 vai trò (Bác sĩ, Bệnh nhân, Tiếp đón). |
-| ✅ **Đã làm** | Module Tiếp đón: Tìm kiếm bệnh nhân theo mã `BNxxxx`, đăng ký lượt khám và cấp số thứ tự hàng đợi. |
-| ✅ **Đã làm** | Module Bác sĩ: Quản lý hàng đợi phòng khám, gọi khám, cập nhật trạng thái lượt khám theo thời gian thực. |
-| ✅ **Đã làm** | Module Theo dõi sinh hiệu: Bệnh nhân tự nhập số đo tại nhà, thuật toán kiểm tra ngưỡng cảnh báo nguy cơ suy tim mất bù. |
-| ✅ **Đã làm** | Module AI-CDSS Simulator: Gợi ý chẩn đoán NYHA, khuyến nghị cận lâm sàng và cảnh báo an toàn dùng thuốc. |
-| ✅ **Đã làm** | Module Kê đơn & Mẫu kết luận: Thư viện 4 mẫu kết luận chuẩn hóa, hỗ trợ kê đơn nhanh và lưu lịch sử phiên bản (`visit_versions`). |
-| ✅ **Đã làm** | Bộ dữ liệu thử nghiệm chuẩn Synthetic Data đảm bảo nguyên tắc Zero PII/PHI. |
+| ✅ **Đã làm** | Xác thực người dùng, bảo mật mật khẩu `bcrypt` và phiên làm việc `JWT` cho 3 vai trò (Bác sĩ, Bệnh nhân, Nhân viên y tế). |
+| ✅ **Đã làm** | Module Tiếp đón & Sinh hiệu check-in: Tra cứu mã `BNxxxx`, tiếp nhận lượt khám, nhập sinh hiệu tại quầy, chọn bác sĩ và cấp số thứ tự hàng đợi. |
+| ✅ **Đã làm** | Module Bác sĩ: Quản lý hàng đợi phòng khám theo mức ưu tiên, lịch làm việc (`DoctorSchedule`), gọi khám, chỉ định xét nghiệm (`lab_orders`). |
+| ✅ **Đã làm** | Module Bệnh nhân: Theo dõi tổng quan sức khỏe, số thứ tự khám, lịch sử sinh hiệu, cảnh báo ngưỡng nguy cơ và đơn thuốc đã công bố. |
+| ✅ **Đã làm** | Module AI-CDSS Simulator: Gợi ý chẩn đoán NYHA, xét nghiệm, điều trị, cảnh báo an toàn thuốc kèm đánh giá từng khối (`ai_block_reviews`). |
+| ✅ **Đã làm** | Module Kê đơn & Mẫu kết luận: 4 mẫu kết luận chuẩn hóa, kiểm tra tương tác thuốc, lưu lịch sử phiên bản (`visit_versions`) và ký xác nhận điện tử. |
+| ✅ **Đã làm** | Script nạp dữ liệu thử nghiệm chuẩn Synthetic Data (`backend/seed.js`) đảm bảo nguyên tắc Zero PII/PHI. |
 | 🚧 **Đang làm** | Bộ kiểm thử tự động (Unit Test / Integration Test) bao phủ $\ge 60\%$ module nghiệp vụ cốt lõi. |
 | 🚧 **Đang làm** | Bổ sung nhật ký kiểm toán (Audit Trail Logging) chi tiết cho các hành động thay đổi bệnh án và kết quả khám. |
 | ⬜ **Chưa làm** | Tích hợp cổng chuẩn hóa trao đổi dữ liệu y tế quốc tế HL7/FHIR với hệ thống HIS/LIS bệnh viện. |
@@ -119,7 +119,8 @@ submissions/suy_tim_173820_n12/
     ├── .env.example                    # Mẫu cấu hình biến môi trường an toàn
     ├── backend/                        # Mã nguồn máy chủ Node.js & Express
     │   ├── server.js                   # Điểm khởi động ứng dụng, định tuyến REST API
-    │   ├── database.js                 # Schema CSDL, migration và seeding mẫu
+    │   ├── database.js                 # Schema CSDL và migration
+    │   ├── seed.js                     # Script nạp dữ liệu demo synthetic đầy đủ
     │   ├── test.js                     # Bộ test kiểm tra tự động backend
     │   └── package.json                # Dependencies backend
     └── frontend/                       # Mã nguồn giao diện React SPA
@@ -128,7 +129,7 @@ submissions/suy_tim_173820_n12/
         ├── package.json                # Dependencies frontend
         └── src/                        # Các trang & thành phần giao diện
             ├── App.jsx                 # Điều hướng chính và quản lý phiên
-            ├── pages/                  # Các màn hình nghiệp vụ (Doctor, Patient, Reception, CDSS)
+            ├── pages/                  # Các màn hình nghiệp vụ (Doctor, Patient, Reception, CDSS, DoctorSchedule...)
             └── components/             # Các thành phần UI dùng chung
 ```
 
@@ -157,10 +158,13 @@ cp .env.example .env
 # 3. Cài đặt dependencies cho root, Backend và Frontend
 npm run install:all
 
-# 4. Chạy kiểm thử tự động cục bộ
+# 4. Nạp dữ liệu demo synthetic đầy đủ (hàng đợi hôm nay, HIS/EMR, AI-CDSS, BN0001..BN0009)
+npm run seed
+
+# 5. Chạy kiểm thử tự động cục bộ
 npm test
 
-# 5. Khởi chạy ứng dụng
+# 6. Khởi chạy ứng dụng
 # Cách A - Chạy chế độ phát triển đầy đủ (chạy song song backend và frontend):
 npm run dev
 
@@ -184,47 +188,40 @@ cd frontend && npm run lint
 
 ### 4.4. Dữ liệu & Tài khoản mẫu (Synthetic Accounts)
 
-Toàn bộ tài khoản thử nghiệm dùng dữ liệu mô phỏng, mật khẩu chung là `123456`:
+Toàn bộ tài khoản thử nghiệm dùng dữ liệu mô phỏng (nạp đầy đủ qua `npm run seed`), mật khẩu chung là `123456`:
 
 | Vai trò | Định danh đăng nhập (Identifier) | Mật khẩu | Mục đích kiểm thử |
 | :--- | :--- | :--- | :--- |
-| **Bác sĩ Tim mạch** | `doctor@demo.vn` | `123456` | Khám bệnh, điều phối hàng đợi, thử nghiệm gợi ý AI-CDSS, kê đơn. |
-| **Nhân viên tiếp đón** | `reception@demo.vn` | `123456` | Tiếp nhận bệnh nhân tại quầy, cấp số hàng đợi phòng khám. |
-| **Bệnh nhân mẫu 1** | `BN0001` | `123456` | Nhập chỉ số sinh hiệu (cảnh báo nguy cơ cao), xem kết quả khám. |
-| **Bệnh nhân mẫu 2** | `BN0002` | `123456` | Theo dõi tiến trình điều trị ổn định. |
+| **Bác sĩ Tim mạch** | `doctor@demo.vn` | `123456` | Điều phối hàng đợi, duyệt từng khối AI-CDSS, kê đơn, kiểm tra tương tác thuốc, ký xác nhận. |
+| **Nhân viên y tế / Tiếp đón** | `reception@demo.vn` | `123456` | Tiếp nhận bệnh nhân tại quầy, nhập sinh hiệu check-in, cấp số thứ tự và chuyển bác sĩ. |
+| **Bệnh nhân mẫu 1 (có dữ liệu đầy đủ)** | `BN0001` | `123456` | Xem số thứ tự khám, lịch sử sinh hiệu có cảnh báo nguy cơ, dữ liệu AI-CDSS & kết quả đã công bố. |
+| **Bệnh nhân mẫu 9 (demo từ đầu)** | `BN0009` | `123456` | Bệnh nhân chưa có lượt khám để thử luồng đặt lịch $\rightarrow$ tiếp đón $\rightarrow$ khám hoàn chỉnh. |
 
 *(Trên giao diện đăng nhập có sẵn 3 nút "Tài khoản demo nhanh" để đăng nhập bằng 1 cú nhấp chuột).*
 
 ### 4.5. Kịch bản sử dụng mẫu (≥ 3 kịch bản)
 
-#### Kịch bản 1: Tiếp nhận bệnh nhân tại quầy & Cấp số thứ tự khám
-- **Bước 1:** Truy cập `http://localhost:5173`, bấm nút demo **Nhân viên YT** (hoặc nhập `reception@demo.vn` / `123456`) $\rightarrow$ Bấm **Đăng nhập hệ thống**.
-- **Bước 2:** Tại màn hình *Tiếp đón bệnh nhân*, nhập mã bệnh nhân `BN0001` (hoặc tạo hồ sơ mới cho bệnh nhân vãng lai).
-- **Bước 3:** Chọn chuyên khoa `Khám Tim mạch`, phòng khám `P.201`, nhập lý do đến khám (ví dụ: *"Tái khám định kỳ suy tim, gần đây thấy nặng chân"*).
-- **Bước 4:** Bấm **Cấp số & Chuyển vào hàng đợi**.
-- **Kết quả mong đợi:** Hệ thống cấp số thứ tự tự động (ví dụ: `Số khám #01`), tạo một lượt khám mới ở trạng thái `waiting` và hiển thị xác nhận tiếp nhận thành công.
+#### Kịch bản 1: Đặt lịch khám, Tiếp đón đo sinh hiệu check-in & Cấp số thứ tự
+- **Bước 1:** Đăng nhập bằng tài khoản bệnh nhân chưa có lượt khám `BN0009` / `123456` $\rightarrow$ Vào mục đặt lịch khám chọn ngày hôm nay, chuyên khoa `Tim mạch`, lý do khám và gửi đăng ký.
+- **Bước 2:** Đăng xuất, đăng nhập bằng **Nhân viên YT** (`reception@demo.vn` / `123456`).
+- **Bước 3:** Trên màn hình *Tiếp đón bệnh nhân*, chọn lượt khám đang chờ tiếp nhận của `BN0009` (hoặc tạo lượt khám trực tiếp), nhập các chỉ số sinh hiệu check-in (cân nặng, huyết áp, nhịp tim, SpO2, triệu chứng) và chọn bác sĩ phụ trách.
+- **Bước 4:** Bấm xác nhận tiếp nhận & cấp số.
+- **Kết quả mong đợi:** Hệ thống ghi nhận sinh hiệu gắn với lượt khám, cấp số thứ tự tự động (`waiting`) và chuyển lượt khám vào hàng đợi của bác sĩ.
 
-#### Kịch bản 2: Bác sĩ điều phối khám, tham vấn AI-CDSS & Kê đơn hoàn thành
+#### Kịch bản 2: Bác sĩ điều phối hàng đợi, đánh giá từng khối AI-CDSS & Kê đơn công bố
 - **Bước 1:** Đăng nhập bằng tài khoản **Bác sĩ** (`doctor@demo.vn` / `123456`).
-- **Bước 2:** Trên bảng điều khiển, vào mục **Hàng đợi phòng khám**. Nhìn thấy bệnh nhân `BN0001` đang ở trạng thái `Chờ khám`.
-- **Bước 3:** Nhấn nút **Gọi vào khám** $\rightarrow$ Trạng thái chuyển thành `Đang khám` (`in_progress`).
-- **Bước 4:** Nhấp chọn tab **Hỗ trợ lâm sàng (AI-CDSS)**:
-  - Xem tóm tắt dữ liệu lâm sàng: Cân nặng tăng, Huyết áp $165/95\text{ mmHg}$, SpO2 $92\%$.
-  - Tham vấn khối gợi ý: Hệ thống đề xuất *"Theo dõi đợt mất bù cấp suy tim (NYHA III)"*, khuyến nghị xét nghiệm BNP và cảnh báo tương tác thuốc nếu phối hợp liều cao.
-- **Bước 5:** Bác sĩ chọn áp dụng mẫu kết luận *"Suy tim mất bù cấp"*, điều chỉnh đơn thuốc và bấm **Lưu kết luận & Hoàn thành lượt khám**.
-- **Kết quả mong đợi:** Lượt khám chuyển trạng thái sang `completed`. Bệnh án được lưu phiên bản (`version_no: 1`) và đồng bộ sẵn sàng cho bệnh nhân tra cứu.
+- **Bước 2:** Trên **Hàng đợi phòng khám**, chọn bệnh nhân `BN0001` và nhấn **Gọi vào khám** / **Bắt đầu khám** (`in_progress`).
+- **Bước 3:** Mở tab **Hỗ trợ lâm sàng (AI-CDSS)**:
+  - Xem tóm tắt sinh hiệu + dữ liệu bệnh viện (`hospital_data`), tạo/xem gợi ý AI-CDSS (chẩn đoán NYHA, xét nghiệm, phác đồ điều trị, an toàn thuốc).
+  - Đánh giá độc lập từng khối gợi ý AI (đồng ý/chỉnh sửa/ghi phản hồi) và kiểm tra tương tác thuốc nếu kê phối hợp.
+- **Bước 4:** Chọn mẫu kết luận (ví dụ *"Suy tim mất bù cấp"*), hoàn thiện đơn thuốc, lưu/công bố kết quả khám và nhập mật khẩu để ký xác nhận điện tử.
+- **Kết quả mong đợi:** Lượt khám chuyển trạng thái `completed`, tạo phiên bản lưu trữ (`visit_versions`), sinh mã băm chữ ký và đồng bộ kết quả sang phía bệnh nhân.
 
-#### Kịch bản 3: Bệnh nhân tự theo dõi chỉ số sinh hiệu tại nhà & Kích hoạt cảnh báo sớm
+#### Kịch bản 3: Bệnh nhân theo dõi tổng quan sức khỏe, số thứ tự & cảnh báo sinh hiệu
 - **Bước 1:** Đăng nhập bằng tài khoản **Bệnh nhân** (`BN0001` / `123456`).
-- **Bước 2:** Tại màn hình tổng quan bệnh nhân, chọn mục **Nhập chỉ số sinh hiệu hôm nay**.
-- **Bước 3:** Nhập các thông số thực nghiệm:
-  - Cân nặng: `69.5` kg (tăng $\ge 1.5\text{ kg}$ trong 2 ngày).
-  - Huyết áp: `165 / 100` mmHg.
-  - Nhịp tim: `105` lần/phút.
-  - SpO2: `92` %.
-  - Đánh dấu triệu chứng: Tích chọn ô *"Khó thở khi nằm"* và *"Phù mắt cá chân"*.
-- **Bước 4:** Nhấn nút **Lưu chỉ số sức khỏe**.
-- **Kết quả mong đợi:** Hệ thống ghi nhận dữ liệu vào cơ sở dữ liệu, ngay lập tức hiển thị bảng cảnh báo màu đỏ: *"CẢNH BÁO NGUY CƠ: Các chỉ số sinh hiệu vượt ngưỡng an toàn!"*, đồng thời hướng dẫn bệnh nhân liên hệ cơ sở y tế hoặc đặt lịch khám ưu tiên.
+- **Bước 2:** Tại màn hình **Tổng quan sức khỏe**, kiểm tra thẻ số thứ tự khám hiện tại, chỉ số sinh hiệu gần nhất và banner cảnh báo nguy cơ (nếu có vượt ngưỡng huyết áp, SpO2 hoặc triệu chứng khó thở/phù).
+- **Bước 3:** Chuyển qua các tab **Lịch sử đo sinh hiệu**, **Đơn thuốc chỉ định** và **Lượt khám & thông báo** để đối chiếu kết luận và đơn thuốc bác sĩ vừa công bố.
+- **Kết quả mong đợi:** Hiển thị nhất quán chuỗi sinh hiệu đã được nhân viên y tế ghi nhận, cảnh báo trực quan khi vượt ngưỡng và đầy đủ đơn thuốc/lịch tái khám mới nhất.
 
 ---
 

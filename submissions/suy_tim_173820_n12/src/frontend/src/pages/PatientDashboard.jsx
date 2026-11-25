@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   HeartIcon,
-  PlusIcon,
   FileTextIcon,
   PillIcon,
   CalendarIcon,
@@ -19,7 +18,6 @@ import {
 function PatientDashboard({
   user,
   onLogout,
-  onAddVitals,
   onViewHistory,
   onViewMedication,
   onViewAppointments,
@@ -59,10 +57,6 @@ function PatientDashboard({
           <button className="nav-item active">
             <HeartIcon size={18} />
             <span>Tổng quan sức khỏe</span>
-          </button>
-          <button className="nav-item" onClick={onAddVitals}>
-            <PlusIcon size={18} />
-            <span>Ghi nhận chỉ số</span>
           </button>
           <button className="nav-item" onClick={onViewHistory}>
             <FileTextIcon size={18} />
@@ -113,15 +107,15 @@ function PatientDashboard({
                 ? "Phát hiện chỉ số / triệu chứng cần theo dõi sát"
                 : hasVitals
                   ? "Tình trạng lâm sàng hiện tại ổn định"
-                  : "Chưa ghi nhận chỉ số sức khỏe hôm nay"}
+                  : "Chưa có chỉ số sinh hiệu"}
             </strong>
 
             <p>
               {hasAlert
-                ? "Một số chỉ số hoặc triệu chứng bạn vừa ghi nhận nằm ngoài ngưỡng an toàn cho bệnh nhân suy tim. Bác sĩ chuyên khoa đã được gửi cảnh báo và đang rà soát."
+                ? "Một số chỉ số hoặc triệu chứng ghi nhận ở lần khám gần nhất nằm ngoài ngưỡng an toàn cho bệnh nhân suy tim. Bác sĩ chuyên khoa đã được gửi cảnh báo và đang rà soát."
                 : hasVitals
                   ? "Các chỉ số cân nặng, huyết áp, nhịp tim và SpO₂ gần nhất đều nằm trong ngưỡng an toàn cho phép."
-                  : "Hãy dành 2 phút gửi chỉ số huyết áp, cân nặng và nhịp tim sáng nay để bác sĩ quản lý tốt nhất."}
+                  : "Sinh hiệu sẽ được nhân viên y tế đo và cập nhật khi bạn đến khám."}
             </p>
 
             {activeSymptoms.length > 0 && (
@@ -149,6 +143,8 @@ function PatientDashboard({
           </div>
         </div>
 
+        <QueueTicket user={user} onViewVisits={onViewVisits} />
+
         {/* Vitals Section */}
         <section>
           <div className="section-title">
@@ -156,7 +152,7 @@ function PatientDashboard({
               <h2>Chỉ số đo gần nhất</h2>
               <p>
                 {vitals.createdAt
-                  ? `Dữ liệu đo gửi lúc ${new Date(vitals.createdAt).toLocaleString('vi-VN')}`
+                  ? `Đo tại cơ sở y tế lúc ${new Date(vitals.createdAt).toLocaleString('vi-VN')}`
                   : 'Chưa có dữ liệu sinh hiệu'}
               </p>
             </div>
@@ -165,10 +161,6 @@ function PatientDashboard({
               <button className="primary-action" onClick={onViewBookVisit} style={{ background: 'var(--slate-800)' }}>
                 <CalendarIcon size={16} />
                 <span>Đăng ký khám bệnh</span>
-              </button>
-              <button className="primary-action" onClick={onAddVitals}>
-                <PlusIcon size={16} />
-                <span>Ghi nhận chỉ số mới</span>
               </button>
             </div>
           </div>
@@ -322,6 +314,73 @@ function PatientDashboard({
         </section>
       </main>
     </div>
+  )
+}
+
+const ACTIVE_STATUSES = ['registered', 'waiting', 'called', 'in_progress']
+
+const TICKET_STATUS = {
+  registered: { label: 'Chờ tiếp nhận tại quầy', hint: 'Vui lòng đến quầy tiếp đón để đo sinh hiệu và nhận số thứ tự.' },
+  waiting: { label: 'Đang xếp hàng', hint: 'Vui lòng ngồi chờ, hệ thống sẽ báo khi đến lượt bạn.' },
+  called: { label: 'Đến lượt bạn', hint: 'Mời bạn vào phòng khám ngay.' },
+  in_progress: { label: 'Bác sĩ đang khám', hint: 'Bạn đang trong phòng khám.' },
+}
+
+function QueueTicket({ user, onViewVisits }) {
+  const [visit, setVisit] = useState(null)
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await fetch('/api/visits/mine', { headers: { Authorization: `Bearer ${user.token}` } })
+        const data = await response.json()
+        const today = new Date().toISOString().slice(0, 10)
+        const active = (data.visits || [])
+          .filter((v) => ACTIVE_STATUSES.includes(v.status) && v.visit_date <= today)
+          .sort((a, b) => ACTIVE_STATUSES.indexOf(b.status) - ACTIVE_STATUSES.indexOf(a.status))
+        setVisit(active[0] || null)
+      } catch {
+        setVisit(null)
+      }
+    }
+    load()
+    const timer = setInterval(load, 15000)
+    return () => clearInterval(timer)
+  }, [user.token])
+
+  if (!visit) return null
+
+  const status = TICKET_STATUS[visit.status]
+  const hasNumber = visit.queue_number != null
+
+  return (
+    <section className={`queue-ticket ticket-${visit.status}`}>
+      <div className="queue-ticket-number">
+        <span>Số thứ tự</span>
+        <strong>{hasNumber ? `#${visit.queue_number}` : '—'}</strong>
+      </div>
+
+      <div className="queue-ticket-body">
+        <span className="queue-ticket-status">● {status.label}</span>
+        <h3>
+          {visit.status === 'waiting' && visit.peopleAhead != null
+            ? (visit.peopleAhead === 0 ? 'Bạn là người tiếp theo' : `Còn ${visit.peopleAhead} người phía trước bạn`)
+            : status.hint}
+        </h3>
+        <p>
+          {visit.specialty}
+          {visit.room && ` · ${visit.room}`}
+          {visit.doctor_name && ` · BS. ${visit.doctor_name}`}
+          {` · Ngày ${new Date(visit.visit_date).toLocaleDateString('vi-VN')}`}
+        </p>
+        {visit.status === 'waiting' && <small>{status.hint}</small>}
+      </div>
+
+      <button className="queue-ticket-link" onClick={onViewVisits}>
+        <span>Chi tiết lượt khám</span>
+        <ChevronRightIcon size={16} />
+      </button>
+    </section>
   )
 }
 
