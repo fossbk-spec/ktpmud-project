@@ -1,0 +1,351 @@
+<mxfile host="app.diagrams.net" agent="claude" pages="3">
+  <diagram name="1. C2 - Container (Django)" id="dj1">
+    <mxGraphModel dx="1231" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d2" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;" value="C2 – CONTAINER DIAGRAM: HỆ THỐNG ĐẶT PHÒNG TRỰC TUYẾN (DJANGO)" vertex="1">
+          <mxGeometry height="28" width="730" x="220" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;fontSize=11;" value="&lt;b&gt;Khách hàng&lt;/b&gt;&lt;br&gt;[Person]&lt;br&gt;&lt;br&gt;Đặt phòng qua link" vertex="1">
+          <mxGeometry height="90" width="170" x="142" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;Trình duyệt web&lt;/b&gt;&lt;br&gt;[Container: HTML, Bootstrap 5, HTMX]&lt;br&gt;&lt;br&gt;Giao diện cho khách và nhân viên, dùng được trên máy tính và điện thoại" vertex="1">
+          <mxGeometry height="90" width="300" x="361" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;fontSize=11;" value="&lt;b&gt;Lễ tân, Quản lý,&lt;br&gt;Chủ cơ sở, Admin&lt;/b&gt;&lt;br&gt;[Person]&lt;br&gt;&lt;br&gt;Nhân viên và quản trị" vertex="1">
+          <mxGeometry height="90" width="170" x="750" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 4;fillColor=none;strokeColor=#438DD5;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=10;spacingTop=4;fontStyle=1;fontSize=11;fontColor=#1F4E85;" value="Django Web App – [Python 3.13, Django] – một ứng dụng web duy nhất, chia thành các app" vertex="1">
+          <mxGeometry height="360" width="650" x="190" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="d7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;URL Router &amp;amp; Middleware&lt;/b&gt; [Django]&lt;br&gt;Định tuyến URL, xác thực phiên đăng nhập, phân quyền theo vai trò và theo cơ sở, chống CSRF" vertex="1">
+          <mxGeometry height="56" width="622" x="200" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="d8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;app hotels&lt;/b&gt;&lt;br&gt;[Django app]&lt;br&gt;Cơ sở, loại phòng, phòng, giá, link đặt phòng" vertex="1">
+          <mxGeometry height="110" width="112" x="200" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="d9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;app accounts&lt;/b&gt;&lt;br&gt;[Django app]&lt;br&gt;Đăng nhập, phân quyền, duyệt tài khoản" vertex="1">
+          <mxGeometry height="110" width="112" x="325" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="d10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;app bookings&lt;/b&gt;&lt;br&gt;[Django app]&lt;br&gt;Tìm phòng, đặt phòng, giữ chỗ, check-in/out" vertex="1">
+          <mxGeometry height="110" width="112" x="450" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="d12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;Django Admin&lt;/b&gt;&lt;br&gt;[Django]&lt;br&gt;Trang quản trị: duyệt tài khoản, khai báo dữ liệu" vertex="1">
+          <mxGeometry height="110" width="112" x="580" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="d13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;app payments&lt;/b&gt;&lt;br&gt;[Django app]&lt;br&gt;Thanh toán, hóa đơn PDF, gửi email" vertex="1">
+          <mxGeometry height="110" width="112" x="710" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="d14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;Django ORM&lt;/b&gt; [Models, Migrations]&lt;br&gt;Truy cập dữ liệu, giao dịch, ràng buộc chống đặt trùng phòng (ExclusionConstraint)" vertex="1">
+          <mxGeometry height="48" width="622" x="200" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="d15" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#2B6CB0;strokeColor=#1F4E85;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;SQLite&lt;/b&gt;&lt;br&gt;[Relational DB]&lt;br&gt;&lt;br&gt;Dữ liệu nghiệp vụ" vertex="1">
+          <mxGeometry height="80" width="220" x="290" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="d16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;Tác vụ nền&lt;/b&gt;&lt;br&gt;[Django management command + cron]&lt;br&gt;&lt;br&gt;Mỗi phút giải phóng đơn hết hạn giữ chỗ (15 phút)" vertex="1">
+          <mxGeometry height="80" width="260" x="560" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="d17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#8A8A8A;strokeColor=#5F5F5F;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;Cloud storage&lt;/b&gt;&lt;br&gt;[External]&lt;br&gt;&lt;br&gt;Ảnh cơ sở, phòng" vertex="1">
+          <mxGeometry height="110" width="125" x="10" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="d18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#8A8A8A;strokeColor=#5F5F5F;fontColor=#ffffff;fontSize=10;" value="&lt;b&gt;Email service&lt;/b&gt;&lt;br&gt;[External]&lt;br&gt;SMTP / API" vertex="1">
+          <mxGeometry height="56" width="130" x="937" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="d19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#8A8A8A;strokeColor=#5F5F5F;fontColor=#ffffff;fontSize=10;dashed=1;dashPattern=8 4;" value="&lt;b&gt;Cổng thanh toán&lt;/b&gt;&lt;br&gt;[Tùy chọn]&lt;br&gt;VNPay / MoMo" vertex="1">
+          <mxGeometry height="56" width="130" x="940" y="386" as="geometry" />
+        </mxCell>
+        <mxCell id="d20" edge="1" parent="1" source="d3" style="endArrow=blockThin;endFill=1;dashed=1;dashPattern=8 4;html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=1.000;exitY=0.500;exitPerimeter=0;entryX=0.000;entryY=0.500;entryPerimeter=0;" target="d4" value="Đặt phòng&lt;br&gt;[HTTPS]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d21" edge="1" parent="1" source="d5" style="endArrow=blockThin;endFill=1;dashed=1;dashPattern=8 4;html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.000;exitY=0.500;exitPerimeter=0;entryX=1.000;entryY=0.500;entryPerimeter=0;" target="d4" value="Quản trị, vận hành&lt;br&gt;[HTTPS]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d22" edge="1" parent="1" source="d4" style="endArrow=blockThin;endFill=1;dashed=1;dashPattern=8 4;html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.500;exitY=1.000;exitPerimeter=0;entryX=0.509;entryY=0.000;entryPerimeter=0;" target="d7" value="[HTTPS] HTML, HTMX">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d23" edge="1" parent="1" source="d7" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.089;exitY=1.002;exitPerimeter=0;entryX=0.500;entryY=0.000;entryPerimeter=0;exitDx=0;exitDy=0;" target="d8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d24" edge="1" parent="1" source="d8" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.500;exitY=1.000;exitPerimeter=0;entryX=0.09;entryY=0.007;entryPerimeter=0;entryDx=0;entryDy=0;" target="d14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d25" edge="1" parent="1" source="d6" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.294;exitY=0.236;exitPerimeter=0;entryX=0.500;entryY=0.000;entryPerimeter=0;exitDx=0;exitDy=0;" target="d9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d26" edge="1" parent="1" source="d9" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.500;exitY=1.000;exitPerimeter=0;entryX=0.292;entryY=-0.009;entryPerimeter=0;entryDx=0;entryDy=0;" target="d14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d27" edge="1" parent="1" source="d6" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.486;exitY=0.236;exitPerimeter=0;entryX=0.500;entryY=0.000;entryPerimeter=0;exitDx=0;exitDy=0;" target="d10" value="">
+          <mxGeometry relative="1" x="0.0256" as="geometry">
+            <Array as="points">
+              <mxPoint x="506" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d28" edge="1" parent="1" source="d10" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.500;exitY=1.000;exitPerimeter=0;entryX=0.492;entryY=0.007;entryPerimeter=0;entryDx=0;entryDy=0;" target="d14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d31" edge="1" parent="1" source="d6" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;entryX=0.500;entryY=0.000;entryPerimeter=0;exitX=0.686;exitY=0.236;exitDx=0;exitDy=0;exitPerimeter=0;" target="d12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d32" edge="1" parent="1" source="d12" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.500;exitY=1.000;exitPerimeter=0;entryX=0.702;entryY=-0.017;entryPerimeter=0;entryDx=0;entryDy=0;" target="d14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d33" edge="1" parent="1" source="d6" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;entryX=0.500;entryY=0.000;entryPerimeter=0;exitX=0.886;exitY=0.236;exitDx=0;exitDy=0;exitPerimeter=0;" target="d13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d34" edge="1" parent="1" source="d13" style="endArrow=blockThin;endFill=1;html=1;rounded=0;fontSize=9;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.500;exitY=1.000;exitPerimeter=0;entryX=0.911;entryY=0.015;entryPerimeter=0;entryDx=0;entryDy=0;" target="d14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d35" edge="1" parent="1" source="d14" style="endArrow=blockThin;endFill=1;dashed=1;dashPattern=8 4;html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.326;exitY=1.000;exitPerimeter=0;entryX=0.500;entryY=0.000;entryPerimeter=0;" target="d15" value="[SQL/TCP]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d36" edge="1" parent="1" source="d16" style="endArrow=blockThin;endFill=1;dashed=1;dashPattern=8 4;html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.500;exitY=0.000;exitPerimeter=0;entryX=0.787;entryY=1.000;entryPerimeter=0;" target="d14" value="Giải phóng đơn hết hạn">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d37" edge="1" parent="1" source="d8" style="endArrow=blockThin;endFill=1;dashed=1;dashPattern=8 4;html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=0.000;exitY=0.500;exitPerimeter=0;entryX=1.000;entryY=0.500;entryPerimeter=0;" target="d17" value="Ảnh&lt;br&gt;[HTTPS – S3 API]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d38" edge="1" parent="1" source="d13" style="endArrow=blockThin;endFill=1;dashed=1;dashPattern=8 4;html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=1.000;exitY=0.255;exitPerimeter=0;entryX=0.000;entryY=0.500;entryPerimeter=0;" target="d18" value="[SMTP /&lt;br&gt;HTTPS API]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d39" edge="1" parent="1" source="d13" style="endArrow=blockThin;endFill=1;dashed=1;dashPattern=8 4;html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#707070;fontColor=#333333;exitX=1.000;exitY=0.950;exitPerimeter=0;entryX=0.000;entryY=0.500;entryPerimeter=0;" target="d19" value="Tùy chọn&lt;br&gt;[HTTPS/REST]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d40" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=10;align=left;verticalAlign=top;" value="&lt;b&gt;Ghi chú:&lt;/b&gt;&lt;br&gt;• Django Web App là một ứng dụng duy nhất chia thành các app (modular monolith); mỗi app tương ứng một service ở thiết kế ban đầu và có thể tách riêng khi hệ thống mở rộng.&lt;br&gt;• Giữ chỗ 15 phút bằng cột hold_expires_at trong PostgreSQL; tác vụ nền chạy mỗi phút để giải phóng đơn hết hạn.&lt;br&gt;• Thanh toán mặc định do Lễ tân xác nhận (UC13); cổng thanh toán (nét đứt) là phần mở rộng.&lt;br&gt;• Giao diện được Django render sẵn (template); HTMX cập nhật từng phần trang, không cần ứng dụng frontend riêng." vertex="1">
+          <mxGeometry height="120" width="800" x="190" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="d41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;fontSize=9;" value="Person" vertex="1">
+          <mxGeometry height="26" width="90" x="1010" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="d42" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;fontSize=9;" value="Container" vertex="1">
+          <mxGeometry height="26" width="90" x="1010" y="722" as="geometry" />
+        </mxCell>
+        <mxCell id="d43" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#2B6CB0;strokeColor=#1F4E85;fontColor=#ffffff;fontSize=9;" value="Database" vertex="1">
+          <mxGeometry height="26" width="90" x="1010" y="754" as="geometry" />
+        </mxCell>
+        <mxCell id="d44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#8A8A8A;strokeColor=#5F5F5F;fontColor=#ffffff;fontSize=9;" value="External" vertex="1">
+          <mxGeometry height="26" width="90" x="1010" y="786" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="2. Sequence - Đặt phòng online (Django)" id="dj2">
+    <mxGraphModel dx="1231" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d2" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;" value="BIỂU ĐỒ TUẦN TỰ – LUỒNG ĐẶT PHÒNG ONLINE (DJANGO)" vertex="1">
+          <mxGeometry height="28" width="730" x="220" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Khách" vertex="1">
+          <mxGeometry height="715" width="110" x="45" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Trình duyệt&lt;br&gt;(HTML, HTMX)" vertex="1">
+          <mxGeometry height="715" width="110" x="235" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d5" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="View&lt;br&gt;bookings" vertex="1">
+          <mxGeometry height="715" width="110" x="425" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d6" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Django&lt;br&gt;ORM" vertex="1">
+          <mxGeometry height="715" width="110" x="615" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d7" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="SQLite" vertex="1">
+          <mxGeometry height="715" width="110" x="805" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d8" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Email&lt;br&gt;service" vertex="1">
+          <mxGeometry height="715" width="110" x="995" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d9" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="1. Mở link, chọn ngày và số khách">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="118" as="sourcePoint" />
+            <mxPoint x="290" y="118" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d10" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="2. GET /h/{slug}/availability/?checkin&amp;checkout&amp;guests [HTTPS]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="158" as="sourcePoint" />
+            <mxPoint x="480" y="158" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d11" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="3. Truy vấn loại phòng, giá, phòng không trùng khoảng ngày">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="198" as="sourcePoint" />
+            <mxPoint x="670" y="198" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d12" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="4. SELECT [SQL]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="238" as="sourcePoint" />
+            <mxPoint x="860" y="238" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d13" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="5. Kết quả">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="860" y="278" as="sourcePoint" />
+            <mxPoint x="670" y="278" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d14" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="6. Danh sách loại phòng còn trống (loại trừ phòng đang giữ chỗ)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="318" as="sourcePoint" />
+            <mxPoint x="480" y="318" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d15" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="7. Trang HTML danh sách phòng và giá">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="358" as="sourcePoint" />
+            <mxPoint x="290" y="358" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d16" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="8. Hiển thị phòng còn trống">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="398" as="sourcePoint" />
+            <mxPoint x="100" y="398" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d17" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="9. Chọn phòng, nhập thông tin, xác nhận">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="438" as="sourcePoint" />
+            <mxPoint x="290" y="438" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d18" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="10. POST /h/{slug}/book/ [HTTPS + CSRF token]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="478" as="sourcePoint" />
+            <mxPoint x="480" y="478" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d19" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="11. Mở giao dịch (transaction.atomic), kiểm tra trùng">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="518" as="sourcePoint" />
+            <mxPoint x="670" y="518" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d20" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="12. INSERT guest, booking, booking_rooms (hold_expires_at = +15 phút)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="558" as="sourcePoint" />
+            <mxPoint x="860" y="558" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d21" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="13. OK (ràng buộc chống trùng phòng được kiểm tra)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="860" y="598" as="sourcePoint" />
+            <mxPoint x="670" y="598" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d22" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="14. Gửi email xác nhận [SMTP]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="638" as="sourcePoint" />
+            <mxPoint x="1050" y="638" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d23" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="15. Chuyển hướng tới trang mã đặt phòng, trạng thái “Chờ thanh toán”">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="678" as="sourcePoint" />
+            <mxPoint x="290" y="678" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d24" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="16. Hiển thị mã đặt phòng">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="718" as="sourcePoint" />
+            <mxPoint x="100" y="718" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="3. Sequence - Xác nhận thanh toán (Django)" id="dj3">
+    <mxGraphModel dx="1022" dy="564" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d2" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;" value="BIỂU ĐỒ TUẦN TỰ – LUỒNG XÁC NHẬN THANH TOÁN (DJANGO)" vertex="1">
+          <mxGeometry height="28" width="730" x="220" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Lễ tân" vertex="1">
+          <mxGeometry height="715" width="110" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Trình duyệt&lt;br&gt;(HTML, HTMX)" vertex="1">
+          <mxGeometry height="715" width="110" x="198" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d5" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Django Auth&lt;br&gt;(Middleware)" vertex="1">
+          <mxGeometry height="715" width="110" x="361" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d6" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="View&lt;br&gt;payments" vertex="1">
+          <mxGeometry height="715" width="110" x="524" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d7" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Django&lt;br&gt;ORM" vertex="1">
+          <mxGeometry height="715" width="110" x="687" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d8" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="SQLite" vertex="1">
+          <mxGeometry height="715" width="110" x="850" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d9" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fontSize=10;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Email&lt;br&gt;service" vertex="1">
+          <mxGeometry height="715" width="110" x="1013" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d10" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="1. Mở đơn chờ thanh toán, nhập số tiền, nhấn “Xác nhận”">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="90" y="120" as="sourcePoint" />
+            <mxPoint x="253" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d11" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="2. POST /manage/payments/{id}/confirm/ [HTTPS + CSRF token]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="253" y="175" as="sourcePoint" />
+            <mxPoint x="416" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d12" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="3. Đủ quyền (vai trò Lễ tân/Quản lý, đúng cơ sở): chuyển tới View">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="416" y="230" as="sourcePoint" />
+            <mxPoint x="579" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d13" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="4. Mở giao dịch: cập nhật payment (Đã xác nhận), booking; ghi audit_logs">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="579" y="285" as="sourcePoint" />
+            <mxPoint x="742" y="285" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d14" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="5. UPDATE / INSERT [SQL]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="742" y="340" as="sourcePoint" />
+            <mxPoint x="905" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d15" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="6. OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="905" y="395" as="sourcePoint" />
+            <mxPoint x="742" y="395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d16" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="7. Hoàn tất">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="742" y="450" as="sourcePoint" />
+            <mxPoint x="579" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d17" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;endArrow=block;endFill=1;" value="8. Gửi email xác nhận (kèm hóa đơn nếu đã thanh toán đủ) [SMTP]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="579" y="505" as="sourcePoint" />
+            <mxPoint x="1068" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d18" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="9. Chuyển hướng về danh sách đơn, thông báo thành công">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="579" y="560" as="sourcePoint" />
+            <mxPoint x="253" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d19" edge="1" parent="1" style="html=1;verticalAlign=bottom;fontSize=9;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;endFill=0;" value="10. Hiển thị đơn “Đã xác nhận”">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="253" y="615" as="sourcePoint" />
+            <mxPoint x="90" y="615" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

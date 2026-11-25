@@ -1,0 +1,75 @@
+
+{% extends "base.html" %}
+
+{% block title %}Đăng ký tài khoản{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="max-width: 520px">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <h2 class="text-center mb-2">Đăng ký tài khoản</h2>
+
+            <p class="text-center text-muted mb-4">
+                Đăng ký tài khoản để sử dụng hệ thống đặt phòng.
+            </p>
+
+            <div class="alert alert-info">
+                <strong>Lưu ý:</strong>
+                <ul class="mb-0 mt-2">
+                    <li>
+                        Không nhập mã giới thiệu:
+                        đăng ký tài khoản chủ cơ sở và chờ Admin xét duyệt.
+                    </li>
+                    <li>
+                        Có mã giới thiệu hợp lệ:
+                        đăng ký tài khoản nhân viên và chờ chủ cơ sở xét duyệt.
+                    </li>
+                </ul>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <div class="form-text">
+                                {{ field.help_text }}
+                            </div>
+                        {% endif %}
+
+                        {% for error in field.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Đăng ký
+                </button>
+            </form>
+
+            <p class="text-center mt-3 mb-0">
+                Đã có tài khoản?
+                <a href="{% url 'login' %}">Đăng nhập</a>
+            </p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

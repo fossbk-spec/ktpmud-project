@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Cài đặt thanh toán{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h4 class="mb-2">Cài đặt tài khoản nhận thanh toán</h4>
+
+            <p class="text-muted">
+                Cơ sở: <strong>{{ hotel.name }}</strong>
+            </p>
+
+            <div class="alert alert-info">
+                Thông tin này được sử dụng để tạo mã QR chuyển khoản
+                cho khách hàng đặt phòng tại cơ sở.
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        {{ form.bank_name.label }}
+                    </label>
+                    {{ form.bank_name }}
+                    {{ form.bank_name.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        {{ form.bank_bin.label }}
+                    </label>
+                    {{ form.bank_bin }}
+                    {{ form.bank_bin.errors }}
+                    <div class="form-text">
+                        Nhập mã BIN của ngân hàng để tạo QR chuyển khoản.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        {{ form.bank_account_number.label }}
+                    </label>
+                    {{ form.bank_account_number }}
+                    {{ form.bank_account_number.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        {{ form.bank_account_name.label }}
+                    </label>
+                    {{ form.bank_account_name }}
+                    {{ form.bank_account_name.errors }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Lưu thông tin ngân hàng
+                </button>
+
+                <a href="{% url 'hotel_manage' hotel.id %}"
+                   class="btn btn-outline-secondary">
+                    Quay lại
+                </a>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

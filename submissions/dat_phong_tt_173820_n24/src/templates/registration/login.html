@@ -1,0 +1,99 @@
+
+{% extends "base.html" %}
+
+{% block title %}Đăng nhập{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5" style="max-width: 450px">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <h3 class="text-center mb-2">
+                Đăng nhập hệ thống
+            </h3>
+
+            <p class="text-center text-muted mb-4">
+                Dành cho Chủ cơ sở, Quản lý và Lễ tân
+            </p>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    Tên đăng nhập hoặc mật khẩu không đúng,
+                    hoặc tài khoản chưa được kích hoạt.
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label" for="id_username">
+                        Tên đăng nhập
+                    </label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        id="id_username"
+                        class="form-control"
+                        placeholder="Nhập tên đăng nhập"
+                        autocomplete="username"
+                        autofocus
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="id_password">
+                        Mật khẩu
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        id="id_password"
+                        class="form-control"
+                        placeholder="Nhập mật khẩu"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <input
+                    type="hidden"
+                    name="next"
+                    value="{{ next }}"
+                >
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Đăng nhập
+                </button>
+
+            </form>
+
+            <hr>
+
+            <p class="text-center mb-0">
+                Chưa có tài khoản chủ cơ sở?
+                <a href="{% url 'owner_register' %}">
+                    Đăng ký tại đây
+                </a>
+            </p>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+

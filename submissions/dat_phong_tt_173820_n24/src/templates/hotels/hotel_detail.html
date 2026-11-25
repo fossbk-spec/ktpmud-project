@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}{{ hotel.name }}{% endblock %}
+{% block content %}
+<div class="hero p-4 mb-4">
+  <h2 class="fw-bold">{{ hotel.name }}</h2>
+  <p class="mb-1">📍 {{ hotel.address }}</p>
+  <p class="mb-0">Nhận phòng từ {{ hotel.check_in_time|time:"H:i" }} · Trả phòng trước {{ hotel.check_out_time|time:"H:i" }}</p>
+</div>
+
+<div class="card mb-4"><div class="card-body">
+  <h5 class="mb-3">Tìm phòng trống</h5>
+  <form method="get" action="{% url 'availability' hotel.slug %}" class="row g-3 align-items-end">
+    <div class="col-md-3">{{ form.check_in.label_tag }}{{ form.check_in }}</div>
+    <div class="col-md-3">{{ form.check_out.label_tag }}{{ form.check_out }}</div>
+    <div class="col-md-3">{{ form.guests.label_tag }}{{ form.guests }}</div>
+    <div class="col-md-3"><button class="btn btn-primary w-100">Tìm phòng</button></div>
+  </form>
+</div></div>
+
+{% if hotel.description %}<p class="mb-4">{{ hotel.description|linebreaksbr }}</p>{% endif %}
+
+<h5 class="mb-3">Các loại phòng</h5>
+<div class="row g-3">
+  {% for rt in room_types %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100">
+      {% if rt.image %}<img src="{{ rt.image.url }}" class="card-img-top room-img" alt="{{ rt.name }}">
+      {% else %}<div class="room-placeholder rounded-top">{{ rt.name }}</div>{% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ rt.name }}</h5>
+        <p class="mb-1">👥 Tối đa {{ rt.capacity }} khách</p>
+        <p class="text-muted small">{{ rt.amenities }}</p>
+        <p class="fw-bold text-primary mb-0">{{ rt.base_price|floatformat:"0g" }} đ / đêm</p>
+      </div>
+    </div>
+  </div>
+  {% empty %}<p class="text-muted">Cơ sở chưa có loại phòng nào.</p>{% endfor %}
+</div>
+{% endblock %}

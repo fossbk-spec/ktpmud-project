@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Đặt phòng – {{ hotel.name }}{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-7">
+    <div class="card"><div class="card-body">
+      <h4 class="mb-3">Thông tin người đặt</h4>
+      <form method="post">{% csrf_token %}
+        <input type="hidden" name="room_type" value="{{ room_type.id }}">
+        <input type="hidden" name="check_in" value="{{ check_in|date:'Y-m-d' }}">
+        <input type="hidden" name="check_out" value="{{ check_out|date:'Y-m-d' }}">
+        <input type="hidden" name="guests" value="{{ guests }}">
+        {% for field in guest_form %}
+          <div class="mb-3">{{ field.label_tag }}{{ field }}
+            {% for e in field.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}</div>
+        {% endfor %}
+        <button class="btn btn-primary">Xác nhận đặt phòng</button>
+      </form>
+    </div></div>
+  </div>
+  <div class="col-md-5">
+    <div class="card"><div class="card-body">
+      <h5>{{ hotel.name }}</h5>
+      <p class="mb-1">{{ room_type.name }}</p>
+      <p class="text-muted mb-1">{{ check_in|date:"d/m/Y" }} → {{ check_out|date:"d/m/Y" }} ({{ nights }} đêm)</p>
+      <p class="text-muted">{{ guests }} khách</p>
+      <hr>
+      <p class="fs-5 fw-bold text-primary mb-0">Tổng: {{ total|floatformat:"0g" }} đ</p>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

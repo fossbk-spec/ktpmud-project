@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body text-center p-4">
+
+                    <h3 class="mb-3">Thanh toán chuyển khoản</h3>
+
+                    <p class="text-muted">
+                        Đơn đặt phòng:
+                        <strong>{{ booking.code }}</strong>
+                    </p>
+
+                    <div class="mb-3">
+                        <h4 class="text-primary">
+                            {{ booking.total_amount|floatformat:0 }} VNĐ
+                        </h4>
+                    </div>
+
+                    <img
+                        src="data:image/png;base64,{{ qr_base64 }}"
+                        alt="Mã QR chuyển khoản"
+                        class="img-fluid border rounded p-2"
+                        style="max-width: 300px;"
+                    >
+
+                    <hr>
+
+                    <div class="text-start">
+                        <p>
+                            <strong>Cơ sở:</strong>
+                            {{ hotel.name }}
+                        </p>
+
+                        <p>
+                            <strong>Ngân hàng:</strong>
+                            {{ hotel.bank_name }}
+                        </p>
+
+                        <p>
+                            <strong>Số tài khoản:</strong>
+                            {{ hotel.bank_account_number }}
+                        </p>
+
+                        <p>
+                            <strong>Chủ tài khoản:</strong>
+                            {{ hotel.bank_account_name }}
+                        </p>
+
+                        <p>
+                            <strong>Số tiền:</strong>
+                            {{ booking.total_amount|floatformat:0 }} VNĐ
+                        </p>
+
+                        <p>
+                            <strong>Nội dung chuyển khoản:</strong>
+                            <span class="text-danger fw-bold">
+                                {{ transfer_content }}
+                            </span>
+                        </p>
+                    </div>
+
+                    <div class="alert alert-warning text-start">
+                        Vui lòng chuyển đúng số tiền và ghi chính xác
+                        mã đặt phòng trong nội dung chuyển khoản.
+                    </div>
+
+                    <form
+                        method="post"
+                        action="{% url 'report_paid' booking.code %}"
+                    >
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="method"
+                            value="TRANSFER"
+                        >
+
+                        <button
+                            type="submit"
+                            class="btn btn-success w-100"
+                        >
+                            Tôi đã chuyển khoản
+                        </button>
+                    </form>
+
+                    <a
+                        href="{% url 'booking_detail' booking.code %}"
+                        class="btn btn-outline-secondary w-100 mt-2"
+                    >
+                        Quay lại đơn đặt phòng
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
