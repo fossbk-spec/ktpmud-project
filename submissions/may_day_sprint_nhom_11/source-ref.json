@@ -1,0 +1,8 @@
+{
+  "starter_repo": "https://github.com/fossbk-spec/ktpmud-bkt-ruleengine-starter",
+  "starter_commit": "1c0a5b1",
+  "fork_url": "https://github.com/phg-nam/ktpmud-bkt-ruleengine-starter",
+  "final_commit": "f699d73b450b9cb20f0c6b160fa198e82cdbbfbe",
+  "release_tag": "bkt-2026-nhom11-rc1",
+  "ci_run_url": "https://github.com/phg-nam/ktpmud-bkt-ruleengine-starter/actions"
+}
