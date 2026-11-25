@@ -70,7 +70,43 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Lệnh khởi chạy backend và chạy test sẽ được cập nhật theo entry point, cấu hình và cấu trúc kiểm thử thực tế của mã nguồn.
+**Cài đặt môi trường và thư viện:**
+
+```powershell
+cd src/backend
+
+# Tạo môi trường ảo
+python -m venv .venv
+.venv\Scripts\activate
+
+# Cài thư viện chạy ứng dụng
+pip install -r requirements.txt
+
+# Cài thêm thư viện phục vụ kiểm thử
+pip install -r requirements-dev.txt
+```
+
+**Cấu hình môi trường:**
+
+Sao chép `.env.example` thành `.env`, sau đó điều chỉnh cấu hình phù hợp với máy tính.
+
+**Khởi chạy backend:**
+
+```powershell
+uvicorn main:app --reload
+```
+
+Sau khi khởi chạy, truy cập:
+
+- API: `http://127.0.0.1:8000`
+- Swagger UI: `http://127.0.0.1:8000/docs`
+- Health check: `http://127.0.0.1:8000/health`
+
+**Chạy kiểm thử:**
+
+```powershell
+pytest -v
+```
 
 **Dữ liệu/tài khoản mẫu (synthetic):** Sử dụng dữ liệu thuốc và dữ liệu tương tác thuốc có nguồn tham chiếu; dữ liệu đơn thuốc và thông tin người dùng phục vụ kiểm thử, trình diễn phải là dữ liệu tổng hợp. Không sử dụng thông tin định danh cá nhân hoặc hồ sơ sức khỏe thật.
 
