@@ -1,9 +1,11 @@
 {
-  "group_id": "173820_n06",
-  "case_study_id": "CS-10",
   "case_study_slug": "tra_cuu_thuoc",
+  "case_study_id": "CS-10",
+  "group_code": "173820_n06",
   "members": [
     "202414030",
     "202414334"
-  ]
+  ],
+  "scenario": "khong_ap_dung",
+  "submitted_at": "2026-11-25"
 }
