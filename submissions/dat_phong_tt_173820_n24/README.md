@@ -117,9 +117,9 @@ Cập nhật cột **Trạng thái** (⬜ chưa / 🚧 đang / ✅ xong) vào cu
 
 - **Mã nhóm:** n24 · **Mã lớp:** 173820 · **Case study slug:** `dat_phong_tt`.
 - **Thành viên:**
-  - 202414457 – Backend Developer
-  - [MSSV thành viên 2] – [Vai trò]
-  - [MSSV thành viên 3] – [Vai trò]
+  - `[202414457]` – Backend Developer
+  - `[202414353]` – [Vai trò]
+  - `[202414397]` – [Vai trò]
 - **Zero PII/PHI:** Dữ liệu minh họa và dữ liệu kiểm thử được sử dụng là dữ liệu synthetic, không đưa thông tin cá nhân hoặc dữ liệu nhạy cảm thật vào repository.
 - **Công cụ AI đã dùng & phạm vi:** ChatGPT được sử dụng để hỗ trợ giải thích lỗi, tham khảo giải pháp kỹ thuật, rà soát mã nguồn và hỗ trợ hoàn thiện tài liệu. Nhóm chịu trách nhiệm kiểm tra, chỉnh sửa và xác nhận kết quả cuối cùng.
 - **Dữ liệu lớn (>10MB):** Không sử dụng bộ dữ liệu lớn bên ngoài trong phiên bản hiện tại.
