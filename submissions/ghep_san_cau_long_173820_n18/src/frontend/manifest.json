@@ -1,0 +1,14 @@
+{
+  "name": "Badminton Connect",
+  "short_name": "Connect",
+  "description": "Ghép sân cầu lông nhanh, chơi cùng người đáng tin cậy",
+  "lang": "vi",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F2F5F3",
+  "theme_color": "#0F7B4F",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

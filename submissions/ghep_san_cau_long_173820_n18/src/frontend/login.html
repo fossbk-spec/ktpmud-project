@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0F7B4F">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <title>Đăng nhập &amp; Đăng ký – Badminton Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="auth-page">
+  <aside class="auth-hero" aria-hidden="true">
+    <a class="brand" href="index.html" tabindex="-1">
+      <span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3.2" fill="currentColor"/><path d="M9.2 16 6.5 4.5M12 15V3.5M14.8 16l2.7-11.5M6.5 4.5Q12 2.5 17.5 4.5"/></svg></span>
+      Badminton Connect
+    </a>
+    <div>
+      <h2>Ghép sân cầu lông, không còn lẻ người.</h2>
+      <p>Tìm kèo gần bạn, xin ghép chỉ trong vài chạm và chơi cùng những người đáng tin cậy.</p>
+    </div>
+    <p class="small">Điểm uy tín &amp; đánh giá chéo sau mỗi trận giúp cộng đồng hạn chế bùng kèo.</p>
+  </aside>
+
+  <main class="auth-panel">
+    <div class="auth-card">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3.2" fill="currentColor"/><path d="M9.2 16 6.5 4.5M12 15V3.5M14.8 16l2.7-11.5M6.5 4.5Q12 2.5 17.5 4.5"/></svg></span>
+        Badminton Connect
+      </a>
+
+      <!-- Bước 1: đăng nhập / đăng ký -->
+      <section id="step-auth">
+        <div class="seg full" role="tablist" aria-label="Chọn đăng nhập hoặc đăng ký">
+          <button type="button" role="tab" id="tab-login" class="active" aria-selected="true">Đăng nhập</button>
+          <button type="button" role="tab" id="tab-register" aria-selected="false">Đăng ký</button>
+        </div>
+        <div id="form-error" class="form-error mt" role="alert" hidden></div>
+
+        <form id="login-form" class="mt" novalidate>
+          <h1>Chào mừng quay lại</h1>
+          <p class="muted small" style="margin-bottom:16px">Đăng nhập bằng tên đăng nhập, Email hoặc Số điện thoại.</p>
+          <div class="field"><label for="login-id">Tên đăng nhập / Email / Số điện thoại</label>
+            <input id="login-id" autocomplete="username" autocapitalize="none" placeholder="vd: namtran hoặc 0912345678"></div>
+          <div class="field"><label for="login-pass">Mật khẩu</label>
+            <input id="login-pass" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu"></div>
+          <button class="btn primary lg block" type="submit">Đăng nhập</button>
+          <p style="text-align:center;margin-top:12px"><button class="link-btn" type="button" id="link-forgot">Quên mật khẩu?</button></p>
+        </form>
+
+        <form id="register-form" class="mt" hidden novalidate>
+          <h1>Tạo tài khoản</h1>
+          <p class="muted small" style="margin-bottom:16px">Bạn sẽ nhận mã OTP để xác thực, giúp hạn chế tài khoản ảo.</p>
+          <div class="field"><span class="label">Bạn tham gia với vai trò</span>
+            <div class="seg full" id="reg-role" role="group" aria-label="Vai trò">
+              <button type="button" data-role="player" class="active">Người chơi</button>
+              <button type="button" data-role="host">Chủ nhóm / Chủ sân</button>
+            </div>
+            <span class="hint" id="role-hint">Tìm kèo, xin ghép sân và đánh giá sau trận.</span>
+          </div>
+          <div class="field"><label for="reg-name">Họ và tên</label><input id="reg-name" autocomplete="name" placeholder="vd: Trần Duy Nam"></div>
+          <div class="field"><label for="reg-user">Tên đăng nhập</label><input id="reg-user" autocomplete="username" autocapitalize="none" placeholder="Chữ, số, dấu _ . (3-30 ký tự)"></div>
+          <div class="field"><label for="reg-contact">Email hoặc Số điện thoại</label><input id="reg-contact" autocomplete="email" inputmode="email" autocapitalize="none" placeholder="vd: 0912345678 hoặc ban@gmail.com"></div>
+          <div class="field"><label for="reg-pass">Mật khẩu</label><input id="reg-pass" type="password" autocomplete="new-password" placeholder="Ít nhất 6 ký tự"></div>
+          <button class="btn primary lg block" type="submit">Tạo tài khoản &amp; nhận mã OTP</button>
+        </form>
+
+        <details class="demo-box" id="demo-box" hidden>
+          <summary>Tài khoản demo (chỉ hiện khi chạy chế độ phát triển)</summary>
+          <button class="btn sm" type="button" data-demo="admin|admin123">Quản trị viên</button>
+          <button class="btn sm" type="button" data-demo="host_hung|123456">Chủ nhóm</button>
+          <button class="btn sm" type="button" data-demo="thao|123456">Người chơi</button>
+        </details>
+      </section>
+
+      <!-- Quên mật khẩu: nhận OTP rồi đặt lại -->
+      <section id="step-forgot" hidden>
+        <h1 style="margin-top:6px">Quên mật khẩu</h1>
+        <p class="muted" style="margin:4px 0 14px" id="fg-sub">Nhập tên đăng nhập, Email hoặc Số điện thoại. Chúng tôi sẽ gửi mã OTP để bạn đặt lại mật khẩu.</p>
+        <div id="fg-error" class="form-error" role="alert" hidden></div>
+        <form id="fg-form-1" novalidate>
+          <div class="field"><label for="fg-id">Tên đăng nhập / Email / Số điện thoại</label><input id="fg-id" autocomplete="username" autocapitalize="none"></div>
+          <button class="btn primary lg block" type="submit">Gửi mã OTP</button>
+        </form>
+        <form id="fg-form-2" hidden novalidate>
+          <div class="notice good" id="fg-demo" hidden><div>Chế độ demo: mã OTP của bạn là <b id="fg-demo-code" style="letter-spacing:.15em"></b>.
+            <button type="button" class="link-btn" id="fg-fill">Điền sẵn</button></div></div>
+          <div class="field"><label for="fg-otp">Mã OTP (6 số)</label><input id="fg-otp" class="otp-input" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••"></div>
+          <div class="field"><label for="fg-pass">Mật khẩu mới</label><input id="fg-pass" type="password" autocomplete="new-password" placeholder="Ít nhất 6 ký tự"></div>
+          <div class="field"><label for="fg-pass2">Nhập lại mật khẩu mới</label><input id="fg-pass2" type="password" autocomplete="new-password"></div>
+          <button class="btn primary lg block" type="submit">Đặt lại mật khẩu</button>
+        </form>
+        <div class="row between mt">
+          <button class="btn ghost sm" type="button" id="fg-back">Quay lại đăng nhập</button>
+          <button class="btn ghost sm" type="button" id="fg-resend" hidden>Gửi lại mã</button>
+        </div>
+      </section>
+
+      <!-- Bước 2: nhập mã OTP -->
+      <section id="step-otp" hidden>
+        <h1 style="margin-top:6px">Nhập mã OTP</h1>
+        <p class="muted" style="margin:4px 0 14px">Mã gồm 6 chữ số đã được gửi tới <b id="otp-target"></b>. Mã có hiệu lực 5 phút.</p>
+        <div class="notice good" id="otp-demo" hidden>
+          <div>Chế độ demo: mã OTP của bạn là <b id="otp-demo-code" style="letter-spacing:.15em"></b>. Khi triển khai thật, mã sẽ được gửi qua SMS / Email.
+            <button type="button" class="link-btn" id="otp-fill">Điền sẵn</button></div>
+        </div>
+        <div id="otp-error" class="form-error" role="alert" hidden></div>
+        <form id="otp-form" novalidate>
+          <div class="field"><label class="sr-only" for="otp-input">Mã OTP</label>
+            <input id="otp-input" class="otp-input" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••"></div>
+          <button class="btn primary lg block" type="submit">Xác thực &amp; vào ứng dụng</button>
+        </form>
+        <div class="row between mt">
+          <button class="btn ghost sm" type="button" id="otp-back">Quay lại</button>
+          <button class="btn ghost sm" type="button" id="otp-resend">Gửi lại mã</button>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<div id="modal-root"></div>
+<div id="toast-root" class="toasts"></div>
+<script src="common.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

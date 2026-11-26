@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+badminton.db
+badminton.db-wal
+badminton.db-shm
+*.bak
+.pytest_cache/
+.vscode/
+.idea/
+
