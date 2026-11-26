@@ -1,0 +1,275 @@
+import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { Button } from "../../../shared/components/Button";
+import { TextInput } from "../../../shared/components/Input";
+import eyeIcon from "../../../assets/icons/eye.svg";
+import eyeOffIcon from "../../../assets/icons/eye-off.svg";
+
+export interface RegisterSubmitPayload {
+  fullName: string;
+  emailOrPhone: string;
+  phone?: string;
+  password: string;
+  asPitchOwner?: boolean;
+}
+
+interface RegisterFormValues {
+  fullName: string;
+  emailOrPhone: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+  asPitchOwner: boolean;
+}
+
+interface RegisterFormErrors {
+  fullName?: string;
+  emailOrPhone?: string;
+  phone?: string;
+  password?: string;
+  confirmPassword?: string;
+  global?: string;
+}
+
+interface RegisterFormProps {
+  onSubmit?: (payload: RegisterSubmitPayload) => Promise<void> | void;
+}
+
+const EMAIL_OR_PHONE_REGEX = /^(?:\+?\d[\d\s-]{7,}|[^\s@]+@[^\s@]+\.[^\s@]+)$/;
+
+export function RegisterForm({ onSubmit }: RegisterFormProps) {
+  const navigate = useNavigate();
+  const [values, setValues] = useState<RegisterFormValues>({
+    fullName: "",
+    emailOrPhone: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    asPitchOwner: false,
+  });
+  const [errors, setErrors] = useState<RegisterFormErrors>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = event.target;
+    const fieldName = name as keyof RegisterFormValues;
+
+    setValues((current) => ({
+      ...current,
+      [fieldName]: type === "checkbox" ? checked : value,
+    }));
+
+    setErrors((current) => {
+      const errorKey = fieldName as keyof RegisterFormErrors;
+      if (!current[errorKey]) {
+        return current;
+      }
+
+      const nextErrors = { ...current };
+      delete nextErrors[errorKey];
+      if (nextErrors.global) {
+        delete nextErrors.global;
+      }
+      return nextErrors;
+    });
+  };
+
+  const validate = (): RegisterFormErrors => {
+    const nextErrors: RegisterFormErrors = {};
+
+    const normalizedFullName = values.fullName.trim();
+    const normalizedEmailOrPhone = values.emailOrPhone.trim();
+
+    if (!normalizedFullName) {
+      nextErrors.fullName = "Vui lòng nhập họ tên.";
+    }
+
+    if (!normalizedEmailOrPhone) {
+      nextErrors.emailOrPhone = "Vui lòng nhập email hoặc số điện thoại.";
+    } else if (!EMAIL_OR_PHONE_REGEX.test(normalizedEmailOrPhone)) {
+      nextErrors.emailOrPhone =
+        "Định dạng email hoặc số điện thoại chưa hợp lệ.";
+    }
+
+    if (!values.password) {
+      nextErrors.password = "Vui lòng nhập mật khẩu.";
+    } else if (values.password.length < 6) {
+      nextErrors.password = "Mật khẩu cần ít nhất 6 ký tự.";
+    }
+
+    if (!values.confirmPassword) {
+      nextErrors.confirmPassword = "Vui lòng xác nhận mật khẩu.";
+    } else if (values.confirmPassword !== values.password) {
+      nextErrors.confirmPassword = "Mật khẩu xác nhận không khớp.";
+    }
+
+    return nextErrors;
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const nextErrors = validate();
+    setErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      if (onSubmit) {
+        await onSubmit({
+          fullName: values.fullName.trim(),
+          emailOrPhone: values.emailOrPhone.trim(),
+          phone: values.phone.trim() || undefined,
+          password: values.password,
+          asPitchOwner: values.asPitchOwner,
+        });
+      } else {
+        await new Promise<void>((resolve) => {
+          setTimeout(() => resolve(), 1500);
+        });
+      }
+
+      setValues({
+        fullName: "",
+        emailOrPhone: "",
+        phone: "",
+        password: "",
+        confirmPassword: "",
+        asPitchOwner: false,
+      });
+      setErrors({});
+      navigate("/login");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Đăng ký thất bại. Vui lòng thử lại.";
+      setErrors({ global: errorMessage });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="w-full">
+      <div className="mx-auto flex w-full max-w-[399px] flex-col gap-3.5">
+        <TextInput
+          id="fullName"
+          label="Họ tên"
+          name="fullName"
+          value={values.fullName}
+          onChange={handleChange}
+          placeholder="Nhập họ tên"
+          error={errors.fullName}
+        />
+
+        <TextInput
+          id="emailOrPhone"
+          label="Email"
+          name="emailOrPhone"
+          value={values.emailOrPhone}
+          onChange={handleChange}
+          placeholder="Email (ví dụ: tenban@gmail.com)"
+          autoComplete="username"
+          error={errors.emailOrPhone}
+        />
+
+        <TextInput
+          id="phone"
+          label="Số điện thoại"
+          name="phone"
+          value={values.phone}
+          onChange={handleChange}
+          placeholder="Số điện thoại (ví dụ: 0912345678)"
+          autoComplete="tel"
+          error={errors.phone}
+        />
+
+        <TextInput
+          id="password"
+          label="Mật khẩu"
+          name="password"
+          type={isPasswordVisible ? "text" : "password"}
+          value={values.password}
+          onChange={handleChange}
+          placeholder="Mật khẩu"
+          autoComplete="new-password"
+          error={errors.password}
+          rightAdornment={
+            <button
+              type="button"
+              onClick={() => setIsPasswordVisible((current) => !current)}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-white/90 transition hover:bg-white/15 cursor-pointer"
+              aria-label={isPasswordVisible ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+            >
+              <img
+                src={isPasswordVisible ? eyeOffIcon : eyeIcon}
+                alt=""
+                aria-hidden="true"
+                className="h-5 w-5"
+              />
+            </button>
+          }
+        />
+
+        <TextInput
+          id="confirmPassword"
+          label="Xác nhận mật khẩu"
+          name="confirmPassword"
+          type={isConfirmPasswordVisible ? "text" : "password"}
+          value={values.confirmPassword}
+          onChange={handleChange}
+          placeholder="Xác nhận mật khẩu"
+          autoComplete="new-password"
+          error={errors.confirmPassword}
+          rightAdornment={
+            <button
+              type="button"
+              onClick={() => setIsConfirmPasswordVisible((current) => !current)}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-white/90 transition hover:bg-white/15 cursor-pointer"
+              aria-label={isConfirmPasswordVisible ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+            >
+              <img
+                src={isConfirmPasswordVisible ? eyeOffIcon : eyeIcon}
+                alt=""
+                aria-hidden="true"
+                className="h-5 w-5"
+              />
+            </button>
+          }
+        />
+
+        <label className="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/[0.04] px-3 py-2.5 text-xs text-white/85 cursor-pointer">
+          <input
+            type="checkbox"
+            name="asPitchOwner"
+            checked={values.asPitchOwner}
+            onChange={handleChange}
+            className="h-4 w-4 rounded accent-emerald-500"
+          />
+          <span>Đăng ký thêm quyền Chủ sân (Quản lý cụm sân &amp; đơn đặt)</span>
+        </label>
+
+        <div className="mt-1">
+          <Button type="submit" loading={isLoading}>
+            Đăng ký
+          </Button>
+        </div>
+
+        {errors.global ? (
+          <p className="text-center text-sm font-medium text-red-300">
+            {errors.global}
+          </p>
+        ) : null}
+      </div>
+    </form>
+  );
+}

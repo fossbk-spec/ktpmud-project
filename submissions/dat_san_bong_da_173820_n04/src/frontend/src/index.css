@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --color-auth-shell: #1b2f20;
+  --color-auth-panel-start: #323030;
+  --color-auth-panel-end: #7c7676;
+  --color-auth-accent-start: #1c6941;
+  --color-auth-accent-end: #179955;
+  --color-auth-placeholder: #cccccc;
+
+  --color-admin-shell: #29721d;
+  --color-admin-sidebar: #005e2e;
+  --color-admin-topbar: #005e2e;
+  --color-admin-surface: #29721d;
+  --color-admin-surface-soft: #005e2e;
+  --color-admin-border: #005e2e;
+  --color-admin-accent: #29721d;
+  --color-admin-icon-light: #ffffff;
+  --color-admin-text-primary: #ffffff;
+  --color-admin-text-secondary: rgb(255 255 255 / 0.78);
+  --color-admin-alert: #ffffff;
+
+  --font-display: "Jersey 10", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --text-auth-input: 24px;
+  --text-auth-button: 24px;
+  --text-auth-link: 24px;
+
+  --radius-auth-panel: 25px;
+  --radius-auth-control: 20px;
+
+  --shadow-auth-glow: 4px 4px 18px -2px rgba(231, 228, 232, 0.8);
+  --shadow-auth-shell: 0 16px 42px rgba(0, 0, 0, 0.32);
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: var(--font-body);
+  background: radial-gradient(circle at 18% 18%, rgba(8, 130, 70, 0.65), transparent 30%),
+    radial-gradient(circle at 86% 82%, rgba(11, 78, 43, 0.7), transparent 35%),
+    var(--color-auth-shell);
+  color: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes auth-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mặc định cho mọi input autofill (ví dụ: trong Admin Profile Tab) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: 0 0 0px 1000px #0f4d2a inset !important;
+}
+
+/* Cho các ô input trong trang Auth (Login / Register) ở trạng thái bình thường */
+.rounded-auth-control input:-webkit-autofill,
+.rounded-auth-control input:-webkit-autofill:hover,
+.rounded-auth-control input:-webkit-autofill:focus,
+.rounded-auth-control input:-webkit-autofill:active {
+    box-shadow: 0 0 0px 1000px #575353 inset !important;
+}
+
+/* Khi có lỗi (error) trên ô input bất kỳ (kể cả Auth) */
+div[class*="border-red-400"] input:-webkit-autofill,
+div[class*="border-red-400"] input:-webkit-autofill:hover,
+div[class*="border-red-400"] input:-webkit-autofill:focus,
+div[class*="border-red-400"] input:-webkit-autofill:active {
+    box-shadow: 0 0 0px 1000px #3d1a1a inset !important;
+}
+
+/* Responsive height override for all auth text inputs */
+.bg-auth-shell .group.flex.w-full.items-center.border {
+  height: 52px !important;
+}
+
+.bg-auth-shell .group.flex.w-full.items-center.border input {
+  font-size: 14px !important;
+}

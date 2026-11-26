@@ -1,0 +1,146 @@
+// Type alias for monetary values that can come from backend as strings or numbers
+export type BigDecimal = string | number;
+
+// Player DTOs
+export interface VenueResponseDTO {
+  id: number;
+  name: string;
+  address: string;
+  imageUrl: string;
+  minPrice: BigDecimal | number;
+  latitude?: number;
+  longitude?: number;
+  averageRating?: number;
+  reviewCount?: number;
+}
+
+export interface VenueSummaryResponse {
+  id: number;
+  name: string;
+  address: string;
+  openTime: string; // LocalTime as ISO string or time string (e.g., "08:00")
+  closeTime: string; // LocalTime as ISO string or time string (e.g., "22:00")
+  minPrice: BigDecimal | number;
+  latitude?: number;
+  longitude?: number;
+}
+
+export interface VenueDetailResponse {
+  id: number;
+  name: string;
+  address: string;
+  description: string;
+  openTime: string; // LocalTime
+  closeTime: string; // LocalTime
+  latitude?: number;
+  longitude?: number;
+}
+
+// Admin DTOs
+export interface AdminVenueResponseDTO {
+  id: number;
+  name: string;
+  address: string;
+  imageUrl: string;
+  revenue: BigDecimal | number;
+  totalPitches: number;
+}
+
+export interface PitchDetailResponse {
+  id: number;
+  name: string;
+  pitchType: "5" | "7" | "11";
+  isActive: boolean;
+  venueId: number;
+  venueName: string;
+  basePrice: BigDecimal | number;
+  slotPrices: SlotPriceResponse[];
+}
+
+export interface SlotPriceResponse {
+  slotNumber: number;
+  weekdayPrice: BigDecimal | number;
+  weekendPrice: BigDecimal | number;
+}
+
+export type SlotBookingStatus = "AVAILABLE" | "BOOKED" | "PENDING";
+
+export interface SlotStatusResponse {
+  timeSlotId: number;
+  slotNumber: number;
+  startTime: string; // LocalTime (HH:mm:ss or HH:mm)
+  endTime: string; // LocalTime (HH:mm:ss or HH:mm)
+  price: BigDecimal | number | null;
+  status: SlotBookingStatus;
+}
+
+export interface TimeSlotRange {
+  startTime: string;
+  endTime: string;
+}
+
+export interface PitchAvailabilityResponse {
+  pitchId: number;
+  pitchName: string;
+  pitchType: string;
+  slots: SlotStatusResponse[];
+}
+
+export interface VenueAvailabilityResponse {
+  venueId: number;
+  venueName: string;
+  date: string; // YYYY-MM-DD
+  pitches: PitchAvailabilityResponse[];
+}
+
+export interface ServiceItemResponse {
+  id: number;
+  venueId: number;
+  name: string;
+  description?: string | null;
+  price: BigDecimal | number;
+  unit: string;
+  status: string;
+}
+
+// Mock/UI types (backward compatible)
+export interface Facility {
+  id: string;
+  apiFacilityId: string;
+  name: string;
+  address: string;
+}
+
+export interface VenueItem {
+  id: number;
+  imageUrl?: string;
+  ballLogoUrl?: string;
+  name: string;
+  address: string;
+  openTime: string;
+  minPrice?: number;
+  latitude?: number;
+  longitude?: number;
+  averageRating?: number;
+  reviewCount?: number;
+}
+
+export interface CreatePitchReviewRequest {
+  bookingId: number;
+  rating: number;
+  content: string;
+}
+
+export interface PitchReviewResponse {
+  id: number;
+  bookingId: number;
+  pitchId: number;
+  pitchName: string;
+  playerId: number;
+  playerName: string;
+  rating: number;
+  content: string;
+  rewardPoints: number;
+  memberPoints: number;
+  createdAt: string;
+}
