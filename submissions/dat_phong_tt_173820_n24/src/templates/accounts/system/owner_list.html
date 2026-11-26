@@ -1,0 +1,194 @@
+
+{% extends "base.html" %}
+
+{% block title %}Quản lý chủ cơ sở{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+            <h2 class="mb-1">Quản lý chủ cơ sở</h2>
+            <p class="text-muted mb-0">
+                Xem xét và quản lý tài khoản chủ cơ sở trong hệ thống.
+            </p>
+        </div>
+
+        <a href="{% url 'system_audit_list' %}" class="btn btn-outline-primary">
+            Xem nhật ký quản trị
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <strong>Danh sách tài khoản chủ cơ sở</strong>
+            <span class="badge bg-secondary ms-2">{{ owners|length }}</span>
+        </div>
+
+        <div class="card-body">
+
+            {% if owners %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Email</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày đăng ký</th>
+                            <th>Người xét duyệt</th>
+                            <th style="min-width: 320px;">Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for owner in owners %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+
+                            <td>
+                                <strong>{{ owner.user.username }}</strong>
+                            </td>
+
+                            <td>{{ owner.user.email|default:"Chưa cập nhật" }}</td>
+
+                            <td>
+                                {% if owner.status == "PENDING" %}
+                                    <span class="badge bg-warning text-dark">
+                                        Chờ duyệt
+                                    </span>
+                                {% elif owner.status == "ACTIVE" %}
+                                    <span class="badge bg-success">
+                                        Đang hoạt động
+                                    </span>
+                                {% elif owner.status == "REJECTED" %}
+                                    <span class="badge bg-danger">
+                                        Đã từ chối
+                                    </span>
+                                {% elif owner.status == "LOCKED" %}
+                                    <span class="badge bg-dark">
+                                        Đã khóa
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ owner.created_at|date:"d/m/Y H:i" }}</td>
+
+                            <td>
+                                {% if owner.reviewed_by %}
+                                    {{ owner.reviewed_by.username }}
+                                {% else %}
+                                    <span class="text-muted">Chưa xét duyệt</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if owner.status == "PENDING" %}
+                                    <form method="post"
+                                          action="{% url 'owner_review' owner.id %}">
+                                        {% csrf_token %}
+
+                                        <div class="mb-2">
+                                            <textarea
+                                                name="reason"
+                                                class="form-control form-control-sm"
+                                                rows="2"
+                                                placeholder="Nhập lý do xử lý..."
+                                                required></textarea>
+                                        </div>
+
+                                        <div class="d-flex gap-2">
+                                            <button
+                                                type="submit"
+                                                name="action"
+                                                value="APPROVE_OWNER"
+                                                class="btn btn-success btn-sm">
+                                                Duyệt
+                                            </button>
+
+                                            <button
+                                                type="submit"
+                                                name="action"
+                                                value="REJECT_OWNER"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Bạn có chắc chắn muốn từ chối tài khoản này?')">
+                                                Từ chối
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                {% elif owner.status == "ACTIVE" %}
+                                    <form method="post"
+                                          action="{% url 'owner_review' owner.id %}">
+                                        {% csrf_token %}
+
+                                        <textarea
+                                            name="reason"
+                                            class="form-control form-control-sm mb-2"
+                                            rows="2"
+                                            placeholder="Nhập lý do khóa tài khoản..."
+                                            required></textarea>
+
+                                        <button
+                                            type="submit"
+                                            name="action"
+                                            value="LOCK_OWNER"
+                                            class="btn btn-dark btn-sm"
+                                            onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?')">
+                                            Khóa tài khoản
+                                        </button>
+                                    </form>
+
+                                {% elif owner.status == "LOCKED" %}
+                                    <form method="post"
+                                          action="{% url 'owner_review' owner.id %}">
+                                        {% csrf_token %}
+
+                                        <textarea
+                                            name="reason"
+                                            class="form-control form-control-sm mb-2"
+                                            rows="2"
+                                            placeholder="Nhập lý do mở khóa..."
+                                            required></textarea>
+
+                                        <button
+                                            type="submit"
+                                            name="action"
+                                            value="UNLOCK_OWNER"
+                                            class="btn btn-primary btn-sm">
+                                            Mở khóa
+                                        </button>
+                                    </form>
+
+                                {% elif owner.status == "REJECTED" %}
+                                    <span class="text-muted">
+                                        Không có thao tác khả dụng.
+                                    </span>
+                                {% endif %}
+
+                                {% if owner.reason %}
+                                    <div class="small text-muted mt-2">
+                                        Lý do gần nhất: {{ owner.reason }}
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            {% else %}
+                <div class="alert alert-info mb-0">
+                    Chưa có tài khoản chủ cơ sở nào đăng ký.
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

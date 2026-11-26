@@ -1,0 +1,23 @@
+/* Đổi màu cả website: sửa các biến dưới đây, tải lại trang là thấy ngay */
+:root {
+  --bs-primary: #0d6efd;
+  --bs-primary-rgb: 13, 110, 253;
+  --brand-dark: #0b3d91;
+  --brand-soft: #eef4ff;
+}
+.btn-primary { --bs-btn-bg: var(--bs-primary); --bs-btn-border-color: var(--bs-primary); }
+.navbar-brand { font-weight: 700; letter-spacing: .3px; }
+.hero { background: linear-gradient(135deg, var(--brand-dark), var(--bs-primary)); color: #fff; border-radius: 1rem; }
+.room-img { height: 180px; object-fit: cover; }
+.room-placeholder { height: 180px; background: linear-gradient(135deg, var(--brand-soft), #d6e4ff);
+  display: flex; align-items: center; justify-content: center; color: var(--brand-dark); font-weight: 600; }
+.card { border: 0; box-shadow: 0 2px 10px rgba(0, 0, 0, .08); }
+footer { color: #6c757d; }
+/* Hiệu ứng menu khi rê chuột */
+.navbar .nav-link {
+    transition: font-weight 0.2s ease, color 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+    font-weight: 700;
+}

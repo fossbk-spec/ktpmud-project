@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
+                    <h4 class="mb-2">Tạo phòng hàng loạt</h4>
+
+                    <p class="text-muted">
+                        Cơ sở: <strong>{{ hotel.name }}</strong><br>
+                        Loại phòng: <strong>{{ room_type.name }}</strong><br>
+                        Giá mỗi đêm:
+                        <strong>{{ room_type.base_price }} VNĐ</strong>
+                    </p>
+
+                    <hr>
+
+                    <div class="alert alert-info">
+                        Ví dụ nhập từ 101 đến 107, hệ thống sẽ tạo
+                        các phòng 101, 102, 103, 104, 105, 106, 107.
+                        Mã phòng đã tồn tại sẽ được bỏ qua.
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                {{ form.start_number.label }}
+                            </label>
+                            {{ form.start_number }}
+                            {% for error in form.start_number.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                {{ form.end_number.label }}
+                            </label>
+                            {{ form.end_number }}
+                            {% for error in form.end_number.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                {{ form.floor.label }}
+                            </label>
+                            {{ form.floor }}
+                            {% for error in form.floor.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                Tạo phòng
+                            </button>
+
+                            <a
+                                href="{% url 'hotel_manage' hotel.id %}"
+                                class="btn btn-outline-secondary"
+                            >
+                                Quay lại
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,191 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Quản lý đơn{% endblock %}
+
+{% block content %}
+
+<h3 class="mb-3">Danh sách đơn đặt phòng</h3>
+
+<!-- Tìm kiếm theo mã đặt phòng -->
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <form method="get" action="{% url 'manage_bookings' %}">
+            <label for="booking-code" class="form-label fw-bold">
+                Tra cứu mã đặt phòng
+            </label>
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="booking-code"
+                    name="code"
+                    class="form-control"
+                    placeholder="Nhập mã đặt phòng, ví dụ: BKABHHB2"
+                    value="{{ search_code }}"
+                    autocomplete="off"
+                >
+
+                <button type="submit" class="btn btn-primary">
+                    🔎 Tìm đơn
+                </button>
+
+                {% if search_code %}
+                    <a href="{% url 'manage_bookings' %}"
+                       class="btn btn-outline-secondary">
+                        Xóa tìm kiếm
+                    </a>
+                {% endif %}
+            </div>
+
+            <small class="text-muted">
+                Nhập mã đặt phòng chính xác để đưa đơn cần tìm lên đầu danh sách.
+            </small>
+        </form>
+    </div>
+</div>
+
+{% if search_code and not highlighted_booking_id %}
+    <div class="alert alert-warning">
+        Không tìm thấy đơn có mã
+        <strong>{{ search_code }}</strong>
+        trong các cơ sở bạn được quyền quản lý.
+    </div>
+{% elif highlighted_booking_id %}
+    <div class="alert alert-success">
+        Đã tìm thấy đơn
+        <strong>{{ search_code }}</strong>.
+        Đơn đã được đưa lên đầu danh sách và tô vàng.
+    </div>
+{% endif %}
+
+<div class="table-responsive card shadow-sm">
+    <table class="table table-hover align-middle mb-0">
+
+        <thead class="table-light">
+            <tr>
+                <th>Mã</th>
+                <th>Cơ sở</th>
+                <th>Khách</th>
+                <th>Ngày ở</th>
+                <th>Phòng</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for b in bookings %}
+
+            <tr class="{% if b.pk == highlighted_booking_id %}table-warning{% endif %}">
+
+                <td>
+                    <a href="{% url 'booking_detail' b.code %}"
+                       class="fw-bold">
+                        {{ b.code }}
+                    </a>
+
+                    {% if b.pk == highlighted_booking_id %}
+                        <br>
+                        <span class="badge bg-warning text-dark">
+                            Đơn đang tìm
+                        </span>
+                    {% endif %}
+                </td>
+
+                <td>{{ b.hotel.name }}</td>
+
+                <td>
+                    {{ b.guest.full_name }}
+                    <br>
+                    <small class="text-muted">
+                        {{ b.guest.phone }}
+                    </small>
+                </td>
+
+                <td>
+                    {{ b.check_in_date|date:"d/m" }}
+                    →
+                    {{ b.check_out_date|date:"d/m/Y" }}
+                </td>
+
+                <td>
+                    {% for br in b.booking_rooms.all %}
+                        {{ br.room.room_code }}
+                    {% endfor %}
+                </td>
+
+                <td>
+                    {{ b.total_amount|floatformat:"0g" }} đ
+                </td>
+
+                <td>
+                    <span class="badge
+                        {% if b.status == 'CONFIRMED' or b.status == 'CHECKED_IN' or b.status == 'CHECKED_OUT' %}
+                            text-bg-success
+                        {% elif b.status == 'PENDING_PAYMENT' %}
+                            text-bg-warning
+                        {% else %}
+                            text-bg-secondary
+                        {% endif %}">
+                        {% if b.is_holding %}
+                            Đang giữ chỗ
+                        {% else %}
+                            {{ b.get_status_display }}
+                        {% endif %}
+                    </span>
+                </td>
+
+                <td>
+                    {% for p in b.payments.all %}
+                        {% if p.status == 'PENDING' and b.status == 'PENDING_PAYMENT' %}
+                            <form method="post"
+                                  action="{% url 'confirm_payment' p.pk %}"
+                                  class="d-inline">
+                                {% csrf_token %}
+                                <button class="btn btn-sm btn-success">
+                                    Xác nhận đã nhận tiền
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if b.status == 'CONFIRMED' %}
+                        <form method="post"
+                              action="{% url 'check_in' b.pk %}"
+                              class="d-inline">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-primary">
+                                Check-in
+                            </button>
+                        </form>
+
+                    {% elif b.status == 'CHECKED_IN' %}
+                        <form method="post"
+                              action="{% url 'check_out' b.pk %}"
+                              class="d-inline">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-dark">
+                                Check-out
+                            </button>
+                        </form>
+                    {% endif %}
+                </td>
+
+            </tr>
+
+            {% empty %}
+                <tr>
+                    <td colspan="8"
+                        class="text-center text-muted py-4">
+                        Chưa có đơn nào.
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock %}

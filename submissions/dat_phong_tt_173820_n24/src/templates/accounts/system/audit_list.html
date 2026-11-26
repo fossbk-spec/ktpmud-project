@@ -1,0 +1,99 @@
+
+{% extends "base.html" %}
+
+{% block title %}Nhật ký quản trị{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+            <h2 class="mb-1">Nhật ký quản trị hệ thống</h2>
+            <p class="text-muted mb-0">
+                Theo dõi lịch sử thao tác của Admin.
+            </p>
+        </div>
+
+        <a href="{% url 'system_owner_list' %}" class="btn btn-outline-primary">
+            Quay lại quản lý chủ cơ sở
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <strong>Lịch sử thao tác</strong>
+            <span class="badge bg-secondary ms-2">{{ logs|length }}</span>
+        </div>
+
+        <div class="card-body">
+
+            {% if logs %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Admin thực hiện</th>
+                            <th>Hành động</th>
+                            <th>Tài khoản liên quan</th>
+                            <th>Lý do</th>
+                            <th>Địa chỉ IP</th>
+                            <th>Thời gian</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for log in logs %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+
+                            <td>
+                                {% if log.actor %}
+                                    {{ log.actor.username }}
+                                {% else %}
+                                    <span class="text-muted">Tài khoản không còn tồn tại</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <span class="badge bg-primary">
+                                    {{ log.get_action_display }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {% if log.target_user %}
+                                    {{ log.target_user.username }}
+                                {% else %}
+                                    <span class="text-muted">Không có</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ log.reason }}</td>
+
+                            <td>
+                                {{ log.ip_address|default:"Không xác định" }}
+                            </td>
+
+                            <td>
+                                {{ log.created_at|date:"d/m/Y H:i:s" }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            {% else %}
+                <div class="alert alert-info mb-0">
+                    Chưa có nhật ký quản trị nào.
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

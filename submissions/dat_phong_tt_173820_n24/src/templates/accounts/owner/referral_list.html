@@ -1,0 +1,194 @@
+
+{% extends "base.html" %}
+
+{% block title %}Duyệt nhân viên{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <div>
+            <h2>Duyệt nhân viên</h2>
+            <p class="text-muted mb-0">
+                Chỉ hiển thị những tài khoản đăng ký bằng mã của bạn.
+            </p>
+        </div>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+            Quay lại
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <h5>Mã giới thiệu của bạn</h5>
+
+            {% if owner.referral_code %}
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <code id="referralCode" class="fs-5">
+                        {{ owner.referral_code }}
+                    </code>
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary btn-sm"
+                        onclick="copyReferralCode()"
+                    >
+                        Sao chép
+                    </button>
+                </div>
+            {% else %}
+                <div class="alert alert-warning mb-0">
+                    Bạn chưa được cấp mã giới thiệu.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="text-muted">Tổng đăng ký</div>
+                    <h3>{{ referrals|length }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="text-muted">Chờ duyệt</div>
+                    <h3 class="text-warning">{{ pending_count }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="text-muted">Đã duyệt</div>
+                    <h3 class="text-success">{{ approved_count }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <h5 class="mb-3">Danh sách đăng ký nhân viên</h5>
+
+            {% if referrals %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Email</th>
+                            <th>Ngày đăng ký</th>
+                            <th>Trạng thái</th>
+                            <th style="min-width: 300px;">Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for referral in referrals %}
+                        <tr>
+                            <td>{{ referral.referred_user.username }}</td>
+                            <td>{{ referral.referred_user.email|default:"Chưa có" }}</td>
+                            <td>{{ referral.created_at|date:"d/m/Y H:i" }}</td>
+
+                            <td>
+                                {% if referral.status == "PENDING" %}
+                                    <span class="badge bg-warning text-dark">Chờ duyệt</span>
+                                {% elif referral.status == "APPROVED" %}
+                                    <span class="badge bg-success">Đã duyệt</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Đã từ chối</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if referral.status == "PENDING" %}
+                                <form
+                                    method="post"
+                                    action="{% url 'owner_referral_review' referral.id %}"
+                                >
+                                    {% csrf_token %}
+
+                                    <select
+                                        name="action"
+                                        class="form-select form-select-sm mb-2"
+                                        required
+                                    >
+                                        <option value="APPROVE">Duyệt nhân viên</option>
+                                        <option value="REJECT">Từ chối</option>
+                                    </select>
+
+                                    <select
+                                        name="hotel"
+                                        class="form-select form-select-sm mb-2"
+                                    >
+                                        <option value="">-- Chọn cơ sở --</option>
+                                        {% for hotel in hotels %}
+                                            <option value="{{ hotel.id }}">
+                                                {{ hotel.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <select
+                                        name="role"
+                                        class="form-select form-select-sm mb-2"
+                                    >
+                                        <option value="">-- Chọn vai trò --</option>
+                                        <option value="MANAGER">Quản lý</option>
+                                        <option value="STAFF">Nhân viên</option>
+                                    </select>
+
+                                    <input
+                                        type="text"
+                                        name="reason"
+                                        class="form-control form-control-sm mb-2"
+                                        placeholder="Ghi chú (không bắt buộc)"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary btn-sm"
+                                        onclick="return confirm('Bạn xác nhận thao tác này?')"
+                                    >
+                                        Xác nhận
+                                    </button>
+                                </form>
+                                {% else %}
+                                    <span class="text-muted small">
+                                        {{ referral.reason|default:"Không có ghi chú" }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% else %}
+                <div class="alert alert-info mb-0">
+                    Chưa có nhân viên đăng ký bằng mã giới thiệu của bạn.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+function copyReferralCode() {
+    const code = document.getElementById("referralCode").innerText.trim();
+
+    navigator.clipboard.writeText(code)
+        .then(() => alert("Đã sao chép mã giới thiệu!"))
+        .catch(() => alert("Không thể sao chép mã."));
+}
+</script>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% block title %}Đơn {{ booking.code }}{% endblock %}
+{% block content %}
+<div class="card mb-3"><div class="card-body">
+  <div class="d-flex justify-content-between flex-wrap">
+    <div>
+      <div class="text-muted">Mã đặt phòng</div>
+      <h2 class="fw-bold text-primary">{{ booking.code }}</h2>
+    </div>
+    <div>
+      <span class="badge fs-6 {% if booking.status == 'CONFIRMED' or booking.status == 'CHECKED_IN' or booking.status == 'CHECKED_OUT' %}text-bg-success{% elif booking.status == 'PENDING_PAYMENT' %}text-bg-warning{% else %}text-bg-secondary{% endif %}">
+        {% if booking.is_holding %}Đang giữ chỗ{% else %}{{ booking.get_status_display }}{% endif %}
+      </span>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <p class="mb-1"><strong>{{ booking.hotel.name }}</strong></p>
+      <p class="text-muted">{{ booking.hotel.address }}</p>
+      <p class="mb-1">Nhận phòng: {{ booking.check_in_date|date:"d/m/Y" }} (từ {{ booking.hotel.check_in_time|time:"H:i" }})</p>
+      <p class="mb-1">Trả phòng: {{ booking.check_out_date|date:"d/m/Y" }} (trước {{ booking.hotel.check_out_time|time:"H:i" }})</p>
+      <p class="mb-1">{{ booking.nights }} đêm · {{ booking.num_guests }} khách</p>
+      {% for br in booking_rooms %}<p class="mb-1">Phòng: {{ br.room.room_code }} – {{ br.room.room_type.name }}</p>{% endfor %}
+    </div>
+    <div class="col-md-6">
+      <p class="mb-1">Khách: {{ booking.guest.full_name }} · {{ booking.guest.phone }}</p>
+      <p class="fs-5 fw-bold">Tổng tiền: {{ booking.total_amount|floatformat:"0g" }} đ</p>
+    </div>
+  </div>
+</div></div>
+
+
+{% if booking.status == 'PENDING_PAYMENT' and booking.is_holding %}
+<div class="card border-warning mb-3">
+    <div class="card-body">
+        <h5 class="mb-3">Thanh toán để giữ phòng</h5>
+
+        <p>
+            Phòng đang được giữ cho bạn đến
+            <strong>
+                {{ booking.hold_expires_at|date:"H:i d/m/Y" }}
+            </strong>.
+            Quá hạn mà chưa thanh toán, phòng sẽ được nhả cho khách khác.
+        </p>
+
+        {% if booking.hotel.bank_bin and booking.hotel.bank_account_number and booking.hotel.bank_account_name %}
+
+            <div class="bg-light p-3 rounded mb-3">
+                <div class="fw-bold mb-2">
+                    Thông tin nhận chuyển khoản
+                </div>
+
+                <p class="mb-1">
+                    Ngân hàng: {{ booking.hotel.bank_name }}
+                </p>
+
+                <p class="mb-1">
+                    Số tài khoản:
+                    <strong>{{ booking.hotel.bank_account_number }}</strong>
+                </p>
+
+                <p class="mb-1">
+                    Chủ tài khoản:
+                    {{ booking.hotel.bank_account_name }}
+                </p>
+
+                <p class="mb-0">
+                    Nội dung chuyển khoản:
+                    <strong class="text-danger">{{ booking.code }}</strong>
+                </p>
+            </div>
+
+            <a
+                href="{% url 'payment_qr' booking.code %}"
+                class="btn btn-primary mb-3"
+            >
+                <i class="bi bi-qr-code"></i>
+                Xem mã QR chuyển khoản
+            </a>
+
+        {% else %}
+
+            <div class="alert alert-warning">
+                Cơ sở chưa cấu hình đầy đủ tài khoản ngân hàng.
+                Vui lòng liên hệ cơ sở để được hướng dẫn thanh toán.
+            </div>
+
+        {% endif %}
+
+        <hr>
+
+        <h6>Thanh toán tại quầy</h6>
+
+        <form
+            method="post"
+            action="{% url 'report_paid' booking.code %}"
+        >
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="method"
+                value="CASH"
+            >
+
+            <button class="btn btn-outline-success">
+                Tôi sẽ thanh toán tiền mặt tại quầy
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endif %}
+
+
+
+{% if payments %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="mb-3">Lịch sử thanh toán</h5>
+
+        {% for p in payments %}
+            <div class="border rounded p-3 mb-2">
+
+                <div class="d-flex justify-content-between flex-wrap">
+                    <strong>{{ p.get_method_display }}</strong>
+
+                    {% if p.status == 'CONFIRMED' %}
+                        <span class="badge text-bg-success">
+                            Đã thanh toán
+                        </span>
+
+                    {% elif p.status == 'PENDING' %}
+                        <span class="badge text-bg-warning">
+                            Chờ duyệt thanh toán
+                        </span>
+
+                    {% elif p.status == 'REJECTED' %}
+                        <span class="badge text-bg-danger">
+                            Bị từ chối
+                        </span>
+                    {% endif %}
+                </div>
+
+                <p class="mb-1 mt-2">
+                    Số tiền:
+                    <strong>{{ p.amount|floatformat:"0g" }} đ</strong>
+                </p>
+
+                <p class="text-muted mb-1">
+                    Thời gian tạo:
+                    {{ p.created_at|date:"H:i d/m/Y" }}
+                </p>
+
+                {% if p.reported_at %}
+                    <p class="text-muted mb-1">
+                        Khách báo thanh toán:
+                        {{ p.reported_at|date:"H:i d/m/Y" }}
+                    </p>
+                {% endif %}
+
+                {% if p.status == 'REJECTED' %}
+                    <div class="alert alert-danger mt-2 mb-0">
+                        <strong>Lý do từ chối:</strong>
+                        {{ p.rejection_reason }}
+                    </div>
+                {% endif %}
+
+                {% if p.status == 'CONFIRMED' %}
+                    <p class="text-success mb-0 mt-2">
+                        Xác nhận lúc:
+                        {{ p.confirmed_at|date:"H:i d/m/Y" }}
+                    </p>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if booking.status == 'PENDING_PAYMENT' or booking.status == 'CONFIRMED' %}
+<form method="post" action="{% url 'booking_cancel' booking.code %}" onsubmit="return confirm('Bạn chắc chắn muốn hủy đơn này?');">{% csrf_token %}
+  <button class="btn btn-outline-danger">Hủy đặt phòng</button>
+</form>
+{% endif %}
+{% endblock %}

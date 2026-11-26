@@ -1,0 +1,65 @@
+
+{% extends "base.html" %}
+
+{% block title %}Thêm cơ sở mới{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5" style="max-width: 750px;">
+
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+
+            <h3 class="mb-2">Thêm cơ sở lưu trú</h3>
+
+            <p class="text-muted mb-4">
+                Nhập thông tin để tạo cơ sở mới.
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+
+                {% for field in form %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% for error in field.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                {% endfor %}
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Tạo cơ sở
+                    </button>
+
+                    <a href="{% url 'dashboard' %}"
+                       class="btn btn-secondary">
+                        Quay lại
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
