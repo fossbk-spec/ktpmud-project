@@ -60,7 +60,9 @@ npm run build
 ```
 **Dữ liệu/tài khoản mẫu (synthetic):**
 - Cơ sở dữ liệu mẫu: Khởi tạo bằng file `supabase/setup.sql` trong SQL Editor của Supabase.
-- Tài khoản Bác sĩ/Quản trị mẫu (synthetic): `admin@example.com` (gán role `admin` qua lệnh: `UPDATE public.profiles SET role = 'admin' WHERE email = 'admin@example.com';`).
+- Tài khoản Bác sĩ/Quản trị mẫu (synthetic): 
+TK : pnam70653@gmail.com / MK : ngocdieucare
+
 - Tài khoản Bệnh nhân mẫu: Tạo tài khoản mới trực tiếp từ giao diện trang Đăng ký.
 
 **Kịch bản sử dụng:**
