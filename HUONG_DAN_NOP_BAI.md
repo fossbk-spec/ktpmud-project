@@ -33,6 +33,12 @@ submissions/dai_thao_duong_173820_n01/
 └── src/                 ← mã nguồn (khi có)
 ```
 
+> **README bắt buộc (từ Tuần 11, 18/11):** `README.md` của nhóm phải có đủ 6 mục
+> (giới thiệu sản phẩm, phạm vi MVP, kiến trúc & công nghệ, cài đặt & cách sử dụng,
+> hướng phát triển Tuần 11–15, nhóm & tuân thủ) — copy từ `submissions/_TEMPLATE/README.md`.
+> CI kiểm tra đủ mục, độ dài tối thiểu và không còn nội dung mẫu. Chi tiết:
+> https://fossbk-spec.github.io/ktpmud-book/nop_bai
+
 `submission.json` của N01:
 
 ```json
@@ -104,8 +110,7 @@ Chỉ `git add` thư mục của nhóm mình — không sửa file nào khác c�
 - Nếu PR hiện *"Workflow awaiting approval"*: tài khoản GitHub còn mới, chờ giảng viên bấm duyệt
   một lần.
 - Giảng viên góp ý bằng bình luận trên PR; góp ý tổng hợp lưu ở `feedback/<thư mục nhóm>.md`.
-- Khi giảng viên **approve**, PR được merge vào `main`. Sau khi merge **không sửa qua PR thường
-  được nữa** — tuần sau nộp tiếp bằng PR mới (thêm file mới, ví dụ `report/BaoCao_Tuan8.docx`).
+- Khi giảng viên **approve**, PR được merge vào `main`. Sau khi merge, không sửa thêm trên PR đó nữa — tuần sau nộp tiếp bằng **PR mới** (thêm file mới, ví dụ `report/BaoCao_Tuan8.docx`).
 
 ## 5. Lỗi hay gặp
 

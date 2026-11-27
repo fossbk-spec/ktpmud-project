@@ -26,29 +26,34 @@ vô tình ghi đè hay xung đột với nhóm B.
 1. **Fork** repo này về tài khoản GitHub cá nhân (hoặc dùng chung 1 fork
    cho cả nhóm — 1 thành viên đại diện fork, thêm thành viên còn lại làm
    collaborator trên fork đó).
-2. **Tạo branch riêng** từ `main`, đặt tên `submit/<case_study_slug>-<ma_nhom>`:
+2. **Tạo branch riêng** từ `main`, đặt tên `submit/<case_study_slug>-<ma_lop>_<ma_nhom>` (ví dụ `submit/suy_tim-173820_n07`):
    ```
-   git checkout -b submit/suy_tim-nhom07
+   git checkout -b submit/suy_tim-173820_n07
    ```
 3. **Copy thư mục mẫu:**
    ```
-   cp -r submissions/_TEMPLATE submissions/suy_tim_nhom07
+   cp -r submissions/_TEMPLATE submissions/suy_tim_173820_n07
    ```
+
+   > **Nhóm đã có thư mục trên `main`** (lớp 173820: N01, N02, N03, N27, N43): bỏ qua bước copy mẫu — chỉ thêm/cập nhật file trong thư mục đã có (nhưng phải viết lại `README.md` theo mẫu 6 mục trước PR tiếp theo, nếu không CI sẽ chặn).
 4. **Điền `submission.json`** (xem schema Mục 2) và các file trong `report/`
    (SRS, C4 Model, Test Report...), `src/`, `slides/`.
 5. **Chạy kiểm tra cục bộ trước khi nộp** (bắt buộc — CI sẽ chạy lại đúng
    script này, nộp trước khi tự kiểm tra chỉ tốn thời gian chờ CI fail):
    ```
-   python scripts/validate_submission.py submissions/suy_tim_nhom07
+   python scripts/validate_submission.py submissions/suy_tim_173820_n07
    ```
 6. **Commit + push** lên fork của bạn, rồi **mở Pull Request** vào
    `main` của `fossbk-spec/ktpmud-project`.
 7. Chờ CI chạy xanh (✅) — nếu đỏ (❌), đọc log lỗi, sửa, push tiếp lên
    cùng branch (PR tự cập nhật, không cần mở PR mới).
-8. Giảng viên/TA review nội dung và merge. Sau khi merge, bài nộp của nhóm
-   bạn chính thức nằm trong lịch sử `main` — **không sửa được nữa qua PR
-   thường** (mọi cập nhật sau merge coi như nộp lại, cần trao đổi trực tiếp
-   với giảng viên).
+8. Giảng viên/TA review nội dung và merge. Sau khi merge, các tuần tiếp theo nộp bằng **PR mới** chỉ thêm/sửa file trong đúng thư mục của nhóm — không cần trao đổi trước với giảng viên cho cập nhật thường kỳ. Chỉ liên hệ giảng viên khi: đổi case study/mã nhóm, xóa file đã merge, nộp muộn, hoặc xung đột không tự xử lý được.
+
+> **README bắt buộc (từ Tuần 11, 18/11):** `README.md` của nhóm phải có đủ 6 mục
+> (giới thiệu sản phẩm, phạm vi MVP, kiến trúc & công nghệ, cài đặt & cách sử dụng,
+> hướng phát triển Tuần 11–15, nhóm & tuân thủ) — copy từ `submissions/_TEMPLATE/README.md`.
+> CI kiểm tra đủ mục, độ dài tối thiểu và không còn nội dung mẫu. Chi tiết:
+> https://fossbk-spec.github.io/ktpmud-book/nop_bai
 
 ## 2. Schema `submission.json`
 
@@ -56,10 +61,10 @@ vô tình ghi đè hay xung đột với nhóm B.
 {
   "case_study_slug": "suy_tim",
   "case_study_id": "CS-2",
-  "group_code": "nhom07",
+  "group_code": "173820_n07",
   "members": ["MSSV1", "MSSV2", "MSSV3", "MSSV4"],
   "scenario": "khong_ap_dung",
-  "submitted_at": "2026-12-15"
+  "submitted_at": "2026-11-25"
 }
 ```
 
@@ -68,12 +73,11 @@ Trường bắt buộc: `case_study_slug`, `case_study_id`, `group_code`,
 
 `scenario` chỉ có ý nghĩa với CS-1 (Dr May Day) — điền `mayday_sim` (kịch
 bản mô phỏng độc lập) hoặc `mayday_tichhop` (kịch bản tích hợp thật). Với
-CS-2/CS-3 điền `khong_ap_dung`.
+CS-2 đến CS-9 điền `khong_ap_dung`.
 
 ## 3. Quy tắc bắt buộc về quyền riêng tư (CI sẽ chặn nếu vi phạm)
 
-1. **Không đưa dữ liệu bệnh nhân thật** vào bất kỳ đâu trong PR — toàn bộ
-   3 case study đều bắt buộc dùng dữ liệu synthetic/mô phỏng theo nguyên
+1. **Không đưa dữ liệu bệnh nhân thật** vào bất kỳ đâu trong PR — tất cả 19 case study đều bắt buộc dùng dữ liệu synthetic/mô phỏng theo nguyên
    tắc Zero PII/PHI của khung chung. Vi phạm: 0 điểm toàn phần theo Rubric.
 2. **Không commit khóa API, token, mật khẩu, file `.env`.**
 3. **Không dùng họ tên thật đầy đủ** của thành viên trong code/README/tên
@@ -89,10 +93,7 @@ CS-2/CS-3 điền `khong_ap_dung`.
 ## 4. Câu hỏi thường gặp
 
 **Nhóm em có thể sửa bài sau khi đã merge không?**
-Không tự sửa qua PR thường (branch protection chặn ghi đè thư mục nhóm
-khác nhưng cũng chặn cả việc bạn tự ý sửa thư mục của chính mình sau khi
-đã merge, để giữ tính toàn vẹn lịch sử nộp bài) — trao đổi trực tiếp với
-giảng viên nếu cần nộp bổ sung/nộp lại.
+Có — mỗi tuần nộp tiếp bằng **PR mới** chỉ thêm/sửa file trong đúng thư mục của nhóm; không sửa trên PR đã merge. Chỉ liên hệ giảng viên khi: đổi case study/mã nhóm, xóa file đã merge, nộp muộn, hoặc xung đột không tự xử lý được.
 
 **2 nhóm có thể chọn cùng 1 case study không?**
 Có — mỗi nhóm vẫn có thư mục riêng (`ma_nhom` khác nhau), không xung đột.

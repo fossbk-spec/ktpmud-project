@@ -11,6 +11,13 @@ sys.dont_write_bytecode = True
 from validate_submission import BKT_ARTIFACT_FILES, validate_folder
 
 
+GOOD_README = "\n".join(
+    ["# San pham X", "## 1. Giới thiệu sản phẩm", "## 2. Phạm vi MVP", "## 3. Kiến trúc & công nghệ",
+     "## 4. Cài đặt & cách sử dụng", "## 5. Hướng phát triển Tuần 11–15", "## 6. Nhóm & tuân thủ"]
+    + ["Noi dung mo ta chi tiet cho muc tren, du dai de qua kiem tra do dai."] * 14
+)
+
+
 class ValidateSubmissionTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -30,7 +37,8 @@ class ValidateSubmissionTests(unittest.TestCase):
                 "submitted_at": "2026-11-02",
             }), encoding="utf-8"
         )
-        (folder / "README.md").write_text("Bai lam mau de kiem thu.\n", encoding="utf-8")
+        (folder / "README.md").write_text(
+            "Bai lam mau de kiem thu.\n" if bkt else GOOD_README, encoding="utf-8")
         if bkt:
             (folder / "source-ref.json").write_text(
                 json.dumps({
@@ -115,6 +123,23 @@ class ValidateSubmissionTests(unittest.TestCase):
         (folder / "artifacts" / "AI_USE.md").write_bytes(b"")
         self.assertTrue(any("artifacts/AI_USE.md" in error and "rỗng" in error
                             for error in validate_folder(folder)))
+
+    def test_cs_readme_missing_sections_fails(self):
+        folder = self.make_submission("may_day", bkt=False)
+        (folder / "README.md").write_text("Bai lam mau.\n" * 100, encoding="utf-8")
+        errors = validate_folder(folder)
+        self.assertTrue(any("thiếu mục bắt buộc" in e for e in errors))
+
+    def test_cs_readme_template_marker_fails(self):
+        folder = self.make_submission("may_day", bkt=False)
+        path = folder / "README.md"
+        path.write_text(GOOD_README + "\n(điền tên case study)\n", encoding="utf-8")
+        self.assertTrue(any("nội dung mẫu" in e for e in validate_folder(folder)))
+
+    def test_cs_readme_too_short_fails(self):
+        folder = self.make_submission("may_day", bkt=False)
+        (folder / "README.md").write_text("# a\n", encoding="utf-8")
+        self.assertTrue(any("quá ngắn" in e for e in validate_folder(folder)))
 
     def test_invalid_slug_fails(self):
         self.assertTrue(any("case_study_slug" in error and "không hợp lệ" in error

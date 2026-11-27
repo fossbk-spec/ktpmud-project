@@ -35,11 +35,40 @@ SUBMISSIONS_DIR = ROOT / "submissions"
 TEMPLATE_NAME = "_TEMPLATE"
 
 REQUIRED_SUBMISSION_FIELDS = ["case_study_slug", "case_study_id", "group_code", "members"]
-VALID_CASE_STUDY_SLUGS = {"may_day", "suy_tim", "alzheimer", "dreye", "dai_thao_duong", "nha_cho_thue", "ban_do_lich_su", "ke_hoach_hoc_tap", "quan_ly_thiet_bi_y_te", "may_day_sprint", "hoang_mai_toan"}
+VALID_CASE_STUDY_SLUGS = {"may_day", "suy_tim", "alzheimer", "dreye", "dai_thao_duong", "nha_cho_thue", "ban_do_lich_su", "ke_hoach_hoc_tap", "quan_ly_thiet_bi_y_te", "may_day_sprint", "hoang_mai_toan", "tra_cuu_thuoc", "quan_ly_cua_hang_sach", "quan_ly_ky_tuc_xa", "cho_bk", "phan_chia_cong_viec_phong_tro", "quan_ly_hieu_thuoc", "ghep_san_cau_long", "dat_lich_nha_khoa", "dat_san_bong_da", "dat_phong_tt"}
 BKT_SLUGS = {"may_day_sprint", "hoang_mai_toan"}
 BKT_SOURCE_REF_FIELDS = ("starter_repo", "starter_commit", "fork_url", "final_commit", "release_tag", "ci_run_url")
 BKT_ARTIFACT_FILES = ("REQUIREMENTS.md", "DECISIONS.md", "TEST_REPORT.md", "SECURITY_PRIVACY_CHECKLIST.md", "AI_USE.md", "CONTRIBUTIONS.md")
 MAX_FILE_SIZE_MB = 10
+
+# README bắt buộc của mỗi nhóm (CS thường, không áp dụng BKT): 6 mục theo
+# trang "Nộp Bài Đồ Án" — khớp theo từ khóa trong tiêu đề (#...), không phân
+# biệt hoa/thường.
+README_REQUIRED_SECTIONS = {
+    "Giới thiệu sản phẩm": ("giới thiệu",),
+    "Phạm vi MVP": ("phạm vi",),
+    "Kiến trúc & công nghệ": ("kiến trúc", "công nghệ"),
+    "Cài đặt & cách sử dụng": ("cài đặt", "cách sử dụng", "cách chạy"),
+    "Hướng phát triển Tuần 11–15": ("hướng phát triển", "tuần 11"),
+    "Nhóm & tuân thủ": ("tuân thủ", "thành viên", "nhóm &"),
+}
+README_MIN_CHARS = 800
+README_TEMPLATE_MARKERS = ("(điền", "<tên sản phẩm>", "<case_study_slug>_<ma_nhom>")
+
+
+def validate_readme(text: str) -> list[str]:
+    errors: list[str] = []
+    headings = [ln.lstrip("#").strip().lower() for ln in text.splitlines() if ln.lstrip().startswith("#")]
+    for name, keywords in README_REQUIRED_SECTIONS.items():
+        if not any(any(k in h for k in keywords) for h in headings):
+            errors.append(f"'README.md' thiếu mục bắt buộc \"{name}\" (tiêu đề # chứa từ khóa: {', '.join(keywords)}).")
+    if len(text.strip()) < README_MIN_CHARS:
+        errors.append(f"'README.md' quá ngắn (<{README_MIN_CHARS} ký tự) — cần mô tả đầy đủ MVP, cách dùng và lộ trình T11–15.")
+    low = text.lower()
+    for marker in README_TEMPLATE_MARKERS:
+        if marker in low:
+            errors.append(f"'README.md' vẫn còn nội dung mẫu ('{marker}') — cần điền thật.")
+    return errors
 
 # Regex mẫu hình phổ biến của khóa API/secret — lưới an toàn cuối, không
 # thay thế việc nhóm tự rà soát trước khi nộp.
@@ -126,6 +155,8 @@ def validate_folder(folder: Path) -> list[str]:
     readme_path = folder / "README.md"
     if not readme_path.exists():
         errors.append("Thiếu file 'README.md' tóm tắt bài làm.")
+    elif manifest_path.exists() and slug not in BKT_SLUGS:
+        errors.extend(validate_readme(readme_path.read_text(encoding="utf-8", errors="ignore")))
 
     if manifest_path.exists() and slug in BKT_SLUGS:
         source_ref_path = folder / "source-ref.json"
